@@ -1,8 +1,7 @@
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import express from 'express';
-
-import controllerPaia from './controllers/exemploPaia.js';
+import rotaPaia from './routers/rotaPaia.js';
 
 const app = express();
 
@@ -15,6 +14,6 @@ app.use(
 );
 
 // controllers
-app.use('/paia', indexRouter);
+app.use('/paia', rotaPaia);
 
 export default app;
