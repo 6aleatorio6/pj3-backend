@@ -3,10 +3,12 @@
 /**
  * Module dependencies.
  */
-
 import debugFunction from 'debug';
 import app from '../src/app.js';
 import http from 'http';
+import { config } from 'dotenv';
+config();
+
 
 const debug = debugFunction('backend:server');
 
