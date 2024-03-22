@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,7 +7,76 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model userTeste {
-  id   Int    @unique @default(autoincrement())
-  nome String @db.VarChar(64)
+model catalogo {
+  id                Int            @id @default(autoincrement())
+  funcionario_autor Int
+  descricao         String         @db.VarChar(45)
+  nomePopular       String         @db.VarChar(45)
+  nomeCientifico    String         @db.VarChar(45)
+  som               String?        @db.VarChar(45)
+  funcionario       funcionario    @relation(fields: [funcionario_autor], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_arvore_funcionario1")
+  foto              foto[]
+  lidoPeloUser      lidoPeloUser[]
+
+  @@index([funcionario_autor], map: "fk_arvore_funcionario1_idx")
+}
+
+model foto {
+  id                Int      @default(autoincrement())
+  catalogo_id       Int
+  url               String   @db.VarChar(45)
+  mostrarNoCarrosel Boolean  @default(false)
+  catalogo          catalogo @relation(fields: [catalogo_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_foto_catalogo1")
+
+  @@id([id, catalogo_id])
+  @@index([catalogo_id], map: "fk_foto_catalogo1_idx")
+}
+
+model funcionario {
+  id        Int        @id @default(autoincrement())
+  email     String     @db.VarChar(80)
+  senhaHash String     @db.VarChar(100)
+  cpf       String     @db.VarChar(45)
+  nome      String     @db.VarChar(45)
+  adm       Boolean    @default(false)
+  catalogo  catalogo[]
+  visitas   visitas[]
+}
+
+model lidoPeloUser {
+  usuario_id       Int
+  catalogo_id      Int
+  dataDaDescoberta DateTime @db.DateTime(0)
+  usuario          usuario  @relation(fields: [usuario_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_descobertasInteressantes_usuario1")
+  catalogo         catalogo @relation(fields: [catalogo_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_lidoPeloUser_catalogo1")
+
+  @@id([usuario_id, catalogo_id])
+  @@index([usuario_id], map: "fk_descobertasInteressantes_usuario1_idx")
+  @@index([catalogo_id], map: "fk_lidoPeloUser_catalogo1_idx")
+}
+
+model usuario {
+  id           Int            @id @default(autoincrement())
+  email        String?        @unique(map: "email_UNIQUE") @db.VarChar(80)
+  senhaHash    String?        @db.VarChar(100)
+  foto         String?        @db.VarChar(45)
+  nome         String         @db.VarChar(45)
+  cidade       String         @db.VarChar(45)
+  sexo         String         @db.VarChar(1)
+  telefone     String         @db.VarChar(45)
+  lidoPeloUser lidoPeloUser[]
+  visitas      visitas[]
+}
+
+model visitas {
+  id             Int          @default(autoincrement())
+  usuario_id     Int
+  funcionario_id Int?
+  dataDaVisita   DateTime     @db.DateTime(0)
+  funcionario    funcionario? @relation(fields: [funcionario_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_visitas_funcionario1")
+  usuario        usuario      @relation(fields: [usuario_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_visitas_usuario1")
+
+  @@id([id, usuario_id])
+  @@index([funcionario_id], map: "fk_visitas_funcionario1_idx")
+  @@index([usuario_id], map: "fk_visitas_usuario1_idx")
 }
