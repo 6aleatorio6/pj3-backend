@@ -2,8 +2,7 @@ import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import express from 'express';
 import cors from 'cors';
-import rotaPaia from './routers/rotaPaia.js';
-
+import funcionarioRouter from './routers/funcionarioRouter.js'
 const app = express();
 
 const arrayDeOrigins = JSON.parse(process.env.CORS_ORIGINS);
@@ -18,6 +17,6 @@ app.use(
 );
 
 // controllers
-app.use('/paia', rotaPaia);
+app.use('/funcionario', funcionarioRouter);
 
 export default app;
