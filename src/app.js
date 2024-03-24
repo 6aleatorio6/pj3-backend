@@ -3,7 +3,7 @@ import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import express from 'express';
 import cors from 'cors';
-import rotaPaia from './routers/rotaPaia.js';
+import passport from 'passport';
 
 const app = express();
 
@@ -16,6 +16,7 @@ app.use(
   express.json(),
   express.urlencoded({ extended: false }),
   cookieParser(),
+  passport.initialize(),
 );
 
 // controllers
