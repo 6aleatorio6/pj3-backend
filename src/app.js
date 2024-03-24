@@ -1,3 +1,4 @@
+import 'dotenv/config.js';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import express from 'express';
