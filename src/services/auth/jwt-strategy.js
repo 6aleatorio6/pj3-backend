@@ -20,7 +20,7 @@ passport.use(
 function customAuthenticate(type) {
   // o middleware alterado sabota o next do original e deixa o callback responsavel pela resposta
   return function middlewareAlterado(req, res, next) {
-    passport.authenticate('jwt', { session: false }, (er, user) => {
+    const cb = (er, user) => {
       if (er) return res.status(500).json({ message: 'erro no servidor' });
 
       if (!user) return res.status(401).json({ message: 'token invalido' });
@@ -29,7 +29,9 @@ function customAuthenticate(type) {
       if (isPassed) return res.status(403).json({ message: 'Nâo autorizado' });
 
       next();
-    })(req, res, () => 'paia');
+    };
+
+    passport.authenticate('jwt', { session: false }, cb)(req, res, () => {});
   };
 }
 
@@ -42,6 +44,5 @@ export const autenticarTotem = customAuthenticate('totem');
 export const jwtSign = (user, expiresIn) => {
   return jwt.sign(user, secretKey, expiresIn && { expiresIn });
 };
-
 
 // fazer na mão fica mais simples
