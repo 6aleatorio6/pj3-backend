@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import express from 'express';
 import cors from 'cors';
 import passport from 'passport';
+import './services/auth/jwt-strategy.js';
 import './services/auth/local-strategy.js';
 
 const app = express();
