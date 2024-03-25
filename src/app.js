@@ -7,6 +7,7 @@ import passport from 'passport';
 import './services/auth/jwt-strategy.js';
 import './services/auth/local-strategy.js';
 import './services/auth/google-strategy.js';
+import './services/auth/facebook-strategy.js';
 import routerAuth from './routers/auth.js';
 
 const app = express();
