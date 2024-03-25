@@ -6,6 +6,7 @@ import cors from 'cors';
 import passport from 'passport';
 import './services/auth/jwt-strategy.js';
 import './services/auth/local-strategy.js';
+import routerAuth from './routers/auth.js';
 
 const app = express();
 
@@ -22,6 +23,6 @@ app.use(
 );
 
 // controllers
-app.use('/paia', rotaPaia);
+app.use('/auth', routerAuth);
 
 export default app;
