@@ -3,8 +3,7 @@ import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import express from 'express';
 import cors from 'cors';
-import rotaPaia from './routers/rotaPaia.js';
-
+import funcionarioRouter from './routers/funcionarioRouter.js'
 const app = express();
 
 const PORT = process.env.PORT || 3000;
@@ -20,7 +19,7 @@ app.use(
 );
 
 // controllers
-app.use('/paia', rotaPaia);
+app.use('/funcionario', funcionarioRouter);
 
 app.listen(PORT, () => {
   console.log(`Porta: ${PORT} | Cors: ${arrayDeOrigins}`);
