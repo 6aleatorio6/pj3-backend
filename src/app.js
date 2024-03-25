@@ -7,7 +7,8 @@ import rotaPaia from './routers/rotaPaia.js';
 
 const app = express();
 
-const arrayDeOrigins = JSON.parse(process.env.CORS_ORIGINS);
+const PORT = process.env.PORT || 3000;
+const arrayDeOrigins = JSON.parse(process.env.CORS_ORIGINS || '["*"]');
 
 // middleware
 app.use(
@@ -21,4 +22,6 @@ app.use(
 // controllers
 app.use('/paia', rotaPaia);
 
-export default app;
+app.listen(PORT, () => {
+  console.log(`Porta: ${PORT} | Cors: ${arrayDeOrigins}`);
+});
