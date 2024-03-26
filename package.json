@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www ",
+    "start": "node ./src/app.js",
+    "dev": "nodemon ./src/app.js ",
     "format": "prettier --write \"src/**/*.js\""
   },
   "dependencies": {

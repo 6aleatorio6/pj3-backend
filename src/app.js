@@ -3,6 +3,7 @@ import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import express from 'express';
 import cors from 'cors';
+
 import passport from 'passport';
 import './services/auth/jwt-strategy.js';
 import './services/auth/local-strategy.js';
@@ -10,9 +11,13 @@ import './services/auth/google-strategy.js';
 import './services/auth/facebook-strategy.js';
 import routerAuth from './routers/auth.js';
 
+
+import funcionarioRouter from './routers/funcionarioRouter.js'
+
 const app = express();
 
-const arrayDeOrigins = JSON.parse(process.env.CORS_ORIGINS);
+const PORT = process.env.PORT || 3000;
+const arrayDeOrigins = JSON.parse(process.env.CORS_ORIGINS || '["*"]');
 
 // middleware
 app.use(
@@ -26,5 +31,9 @@ app.use(
 
 // controllers
 app.use('/auth', routerAuth);
+app.use('/funcionario', funcionarioRouter);
 
-export default app;
+
+app.listen(PORT, () => {
+  console.log(`Porta: ${PORT} | Cors: ${arrayDeOrigins}`);
+});
