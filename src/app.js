@@ -40,3 +40,6 @@ app.use('/catalogo', catalogoRouter);
 app.listen(PORT, () => {
   console.log(`Porta: ${PORT} | Cors: ${arrayDeOrigins}`);
 });
+
+
+export default app
