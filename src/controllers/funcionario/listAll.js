@@ -1,8 +1,12 @@
-import funcionarioModel from "../../models/funcionarioModel.js"
+import prisma from "../../prisma.js";
 
 const listAll = async (req, res) => {
     try {
-        const funcionarios = await funcionarioModel.getAll();
+        const funcionarios = await prisma.funcionario.findMany({
+            where: {
+                deleted_at: null
+            }
+        })
         res.json({ success: `Funcionários listados com sucesso!`, funcionarios })
     } catch (error) {
         console.log(error);

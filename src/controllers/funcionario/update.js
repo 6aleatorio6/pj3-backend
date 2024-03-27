@@ -1,10 +1,15 @@
-import funcionarioModel from "../../models/funcionarioModel.js"
+import prisma from "../../prisma.js";
 
 const update = async (req, res) => {
     try {
         const { id } = req.params
         const data = req.body
-        const funcionario = await funcionarioModel.update(+id, data)
+        const funcionario = await prisma.funcionario.update({
+            where: {
+                id: +id
+            },
+            data
+        })
         res.json({ success: `Funcionário ${funcionario.id} atualizado com sucesso!`, funcionario })
     } catch (error) {
         console.log(error);

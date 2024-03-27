@@ -1,9 +1,14 @@
-import funcionarioModel from "../../models/funcionarioModel.js"
+import prisma from "../../prisma.js";
 
 const getById = async (req, res) => {
     try {
         const { id } = req.params
-        const funcionario = await funcionarioModel.getById(+id)
+        const funcionario = await prisma.funcionario.findUnique({
+            where: {
+                id: +id,
+                deleted_at: null
+            }
+        })
         res.json({ success: `Funcionário ${id} encontrado com sucesso`, funcionario })
     } catch (error) {
         console.log(error);
