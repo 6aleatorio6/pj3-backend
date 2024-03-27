@@ -2,12 +2,8 @@ import prisma from "../../prisma.js";
 
 const listAll = async (req, res) => {
     try {
-        const funcionarios = await prisma.funcionario.findMany({
-            where: {
-                deleted_at: null
-            }
-        })
-        res.json({ success: `Funcionários listados com sucesso!`, funcionarios })
+        const catalogos = await prisma.catalogo.findMany()
+        res.json({ success: `Catalogos listados com sucesso!`, catalogos })
     } catch (error) {
         console.log(error);
         return res.status(500).json({ error: 'Houve um erro no nosso servidor, tente novamente!' })

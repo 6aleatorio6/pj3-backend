@@ -13,7 +13,8 @@ import routerAuth from './routers/auth.js';
 
 
 import funcionarioRouter from './routers/funcionarioRouter.js'
-
+import usuarioRouter from './routers/usuarioRouter.js'
+import catalogoRouter from './routers/catalogoRouter.js'
 const app = express();
 
 const PORT = process.env.PORT || 3000;
@@ -32,6 +33,8 @@ app.use(
 // controllers
 app.use('/auth', routerAuth);
 app.use('/funcionario', funcionarioRouter);
+app.use('/usuario', usuarioRouter);
+app.use('/catalogo', catalogoRouter);
 
 
 app.listen(PORT, () => {

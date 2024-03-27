@@ -1,20 +1,17 @@
 import prisma from "../../prisma.js";
 
-const getById = async (req, res) => {
+const listAll = async (req, res) => {
     try {
-        const { id } = req.params
-        const funcionario = await prisma.funcionario.findUnique({
+        const usuarios = await prisma.usuario.findMany({
             where: {
-                id: +id,
                 deleted_at: null
             }
         })
-        res.json({ success: `Funcionário ${id} encontrado com sucesso`, funcionario })
+        res.json({ success: `Usuários listados com sucesso!`, usuarios })
     } catch (error) {
         console.log(error);
         return res.status(500).json({ error: 'Houve um erro no nosso servidor, tente novamente!' })
     }
-
 }
 
-export default getById
+export default listAll
