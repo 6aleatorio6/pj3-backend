@@ -13,6 +13,11 @@ import routerAuth from './routers/auth.js';
 
 
 import funcionarioRouter from './routers/funcionarioRouter.js'
+import usuarioRouter from './routers/usuarioRouter.js'
+import catalogoRouter from './routers/catalogoRouter.js'
+import visitasRouter from './routers/visitasRouter.js'
+import lidoPeloUserRouter from './routers/lidoPeloUserRouter.js'
+import fotoRouter from './routers/fotoRouter.js'
 
 const app = express();
 
@@ -32,6 +37,11 @@ app.use(
 // controllers
 app.use('/auth', routerAuth);
 app.use('/funcionario', funcionarioRouter);
+app.use('/usuario', usuarioRouter);
+app.use('/catalogo', catalogoRouter);
+app.use('/visitas', visitasRouter);
+app.use('/lidoPeloUser', lidoPeloUserRouter);
+app.use('/foto', fotoRouter);
 
 
 app.listen(PORT, () => {
