@@ -7,66 +7,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model catalogo {
-  id                Int     @id @default(autoincrement())
-  funcionario_autor Int
-  descricao         String  @db.VarChar(45)
-  nomePopular       String  @db.VarChar(45)
-  nomeCientifico    String  @db.VarChar(45)
-  som               String? @db.VarChar(45)
-
-  @@index([funcionario_autor], map: "fk_arvore_funcionario1_idx")
-}
-
-model foto {
-  id                Int    @default(autoincrement())
-  catalogo_id       Int
-  url               String @db.VarChar(45)
-  mostrarNoCarrosel Int    @default(0) @db.TinyInt
-
-  @@id([id, catalogo_id])
-  @@index([catalogo_id], map: "fk_foto_catalogo1_idx")
-}
-
-model funcionario {
-  id         Int       @id @default(autoincrement())
-  email      String    @db.VarChar(80)
-  senhaHash  String    @db.VarChar(100)
-  cpf        String    @db.VarChar(45)
-  nome       String    @db.VarChar(45)
-  adm        Int       @default(0) @db.TinyInt
-  deleted_at DateTime? @db.DateTime(0)
-}
-
 model usuario {
-  id         Int       @id @default(autoincrement())
-  email      String?   @db.VarChar(80)
-  senhaHash  String?   @db.VarChar(100)
-  foto       String?   @db.VarChar(45)
-  nome       String    @db.VarChar(45)
-  cidade     String    @db.VarChar(45)
-  sexo       String    @db.VarChar(1)
-  telefone   String    @db.VarChar(45)
-  deleted_at DateTime? @db.DateTime(0)
+  id         Int          @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  email      String?      @db.VarChar(80)
+  senhaHash  String?      @db.VarChar(100)
+  googleId   String?      @db.VarChar(45)
+  facebookId String?      @db.VarChar(45)
+  foto       String?      @db.VarChar(45)
+  nome       String       @db.VarChar(50)
+  cidade     String       @db.VarChar(50)
+  sexo       usuario_sexo
+  deleted_at String?      @db.VarChar(45)
 }
 
-model visitas {
-  id             Int      @default(autoincrement())
-  usuario_id     Int
-  funcionario_id Int?
-  dataDaVisita   DateTime @db.DateTime(0)
-
-  @@id([id, usuario_id])
-  @@index([funcionario_id], map: "fk_visitas_funcionario1_idx")
-  @@index([usuario_id], map: "fk_visitas_usuario1_idx")
-}
-
-model lidopelouser {
-  usuario_id       Int
-  catalogo_id      Int
-  dataDaDescoberta DateTime @db.DateTime(0)
-
-  @@id([usuario_id, catalogo_id])
-  @@index([usuario_id], map: "fk_descobertasInteressantes_usuario1_idx")
-  @@index([catalogo_id], map: "fk_lidoPeloUser_catalogo1_idx")
+enum usuario_sexo {
+  F
+  M
 }
