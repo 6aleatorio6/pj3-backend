@@ -5,10 +5,10 @@ const prisma = new PrismaClient()
 const totalUsuarios = async ({sexo, cidade, email, foto, numeroUsuarios, puleUsuarios = 0}) => {
 
     const filtro = {
-        ...(sexo ? {sexo} : {}),
-        ...(cidade ? {cidade} : {}),
-        ...(email ? {email: {not: null}} : {}),
-        ...(foto ? {foto: {not: null}} : {})
+        ...(sexo && {sexo}),
+        ...(cidade && {cidade}),
+        ...(email && {email: {not: null}}),
+        ...(foto && {foto: {not: null}})
     }
     const users = await prisma.usuario.findMany({
         select: {
@@ -25,22 +25,12 @@ const totalUsuarios = async ({sexo, cidade, email, foto, numeroUsuarios, puleUsu
     return {countUsers, users}
 }
 
-const totalFuncionarios = async ({sexo, cidade, email, foto, numerofuncionario, pulefuncionario = 0}) => {
+const totalFuncionarios = async ({adm, numerofuncionario, pulefuncionario = 0}) => {
     const filtro = {
-        sexo,
-        cidade
+        adm
     }
 
-    const countUsers = await prisma.funcionario.count({
-        select: {
-            foto: foto,
-            email: email
-        },
-        where: filtro,
-        skip: pulefuncionario,
-        take: numerofuncionario
-    })
-    const users = await prisma.funcionario.findMany({
+    const funcionarios = await prisma.funcionario.findMany({
         select: {
             id: false,
             senhaHash: false
@@ -49,7 +39,10 @@ const totalFuncionarios = async ({sexo, cidade, email, foto, numerofuncionario, 
         skip: pulefuncionario,
         take: numerofuncionario
     })
-    return {countUsers, users}
+
+    const countFuncionarios = funcionarios.length
+
+    return {countFuncionarios, funcionarios}
 }
 
 const totalVisitas = async (numerovisitas, pulevisitas = 0) => {
