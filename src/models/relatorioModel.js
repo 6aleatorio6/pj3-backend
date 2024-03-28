@@ -5,28 +5,23 @@ const prisma = new PrismaClient()
 const totalUsuarios = async ({sexo, cidade, email, foto, numeroUsuarios, puleUsuarios = 0}) => {
 
     const filtro = {
-        sexo,
-        cidade
+        ...(sexo ? {sexo} : {}),
+        ...(cidade ? {cidade} : {}),
+        ...(email ? {email: {not: null}} : {}),
+        ...(foto ? {foto: {not: null}} : {})
     }
-
-    const countUsers = await prisma.usuario.count({
-        select: {
-            foto: foto,
-            email: email
-        },
-        where: filtro,
-        skip: puleUsuarios,
-        take: numeroUsuarios
-    })
     const users = await prisma.usuario.findMany({
         select: {
             id: false,
-            senhaHash: false
+            senhaHash: false,
+            visitas: true,
         },
         where: filtro,
         skip: puleUsuarios,
         take: numeroUsuarios
     })
+
+    const countUsers = users.length
     return {countUsers, users}
 }
 
