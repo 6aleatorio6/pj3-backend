@@ -1,8 +1,12 @@
 import { Router } from 'express';
-import postPaia from '../controllers/paia/postInfeliz.js';
 
-const pdfRouter = Router();
+import todosUsuariosPDF from '../controllers/pdfPuppeteer/todosUsuariosPDF.js';
 
-rotaPaia.post('/', postPaia);
+const router = Router();
 
-export default rotaPaia;
+
+router.post('/listar-usuarios', todosUsuariosPDF)
+
+
+
+export default router;
