@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node ./src/app.js",
-    "dev": "nodemon ./src/app.js ",
+    "start": "node ./src/bin/www.js",
+    "dev": "nodemon ./src/bin/www.js ",
     "format": "prettier --write \"src/**/*.js\"",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
