@@ -8,6 +8,7 @@ const config = {
   coverageProvider: 'v8',
   testEnvironment: 'node',
   transform: {},
+  setupFilesAfterEnv: ['<rootDir>/__tests__/setupFile.js']
 };
 
 export default config;
