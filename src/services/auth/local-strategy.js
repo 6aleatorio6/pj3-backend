@@ -3,45 +3,43 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import prisma from '../../prisma.js';
 import bcrypt from 'bcrypt';
 
-passport.use(
-  'user',
-  new LocalStrategy(
-    { usernameField: 'email', passwordField: 'senha' },
-    async (email, senha, done) => {
-      const user = await prisma.usuario.findFirst({
-        where: { email },
-        select: { id: true, senhaHash: true },
-      });
+function strategyLocal(nome, isfuncio) {
+  passport.use(
+    nome,
+    new LocalStrategy(
+      { usernameField: 'email', passwordField: 'senha' },
+      async (email, senha, done) => {
+        const [senhaHash, tokenData] = await verifyEmail(email, isfuncio);
 
-      const isPassed = bcrypt.compareSync(senha, user.senhaHash);
-      if (!user && !isPassed) return done(null, false);
+        autenticarConta({ senha, senhaHash, done, tokenData });
+      },
+    ),
+  );
+}
 
-      // sucesso
-      done(null, { type: 'user', user: { id: user.id } });
-    },
-  ),
-);
+async function verifyEmail(email, isfuncio) {
+  const tipo = isfuncio ? 'funcionario' : 'usuario';
 
-passport.use(
-  'funcionario',
-  new LocalStrategy(
-    { usernameField: 'email', passwordField: 'senha' },
-    async (email, senha, done) => {
-      const user = await prisma.funcionario.findFirst({
-        where: { email },
-        select: { id: true, adm: true, senhaHash: true },
-      });
+  const data = await prisma[tipo].findFirst({
+    where: { email },
+    select: { id: true, roles: isfuncio && true, senhaHash: true },
+  });
 
-      
-      const isPassed = bcrypt.compareSync(senha, user.senhaHash);
-      if (!user && !isPassed) return done(null, false);
-      
-      // sucesso
-      const type = user.adm ? 'adm' : 'totem';
-      done(null, { type, user: { id: user.id } });
-    },
-  ),
-);
+  const { id, roles, senhaHash } = data || {};
+
+  return [senhaHash, { id, roles: roles || 'USER' }];
+}
+
+function autenticarConta({ senha, senhaHash = '', tokenData, done }) {
+  const estaCorreta = bcrypt.compareSync(senha, senhaHash || '');
+
+  if (!estaCorreta) return done(null, false);
+
+  done(null, tokenData);
+}
+
+strategyLocal('user', false);
+strategyLocal('funcionario', true);
 
 export const loginFuncionario = passport.authenticate('funcionario', {
   session: false,
