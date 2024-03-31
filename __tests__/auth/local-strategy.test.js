@@ -44,7 +44,7 @@ describe('local-strategy', () => {
       },
     };
 
-    expect(response.ok).toBeTruthy();
+    expect(response.statusCode).toBe(200);
     expect(response.body).toEqual(body);
   });
 
@@ -66,7 +66,7 @@ describe('local-strategy', () => {
       },
     };
 
-    expect(response.ok).toBeTruthy();
+    expect(response.statusCode).toBe(200);
     expect(response.body).toEqual(body);
   });
 
@@ -74,7 +74,7 @@ describe('local-strategy', () => {
     mockFindUser.mockResolvedValueOnce(userMock);
     const response = await reqUserPost({});
 
-    expect(response.badRequest).toBeTruthy();
+    expect(response.statusCode).toBe(400);
     expect(mockFindUser).toHaveBeenCalledTimes(0); // n chegou a usar o cb verify
   });
 
@@ -82,7 +82,7 @@ describe('local-strategy', () => {
     mockFindUser.mockResolvedValueOnce({}); // simulando que o prisma n encoutrou nd
     const response = await reqUserPost({ email: 'n importa', senha: '123' });
 
-    expect(response.unauthorized).toBeTruthy();
+    expect(response.statusCode).toBe(401);
     expect(mockFindUser).toHaveBeenCalledTimes(1);
   });
 
@@ -90,6 +90,6 @@ describe('local-strategy', () => {
     mockFindUser.mockResolvedValueOnce(userMock);
     const response = await reqUserPost({ email: 'n importa', senha: '123' });
 
-    expect(response.unauthorized).toBeTruthy();
+    expect(response.statusCode).toBe(401);
   });
 });

@@ -33,7 +33,7 @@ describe('jwt-strategy', () => {
   it('céu azul | token certo e rota permitida para USER', async () => {
     const response = await reqTest('user', tokenData);
 
-    expect(response.ok).toBeTruthy();
+    expect(response.statusCode).toBe(200);
     expect(response.body).toHaveProperty('id');
   });
 
@@ -41,16 +41,16 @@ describe('jwt-strategy', () => {
     const responseUser = await reqTest('user&adm', tokenData);
     const responseADM = await reqTest('user&adm', { id: 123, roles: 'ADM' });
 
-    expect(responseADM.ok).toBeTruthy();
+    expect(responseADM.status).toBe(200);
     expect(responseADM.body).toHaveProperty('id');
-    expect(responseUser.ok).toBeTruthy();
+    expect(responseUser.statusCode).toBe(200);
     expect(responseUser.body).toHaveProperty('id');
   });
 
   it('céu azul | token certo e rota permitida para TOTEM', async () => {
     const response = await reqTest('totem', { id: 123, roles: 'TOTEM' });
 
-    expect(response.ok).toBeTruthy();
+    expect(response.statusCode).toBe(200);
     expect(response.body).toHaveProperty('id');
   });
 
@@ -59,7 +59,7 @@ describe('jwt-strategy', () => {
 
     const response = await reqTest('user', tokenSuspeito, true);
 
-    expect(response.unauthorized).toBeTruthy();
+    expect(response.statusCode).toBe(401);
     // teria mensagem tbm se o passport n fosse tao paioso e maldito
     // custava ter uma opcao de msg personalizada em json? :(
   });
@@ -67,7 +67,7 @@ describe('jwt-strategy', () => {
   it('céu triste | nao autorizado', async () => {
     const response = await reqTest('user', { id: 123, roles: 'TOTEM' });
 
-    expect(response.forbidden).toBeTruthy();
+    expect(response.statusCode).toBe(403);
     expect(response.body).toHaveProperty('message');
   });
 });
