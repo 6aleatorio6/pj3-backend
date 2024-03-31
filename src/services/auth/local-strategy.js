@@ -2,32 +2,41 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import prisma from '../../prisma.js';
 import bcrypt from 'bcrypt';
+import { jwtSign } from './jwt-strategy.js';
 
-function strategyLocal(nome, isfuncio) {
+function strategyLocal(tabela, roleUnico = false) {
+  const nomeDaStrategy = tabela + roleUnico;
   passport.use(
-    nome,
+    nomeDaStrategy,
     new LocalStrategy(
       { usernameField: 'email', passwordField: 'senha' },
       async (email, senha, done) => {
-        const [senhaHash, tokenData] = await verifyEmail(email, isfuncio);
+        const { senhaHash, tokenData } = await verifyEmail(
+          email,
+          tabela,
+          roleUnico,
+        );
 
         autenticarConta({ senha, senhaHash, done, tokenData });
       },
     ),
   );
+
+  return passport.authenticate(nomeDaStrategy, {
+    session: false,
+  });
 }
 
-async function verifyEmail(email, isfuncio) {
-  const tipo = isfuncio ? 'funcionario' : 'usuario';
-
-  const data = await prisma[tipo].findFirst({
+async function verifyEmail(email, tabela, roleUnico) {
+  const data = await prisma[tabela].findFirst({
     where: { email },
-    select: { id: true, roles: isfuncio && true, senhaHash: true },
+    select: { id: true, roles: !roleUnico && true, senhaHash: true },
   });
 
+  // se o role/papel for unico ent n existe uma col roles
   const { id, roles, senhaHash } = data || {};
 
-  return [senhaHash, { id, roles: roles || 'USER' }];
+  return { senhaHash, tokenData: { id, roles: roles || roleUnico } };
 }
 
 function autenticarConta({ senha, senhaHash = '', tokenData, done }) {
@@ -35,15 +44,9 @@ function autenticarConta({ senha, senhaHash = '', tokenData, done }) {
 
   if (!estaCorreta) return done(null, false);
 
-  done(null, tokenData);
+  const token = jwtSign(tokenData);
+  done(null, { token });
 }
 
-strategyLocal('user', false);
-strategyLocal('funcionario', true);
-
-export const loginFuncionario = passport.authenticate('funcionario', {
-  session: false,
-});
-export const loginUsuario = passport.authenticate('user', {
-  session: false,
-});
+export const loginFuncionario = strategyLocal('funcionario', false);
+export const loginUsuario = strategyLocal('usuario', 'USER');
