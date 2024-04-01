@@ -2,50 +2,51 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import prisma from '../../prisma.js';
 import bcrypt from 'bcrypt';
+import { jwtSign } from '../../helpers/auth.js';
 
-passport.use(
-  'user',
-  new LocalStrategy(
-    { usernameField: 'email', passwordField: 'senha' },
-    async (email, senha, done) => {
-      const user = await prisma.usuario.findFirst({
-        where: { email },
-        select: { id: true, senhaHash: true },
-      });
+function strategyLocal(tabela, roleUnico = false) {
+  const nomeDaStrategy = tabela + roleUnico;
+  passport.use(
+    nomeDaStrategy,
+    new LocalStrategy(
+      { usernameField: 'email', passwordField: 'senha' },
+      async (email, senha, done) => {
+        const { senhaHash, tokenData } = await verifyEmail(
+          email,
+          tabela,
+          roleUnico,
+        );
 
-      const isPassed = bcrypt.compareSync(senha, user.senhaHash);
-      if (!user && !isPassed) return done(null, false);
+        autenticarConta({ senha, senhaHash, done, tokenData });
+      },
+    ),
+  );
 
-      // sucesso
-      done(null, { type: 'user', user: { id: user.id } });
-    },
-  ),
-);
+  return passport.authenticate(nomeDaStrategy, {
+    session: false,
+  });
+}
 
-passport.use(
-  'funcionario',
-  new LocalStrategy(
-    { usernameField: 'email', passwordField: 'senha' },
-    async (email, senha, done) => {
-      const user = await prisma.funcionario.findFirst({
-        where: { email },
-        select: { id: true, adm: true, senhaHash: true },
-      });
+async function verifyEmail(email, tabela, roleUnico) {
+  const data = await prisma[tabela].findFirst({
+    where: { email },
+    select: { id: true, roles: !roleUnico && true, senhaHash: true },
+  });
 
-      
-      const isPassed = bcrypt.compareSync(senha, user.senhaHash);
-      if (!user && !isPassed) return done(null, false);
-      
-      // sucesso
-      const type = user.adm ? 'adm' : 'totem';
-      done(null, { type, user: { id: user.id } });
-    },
-  ),
-);
+  // se o role/papel for unico ent n existe uma col roles
+  const { id, roles, senhaHash } = data || {};
 
-export const loginFuncionario = passport.authenticate('funcionario', {
-  session: false,
-});
-export const loginUsuario = passport.authenticate('user', {
-  session: false,
-});
+  return { senhaHash, tokenData: { id, roles: roles || roleUnico } };
+}
+
+function autenticarConta({ senha, senhaHash = '', tokenData, done }) {
+  const estaCorreta = bcrypt.compareSync(senha, senhaHash || '');
+
+  if (!estaCorreta) return done(null, false);
+
+  const token = jwtSign(tokenData);
+  done(null, { token });
+}
+
+export const loginFuncionario = strategyLocal('funcionario', false);
+export const loginUsuario = strategyLocal('usuario', 'USER');

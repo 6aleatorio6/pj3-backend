@@ -1,48 +1,37 @@
 import 'dotenv/config.js';
 import passport from 'passport';
-import jwt from 'jsonwebtoken';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 
 const secretKey = process.env.SECKET;
 
-// estrategia do passport
 passport.use(
+  'jwt',
   new JwtStrategy(
     {
       secretOrKey: secretKey,
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     },
-    (payload, done) => done(null, payload),
+    (payload, done) => {
+      done(null, payload);
+    },
   ),
 );
 
-// essa funcao cria um middleware
-function customAuthenticate(type) {
-  // o middleware alterado sabota o next do original e deixa o callback responsavel pela resposta
+/**
+ * @param {...("ADM"|"TOTEM"| "USER")} roles
+ */
+export function acessoApenasPara(...roles) {
   return function middlewareAlterado(req, res, next) {
-    const cb = (er, user) => {
-      if (er) return res.status(500).json({ message: 'erro no servidor' });
+    const nextPaiado = () => {
+      const permiRota = roles.includes(req.user.roles);
 
-      if (!user) return res.status(401).json({ message: 'token invalido' });
-
-      const isPassed = user.type !== type;
-      if (isPassed) return res.status(403).json({ message: 'Nâo autorizado' });
+      if (!permiRota)
+        return res.status(403).json({ message: 'Nâo autorizado' });
 
       next();
     };
 
-    passport.authenticate('jwt', { session: false }, cb)(req, res, () => {});
+    passport.authenticate('jwt', { session: false })(req, res, nextPaiado); // PAIA
+    // custava ter uma opcao de msg personalizada em json? :(
   };
 }
-
-// middlewares
-export const autenticarUser = customAuthenticate('user');
-export const autenticarAdm = customAuthenticate('adm');
-export const autenticarTotem = customAuthenticate('totem');
-
-// gerar jwt
-export const jwtSign = (user, expiresIn) => {
-  return jwt.sign(user, secretKey, expiresIn && { expiresIn });
-};
-
-// fazer na mão fica mais simples

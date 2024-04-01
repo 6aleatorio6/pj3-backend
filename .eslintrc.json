@@ -11,10 +11,11 @@
   "rules": {},
   "overrides": [
     {
-      "files": ["tests/**/*"],
+      "files": ["__tests__/**/*"],
       "plugins": ["jest"],
       "env": {
-        "jest/globals": true
+        "jest/globals": true,
+        "jest": true
       }
     }
   ]

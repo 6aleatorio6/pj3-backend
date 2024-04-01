@@ -8,19 +8,89 @@ datasource db {
 }
 
 model usuario {
-  id         Int          @id @unique(map: "id_UNIQUE") @default(autoincrement())
-  email      String?      @db.VarChar(80)
-  senhaHash  String?      @db.VarChar(100)
-  googleId   String?      @db.VarChar(45)
-  facebookId String?      @db.VarChar(45)
-  foto       String?      @db.VarChar(45)
-  nome       String       @db.VarChar(50)
-  cidade     String       @db.VarChar(50)
-  sexo       usuario_sexo
-  deleted_at String?      @db.VarChar(45)
+  id           Int           @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  email        String?       @db.VarChar(80)
+  senhaHash    String?       @db.VarChar(100)
+  googleId     String?       @db.VarChar(45)
+  facebookId   String?       @db.VarChar(45)
+  foto         String?       @db.VarChar(45)
+  nome         String        @db.VarChar(50)
+  cidade       String        @db.VarChar(50)
+  sexo         usuario_sexo
+  deleted_at   String?       @db.VarChar(45)
+  lidoPeloUser lidoPeloUser?
+  visitas      visitas?
+}
+
+model catalogo {
+  id                Int           @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  funcionario_autor Int           @unique(map: "funcionario_autor_UNIQUE")
+  descricao         String        @db.VarChar(255)
+  nomePopular       String        @db.VarChar(45)
+  nomeCientifico    String        @db.VarChar(45)
+  som               String?       @db.VarChar(45)
+  funcionario       funcionario   @relation(fields: [funcionario_autor], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_arvore_funcionario1")
+  foto              foto?
+  lidoPeloUser      lidoPeloUser?
+
+  @@index([funcionario_autor], map: "fk_arvore_funcionario1_idx")
+}
+
+model foto {
+  id                Int      @unique(map: "id_UNIQUE") @default(autoincrement())
+  catalogo_id       Int      @unique(map: "catalogo_id_UNIQUE")
+  url               String   @db.VarChar(45)
+  mostrarNoCarrosel Boolean  @default(false)
+  catalogo          catalogo @relation(fields: [catalogo_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_foto_catalogo1")
+
+  @@id([id, catalogo_id])
+  @@index([catalogo_id], map: "fk_foto_catalogo1_idx")
+}
+
+model funcionario {
+  id         Int               @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  email      String            @db.VarChar(80)
+  senhaHash  String            @db.VarChar(100)
+  cpf        String            @db.VarChar(14)
+  nome       String            @db.VarChar(50)
+  roles      funcionario_roles
+  deleted_at DateTime?         @db.DateTime(0)
+  catalogo   catalogo?
+  visitas    visitas?
+}
+
+model lidoPeloUser {
+  usuario_id       Int      @unique(map: "usuario_id_UNIQUE")
+  catalogo_id      Int      @unique(map: "catalogo_id_UNIQUE")
+  dataDaDescoberta DateTime @db.DateTime(0)
+  usuario          usuario  @relation(fields: [usuario_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_descobertasInteressantes_usuario1")
+  catalogo         catalogo @relation(fields: [catalogo_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_lidoPeloUser_catalogo1")
+
+  @@id([usuario_id, catalogo_id])
+  @@index([usuario_id], map: "fk_descobertasInteressantes_usuario1_idx")
+  @@index([catalogo_id], map: "fk_lidoPeloUser_catalogo1_idx")
+}
+
+model visitas {
+  id             Int          @unique(map: "id_UNIQUE") @default(autoincrement())
+  usuario_id     Int          @unique(map: "usuario_id_UNIQUE")
+  funcionario_id Int?         @unique(map: "funcionario_id_UNIQUE")
+  dataDaVisita   DateTime     @default(now()) @db.DateTime(0)
+  funcionario    funcionario? @relation(fields: [funcionario_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_visitas_funcionario1")
+  usuario        usuario      @relation(fields: [usuario_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_visitas_usuario1")
+
+  @@id([id, usuario_id])
+  @@index([funcionario_id], map: "fk_visitas_funcionario1_idx")
+  @@index([usuario_id], map: "fk_visitas_usuario1_idx")
 }
 
 enum usuario_sexo {
   F
   M
+  O
+}
+
+enum funcionario_roles {
+  ADM
+  TOTEM
 }

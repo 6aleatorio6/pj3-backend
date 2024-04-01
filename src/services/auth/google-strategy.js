@@ -1,22 +1,30 @@
 import 'dotenv/config.js';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth2';
+import { authOAuth2 } from '../../helpers/auth.js';
 
 passport.use(
   new GoogleStrategy(
     {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: 'http://yourdomain:3000/auth/google/callback',
+      clientID: process.env.GOOGLE_CLIENT_ID || '',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+      callbackURL: '/auth/login/google',
     },
-    (accessToken, refreshToken, profile, done) => {
-      if (profile) done(null, { cadastro: false, profile });
+    async (accessToken, refreshToken, { _json: data }, done) => {
+      const { sub: googleId, email, name, picture } = data;
 
-      done(null, { cadastro: true, profile });
+      const profile = {
+        email,
+        nome: name,
+        foto: picture,
+      };
+
+      authOAuth2({ googleId }, profile, done);
     },
   ),
 );
 
 export const loginGoogle = passport.authenticate('google', {
   scope: ['email', 'profile'],
+  session: false,
 });
