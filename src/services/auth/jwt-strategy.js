@@ -1,6 +1,5 @@
 import 'dotenv/config.js';
 import passport from 'passport';
-import jwt from 'jsonwebtoken';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 
 const secretKey = process.env.SECKET;
@@ -36,9 +35,3 @@ export function acessoApenasPara(...roles) {
     // custava ter uma opcao de msg personalizada em json? :(
   };
 }
-
-
-
-export const jwtSign = (user, expiresIn) => {
-  return jwt.sign(user, secretKey, expiresIn && { expiresIn });
-};

@@ -1,8 +1,7 @@
 import 'dotenv/config.js';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth2';
-import prisma from '../../prisma.js';
-import { jwtSign } from './jwt-strategy.js';
+import { authOAuth2 } from '../../helpers/auth.js';
 
 passport.use(
   new GoogleStrategy(
@@ -12,18 +11,15 @@ passport.use(
       callbackURL: '/auth/login/google',
     },
     async (accessToken, refreshToken, { _json: data }, done) => {
-      const { sub: googleId, ...profile } = data;
+      const { sub: googleId, email, name, picture } = data;
 
-      const user = await prisma.usuario.findFirst({
-        where: {
-          googleId,
-        },
-        select: { id: true },
-      });
-      
-      if (!user) return done(null, { cadastrar: true, profile });
-      
-      done(null, { token: jwtSign({ id: user.id, roles: 'USER' }) });
+      const profile = {
+        email,
+        nome: name,
+        foto: picture,
+      };
+
+      authOAuth2({ googleId }, profile, done);
     },
   ),
 );
