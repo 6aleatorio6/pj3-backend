@@ -6,8 +6,8 @@ import { authOAuth2 } from '../../helpers/auth.js';
 passport.use(
   new GoogleStrategy(
     {
-      clientID: process.env.GOOGLE_CLIENT_ID || '',
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+      clientID: process.env.GOOGLE_CLIENT_ID || 'paia',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'paia',
       callbackURL: '/auth/login/google',
     },
     async (accessToken, refreshToken, { _json: data }, done) => {

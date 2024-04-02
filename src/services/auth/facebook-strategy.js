@@ -7,8 +7,8 @@ passport.use(
   'facebook',
   new FacebookStrategy(
     {
-      clientID: process.env.FACEBOOK_APP_ID,
-      clientSecret: process.env.FACEBOOK_APP_SECRET,
+      clientID: process.env.FACEBOOK_APP_ID || 'paia',
+      clientSecret: process.env.FACEBOOK_APP_SECRET || 'paia',
       callbackURL: '/auth/login/facebook',
       profileFields: ['id', 'email', 'displayName', 'photos'],
     },
