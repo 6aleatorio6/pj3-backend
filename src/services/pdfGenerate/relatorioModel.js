@@ -72,4 +72,6 @@ const totalVisitas = async (numerovisitas, pulevisitas = 0) => {
     return {countUsers, users}
 }
 
-export default {totalFuncionarios, totalUsuarios, totalVisitas}
+const contagem = {totalFuncionarios,totalUsuarios,totalVisitas}
+
+export default contagem
