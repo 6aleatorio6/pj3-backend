@@ -1,7 +1,7 @@
 import 'dotenv/config.js';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth2';
-import { authOAuth2 } from '../../helpers/auth.js';
+import { authOAuth2 } from '../../helpers/oAuth.js';
 
 passport.use(
   new GoogleStrategy(

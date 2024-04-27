@@ -2,7 +2,7 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import prisma from '../../prisma.js';
 import bcrypt from 'bcrypt';
-import { jwtSign } from '../../helpers/auth.js';
+import { jwtSign } from '../../helpers/oAuth.js';
 
 function strategyLocal(tabela, roleUnico = false) {
   const nomeDaStrategy = tabela + roleUnico;
