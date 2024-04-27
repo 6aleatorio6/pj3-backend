@@ -2,7 +2,7 @@ import app from '../../src/app.js';
 import supertest from 'supertest';
 import { acessoApenasPara } from '../../src/services/auth/jwt-strategy.js';
 import jwt from 'jsonwebtoken';
-import { jwtSign } from '../../src/helpers/auth.js';
+import { jwtSign } from '../../src/helpers/oAuth.js';
 
 const resMock = (req, res) => res.json(req.user);
 app.get('/teste/totem', acessoApenasPara('TOTEM'), resMock);
