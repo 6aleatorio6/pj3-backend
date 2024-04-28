@@ -1,4 +1,6 @@
-export default (req, res) => {
+import createController from '../../helpers/createController.js';
+
+export default createController((req, res) => {
   const { cadastrar, profile, token } = req.user;
 
   res.json({
@@ -8,4 +10,4 @@ export default (req, res) => {
     token,
     profile,
   });
-};
+});

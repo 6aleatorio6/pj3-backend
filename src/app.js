@@ -10,7 +10,6 @@ import './services/auth/local-strategy.js';
 import './services/auth/google-strategy.js';
 import './services/auth/facebook-strategy.js';
 
-import routerAuth from './routers/auth.js';
 import funcionarioRouter from './routers/funcionarioRouter.js';
 import usuarioRouter from './routers/usuarioRouter.js';
 import catalogoRouter from './routers/catalogoRouter.js';
@@ -28,7 +27,6 @@ app.use(
 );
 
 // controllers
-app.use('/auth', routerAuth);
 app.use('/funcionario', funcionarioRouter);
 app.use('/usuario', usuarioRouter);
 app.use('/catalogo', catalogoRouter);
