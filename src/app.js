@@ -33,4 +33,18 @@ app.use('/funcionario', funcionarioRouter);
 app.use('/usuario', usuarioRouter);
 app.use('/catalogo', catalogoRouter);
 
+app.use((req, res, next) => {
+  res.status(404).json({
+    message: 'pagina não encontrada',
+  });
+});
+
+app.use((error, req, res, next) => {
+  console.error(error.stack);
+  res.status(500).json({
+    message: 'erro desconhecido',
+    error,
+  });
+});
+
 export default app;
