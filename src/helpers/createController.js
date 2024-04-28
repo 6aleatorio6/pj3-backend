@@ -12,6 +12,7 @@ export default function createController(endpoint, errorCallback) {
     try {
       await endpoint(req, res);
     } catch (error) {
+      console.log(error);
       const erroCustom = errorCallback ? await errorCallback(error) : {};
       const code = erroCustom.code || 500;
       const msg =
