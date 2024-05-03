@@ -1,59 +1,31 @@
-import {
-  validations,
-  // eslint-disable-next-line no-unused-vars
-  validationsMessages,
-} from '../services/validacao/allValidations.js';
+/* eslint-disable no-unused-vars */
+import { allValid } from '../services/validacao/allValidations.js';
+import { ZodObject } from 'zod';
+import { validy } from '../services/validacao/validador.js';
+import { ErrorController } from './erroController.js';
 
 /**
- * @typedef {{code: number, msg:string}} erroObj
  * @typedef {import("express").Request} Req
  * @typedef {import("express").Response} Res
  *
- * @argument { (req:Req , res: Res) => Promise<any>} endpoint
- * @argument {(error) => Promise<erroObj> |  erroObj} errorCallback
- * @argument {{[key in keyof typeof validationsMessages]: any}} validBody
+ * @typedef { (req:Req , res: Res) => Promise<any>} Endpoint
+ * @typedef {{[key in keyof typeof allValid._type]: true | ZodObject}} Validacao
  *
+ * @argument {{endpoint: Endpoint,validacao: {body:Validacao, params: Validacao, query: Validacao}}} config
  */
-export default function createController(validBody, endpoint, errorCallback) {
+export default function createController({ validacao, endpoint }) {
   return async (req, res) => {
     try {
-      validy(validBody).parse({
-        ...req.body,
-        ...req.query,
-        ...req.params,
-      });
+      req.params = validy(validacao.params, req.params);
+      req.query = validy(validacao.query, req.query);
+      req.body = validy(validacao.body, req.body);
 
       await endpoint(req, res);
-    } catch (error) {
-      console.log(error);
+    } catch (erroBruto) {
+      const { code, message, details } =
+        ErrorController.getInfoError(erroBruto);
 
-      const erroCustom = errorCallback ? await errorCallback(error) : {};
-      const code = erroCustom.code || error.code || 500;
-      const msg =
-        erroCustom.msg ||
-        error.msg ||
-        'Houve um erro no nosso servidor, tente novamente!';
-
-      return res.status(code).json({ error: msg });
+      res.status(code).json({ message, details });
     }
   };
 }
-
-/**
- *  @argument {{[key in keyof typeof validationsMessages]: boolean | ZodAny}} validObj
- */
-function validy(validObj) {
-  const valids = [{}, {}];
-
-  for (const key in validObj) {
-    const element = validObj[key];
-    // eslint-disable-next-line no-unused-expressions
-    typeof element === 'boolean' ? valids[0][key] : valids[1][key];
-  }
-
-  const [zPartials, zCustom] = valids;
-
-  return validations.partial(zPartials).extend(zCustom);
-}
-
-createController(null, null, { apelido: true });

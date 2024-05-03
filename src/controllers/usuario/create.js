@@ -1,6 +1,6 @@
 import createController from '../../helpers/createController.js';
 import prisma from '../../prisma.js';
-import { validations } from '../../services/validacao/allValidations.js';
+import { allValid } from '../../services/validacao/allValidations.js';
 
 /**
  *  Endpoint de cadastro de usuario
@@ -10,13 +10,20 @@ import { validations } from '../../services/validacao/allValidations.js';
  *  Criado para ser usado no:
  *      -APP MOBILE
  */
-export default createController(
-  {
-    apelido: true,
-    nome: true,
-    email: validations.pick({ email: true }),
+
+export default createController({
+  validacao: {
+    query: {
+      id: true,
+    },
+    body: {
+      apelido: true,
+      nome: true,
+      paia: allValid.pick({ email: true }),
+    },
   },
-  async (req, res) => {
+
+  async endpoint(req, res) {
     const data = req.body;
 
     const { id: isUsedEmail } = await prisma.usuario.findFirst({
@@ -36,4 +43,4 @@ export default createController(
 
     res.json({ success: `Usuário ${usuario.id} criado com sucesso!`, usuario });
   },
-);
+});
