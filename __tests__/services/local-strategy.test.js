@@ -8,12 +8,9 @@ const request = supertest(app);
 
 jest.spyOn(jwt, 'sign').mockImplementation((x) => x);
 
-async function reqUserPost(data, isNotUser) {
+function reqUserPost(data, isNotUser) {
   const rota = !isNotUser ? 'usuario' : 'funcionario';
-  const res = await request.post(`/${rota}/login`).send(data);
-  // if (res.error) console.log(res.error);
-
-  return res;
+  return request.post(`/${rota}/login`).send(data);
 }
 
 const mockFindUser = jest.spyOn(prisma.usuario, 'findFirst');

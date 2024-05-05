@@ -1,4 +1,3 @@
-
 import supertest from 'supertest';
 import { acessoApenasPara } from '../../src/services/auth/jwt-strategy.js';
 import jwt from 'jsonwebtoken';
@@ -22,8 +21,6 @@ async function reqTest(rota, token, notSign) {
   const res = await request
     .get('/teste/' + rota)
     .set('Authorization', `Bearer ${token}`);
-
-  if (res.error) console.log(res.error);
 
   return res;
 }
