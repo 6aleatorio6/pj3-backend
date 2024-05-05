@@ -5,6 +5,7 @@ import { reqValidy } from '../../services/validacao/reqValidy.js';
 /**
  *  Endpoint de cadastro de usuario
  *
+ *  tipo: POST
  *  autenticação: Não precisa
  *
  *  Criado para ser usado no:
@@ -19,7 +20,14 @@ export default createController(async (req, res) => {
     },
   });
 
-  const usuario = await prisma.usuario.create({ data: req.body });
+  const usuario = await prisma.usuario.create({
+    select: {
+      id: true,
+      apelido: true,
+      email: true,
+    },
+    data: req.body,
+  });
 
   res.json({ success: `Usuário ${usuario.id} criado com sucesso!`, usuario });
 });

@@ -2,9 +2,10 @@ import createController from '../../helpers/createController.js';
 import prisma from '../../prisma.js';
 
 /**
- *  Endpoint da tela de configurações
+ *  
+ *  Endpoint da tela Profile
  *
- *  tipo: DELETE
+ *  tipo: GET
  *  autenticação: somente USER
  *
  *  Criado para ser usado no:
@@ -13,16 +14,15 @@ import prisma from '../../prisma.js';
 export default createController(async (req, res) => {
   const id = +req.user.id;
 
-  const usuario = await prisma.usuario.delete({
+  const usuario = await prisma.usuario.findUnique({
     select: {
-      id: true,
       apelido: true,
-      nome: true,
+      foto: true,
     },
     where: {
       id,
     },
   });
 
-  res.json({ message: `Usuário ${id} removido`, usuario });
+  res.json({ message: `Usuário ${id} encontrado com sucesso`, usuario });
 });
