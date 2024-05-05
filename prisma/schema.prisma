@@ -10,7 +10,7 @@ datasource db {
 model usuario {
   id           Int           @id @unique(map: "id_UNIQUE") @default(autoincrement())
   email        String?       @db.VarChar(80)
-  senhaHash    String?       @default("") @db.VarChar(100)
+  senha        String?       @default("") @db.VarChar(100)
   googleId     String?       @db.VarChar(45)
   facebookId   String?       @db.VarChar(45)
   foto         String?       @db.VarChar(45)
@@ -55,7 +55,7 @@ model foto {
 model funcionario {
   id         Int               @id @unique(map: "id_UNIQUE") @default(autoincrement())
   email      String            @db.VarChar(80)
-  senhaHash  String            @db.VarChar(100)
+  senha      String            @db.VarChar(100)
   cpf        String            @db.VarChar(14)
   nome       String            @db.VarChar(50)
   roles      funcionario_roles
