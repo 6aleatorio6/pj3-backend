@@ -5,7 +5,7 @@ export class ErrorController {
   /**
    * @param {number} code
    * @param {string} message
-   * @param {string} details
+   * @param {object} details
    */
   constructor(code, message, details) {
     this.code = code;

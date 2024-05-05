@@ -1,6 +1,6 @@
-import createController from '../../helpers/createController.js';
 import prisma from '../../prisma.js';
-import { allValid } from '../../services/validacao/allValidations.js';
+import createController from '../../helpers/createController.js';
+import { reqValidy } from '../../services/validacao/reqValidy.js';
 
 /**
  *  Endpoint de cadastro de usuario
@@ -8,39 +8,18 @@ import { allValid } from '../../services/validacao/allValidations.js';
  *  autenticação: Não precisa
  *
  *  Criado para ser usado no:
- *      -APP MOBILE
+ *      APP MOBILE
  */
-
-export default createController({
-  validacao: {
-    query: {
-      id: true,
-    },
+export default createController(async (req, res) => {
+  reqValidy(req, {
     body: {
       apelido: true,
       nome: true,
-      paia: allValid.pick({ email: true }),
+      email: true,
     },
-  },
+  });
 
-  async endpoint(req, res) {
-    const data = req.body;
+  const usuario = await prisma.usuario.create({ data: req.body });
 
-    const { id: isUsedEmail } = await prisma.usuario.findFirst({
-      select: { id: true },
-      where: {
-        email: true,
-        deleted_at: null,
-      },
-    });
-
-    // eslint-disable-next-line no-throw-literal
-    if (isUsedEmail) throw { code: 400, msg: 'esse email está sendo usado' };
-
-    const usuario = await prisma.usuario.create({
-      data,
-    });
-
-    res.json({ success: `Usuário ${usuario.id} criado com sucesso!`, usuario });
-  },
+  res.json({ success: `Usuário ${usuario.id} criado com sucesso!`, usuario });
 });
