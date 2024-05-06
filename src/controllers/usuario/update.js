@@ -1,9 +1,8 @@
-import { hashSync } from 'bcrypt';
 import createController from '../../helpers/createController.js';
-import { paiarPrisma } from '../../helpers/prismaController.js';
-import prisma from '../../prisma.js';
 import { allValid } from '../../services/validacao/allValidations.js';
 import { reqValidy } from '../../services/validacao/reqValidy.js';
+import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
+import { gerarHash } from '../../services/auth/bcrypt.js';
 
 /**
  *  Endpoint da tela de configurações
@@ -19,9 +18,7 @@ export default createController(async (req, res) => {
 
   reqValidy(req, {
     body: {
-      senha: allValid.senha
-        .optional()
-        .transform((senha) => senha && hashSync(senha, 15)),
+      senha: allValid.senha.optional().transform(gerarHash),
       foto: 'partial',
       apelido: 'partial',
       nome: 'partial',
@@ -30,25 +27,20 @@ export default createController(async (req, res) => {
     },
   });
 
-  const responsePrisma = prisma.usuario.update({
+  const usuario = await prismaPaiado.usuario.update({
+    simularUnique: ['email'],
     select: {
       apelido: true,
       foto: true,
       nome: true,
       email: true,
       cidade: true,
-      
+
       sexo: true,
       id: true,
     },
     data: req.body,
     where: { id },
-  });
-
-  const usuario = await paiarPrisma(responsePrisma, {
-    simularUnique: {
-      usuario: ['email', req.body.email],
-    },
   });
 
   res.json({ message: `Usuário ${id} atualizado`, usuario });

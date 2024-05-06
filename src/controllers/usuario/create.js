@@ -1,9 +1,8 @@
-import prisma from '../../prisma.js';
 import createController from '../../helpers/createController.js';
 import { reqValidy } from '../../services/validacao/reqValidy.js';
-import { paiarPrisma } from '../../helpers/prismaController.js';
 import { allValid } from '../../services/validacao/allValidations.js';
-import { hashSync } from 'bcrypt';
+import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
+import { gerarHash } from '../../services/auth/bcrypt.js';
 
 /**
  *  Endpoint de cadastro de usuario
@@ -19,11 +18,12 @@ export default createController(async (req, res) => {
     body: {
       apelido: 'required',
       email: 'required',
-      senha: allValid.senha.transform((senha) => hashSync(senha, 15)),
+      senha: allValid.senha.transform(gerarHash),
     },
   });
 
-  const responsePrisma = prisma.usuario.create({
+  const usuario = await prismaPaiado.usuario.create({
+    simularUnique:['email'],
     select: {
       id: true,
       apelido: true,
@@ -31,12 +31,6 @@ export default createController(async (req, res) => {
     },
     data: req.body,
   });
-
-  const usuario = await paiarPrisma(responsePrisma, {
-    simularUnique: {
-      usuario: ['email', req.body.email],
-    },
-  });
-
+  
   res.json({ success: `Usuário ${usuario.id} criado com sucesso!`, usuario });
 });
