@@ -10,10 +10,12 @@ export default prisma.$extends({
     $allModels: {
       $allOperations({ args, operation, query, model }) {
         if (operation === 'delete' || operation === 'deleteMany') {
-          const op = operation === 'deleteMany' ? 'updateMany' : 'delete';
-
-          return prisma[model][op]({
+          return prisma[model][operation.replace('delete', 'update')]({
             ...args,
+            where: {
+              ...args.where,
+              deleted_at: null,
+            },
             data: {
               deleted_at: new Date(),
             },
@@ -23,6 +25,11 @@ export default prisma.$extends({
         deepChangeWhere(args, 'where', (e) => {
           e.deleted_at = null;
         });
+
+        if (operation === 'findUnique' || operation === 'findUniqueOrThrow') {
+          return prisma[model][operation.replace('Unique', 'First')](args);
+        }
+
         return query(args);
       },
     },
