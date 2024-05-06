@@ -13,6 +13,7 @@ import './services/auth/facebook-strategy.js';
 import funcionarioRouter from './routers/funcionarioRouter.js';
 import usuarioRouter from './routers/usuarioRouter.js';
 import catalogoRouter from './routers/catalogoRouter.js';
+import totenRouter from './routers/totenRouter.js'
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use(
 app.use('/funcionario', funcionarioRouter);
 app.use('/usuario', usuarioRouter);
 app.use('/catalogo', catalogoRouter);
+app.use('/toten', totenRouter)
 
 
 
