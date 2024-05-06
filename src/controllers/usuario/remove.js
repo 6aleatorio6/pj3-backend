@@ -1,4 +1,5 @@
 import createController from '../../helpers/createController.js';
+import { paiarPrisma } from '../../helpers/prismaController.js';
 import prisma from '../../prisma.js';
 
 /**
@@ -13,16 +14,16 @@ import prisma from '../../prisma.js';
 export default createController(async (req, res) => {
   const id = +req.user.id;
 
-  const usuario = await prisma.usuario.delete({
+  const responsePrisma = prisma.usuario.delete({
     select: {
       id: true,
       apelido: true,
       nome: true,
     },
-    where: {
-      id,
-    },
+    where: { id },
   });
+
+  const usuario = await paiarPrisma(responsePrisma);
 
   res.json({ message: `Usuário ${id} removido`, usuario });
 });

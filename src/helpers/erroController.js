@@ -16,7 +16,11 @@ export class ErrorController {
   static getInfoError(error) {
     const isMyError = error instanceof ErrorController;
 
-    if (!isMyError) return { code: 500, message: 'erro interno no servidor' };
+    if (!isMyError && !error.code) {
+      console.log(error);
+
+      return { code: 500, message: 'erro interno no servidor' };
+    }
 
     return {
       code: error.code,

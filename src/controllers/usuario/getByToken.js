@@ -1,8 +1,9 @@
 import createController from '../../helpers/createController.js';
+import { paiarPrisma } from '../../helpers/prismaController.js';
 import prisma from '../../prisma.js';
 
 /**
- *  
+ *
  *  Endpoint da tela Profile
  *
  *  tipo: GET
@@ -14,15 +15,15 @@ import prisma from '../../prisma.js';
 export default createController(async (req, res) => {
   const id = +req.user.id;
 
-  const usuario = await prisma.usuario.findUnique({
+  const responsePrisma = prisma.usuario.findFirstOrThrow({
     select: {
       apelido: true,
       foto: true,
     },
-    where: {
-      id,
-    },
+    where: { id },
   });
+
+  const usuario = await paiarPrisma(responsePrisma);
 
   res.json({ message: `Usuário ${id} encontrado com sucesso`, usuario });
 });

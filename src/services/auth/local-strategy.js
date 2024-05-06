@@ -3,6 +3,7 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import prisma from '../../prisma.js';
 import bcrypt from 'bcrypt';
 import { jwtSign } from '../../helpers/oAuth.js';
+import { paiarPrisma } from '../../helpers/prismaController.js';
 
 function strategyLocal(tabela, roleUnico = false) {
   const nomeDaStrategy = tabela + roleUnico;
@@ -11,13 +12,13 @@ function strategyLocal(tabela, roleUnico = false) {
     new LocalStrategy(
       { usernameField: 'email', passwordField: 'senha' },
       async (email, senha, done) => {
-        const { senhaHash, tokenData } = await verifyEmail(
+        const { senhaCerta, tokenData } = await verifyEmail(
           email,
           tabela,
           roleUnico,
         );
 
-        autenticarConta({ senha, senhaHash, done, tokenData });
+        autenticarConta({ senha, senhaCerta, done, tokenData });
       },
     ),
   );
@@ -28,19 +29,21 @@ function strategyLocal(tabela, roleUnico = false) {
 }
 
 async function verifyEmail(email, tabela, roleUnico) {
-  const data = await prisma[tabela].findFirst({
-    where: { email },
-    select: { id: true, roles: !roleUnico && true, senhaHash: true },
-  });
+  const data = await paiarPrisma(
+    prisma[tabela].findFirst({
+      where: { email },
+      select: { id: true, roles: !roleUnico && true, senha: true },
+    }),
+  );
 
   // se o role/papel for unico ent n existe uma col roles
-  const { id, roles, senhaHash } = data || {};
+  const { id, roles, senha } = data || {};
 
-  return { senhaHash, tokenData: { id, roles: roles || roleUnico } };
+  return { senhaCerta: senha, tokenData: { id, roles: roles || roleUnico } };
 }
 
-function autenticarConta({ senha, senhaHash = '', tokenData, done }) {
-  const estaCorreta = bcrypt.compareSync(senha, senhaHash || '');
+function autenticarConta({ senha, senhaCerta = '', tokenData, done }) {
+  const estaCorreta = bcrypt.compareSync(senha, senhaCerta || '');
 
   if (!estaCorreta) return done(null, false);
 

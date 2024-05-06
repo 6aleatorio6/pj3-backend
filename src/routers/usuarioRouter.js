@@ -18,14 +18,12 @@ const router = Router();
 router.get('/login/google', loginGoogle, loginAuth);
 router.get('/login/facebook', loginFacebook, loginAuth);
 router.post('/login', loginUsuario, login);
+router.post('/', create);
 
 // rotas protegidas
-router.use(acessoApenasPara('USER'));
-// rotas protegidas
-router.get('/rank', getRankByToken);
-router.get('/', getByToken);
-router.post('/', create);
-router.put('/', update);
-router.delete('/', remove);
+router.get('/rank', acessoApenasPara('USER'), getRankByToken);
+router.get('/', acessoApenasPara('USER'), getByToken);
+router.put('/', acessoApenasPara('USER'), update);
+router.delete('/', acessoApenasPara('USER'), remove);
 
 export default router;

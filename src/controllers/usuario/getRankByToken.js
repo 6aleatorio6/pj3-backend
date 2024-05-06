@@ -1,4 +1,5 @@
 import createController from '../../helpers/createController.js';
+import { paiarPrisma } from '../../helpers/prismaController.js';
 import prisma from '../../prisma.js';
 
 /**
@@ -15,16 +16,18 @@ export default createController(async (req, res) => {
   const dataAtual = new Date();
 
   // terminarei mais tarde
-  const rank = await prisma.usuario.groupBy({
+  const responsePrisma = prisma.lidoPeloUser.groupBy({
     by: ['usuario_id'],
     _count: { _all: true },
     where: {
       dataDaDescoberta: {
-        gte: new Date(dataAtual.getFullYear, dataAtual.getMonth, 1),
+        gte: new Date(dataAtual.getFullYear(), dataAtual.getMonth(), 1),
       },
     },
     take: 30,
   });
+
+  const rank = await paiarPrisma(responsePrisma);
 
   res.json({ message: 'sucesso', rank });
 });
