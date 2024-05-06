@@ -1,7 +1,7 @@
 import 'dotenv/config.js';
 import passport from 'passport';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
-import { authOAuth2 } from '../../helpers/oAuth.js';
+import { authOAuth2 } from './oAuth.js';
 
 passport.use(
   'facebook',

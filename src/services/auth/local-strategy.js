@@ -1,9 +1,8 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
-import prisma from '../../prisma.js';
 import bcrypt from 'bcrypt';
-import { jwtSign } from '../../helpers/oAuth.js';
-import { paiarPrisma } from '../../helpers/prismaController.js';
+import { jwtSign } from './oAuth.js';
+import { prismaPaiado } from '../customPrisma/prismaController.js';
 
 function strategyLocal(tabela, roleUnico = false) {
   const nomeDaStrategy = tabela + roleUnico;
@@ -29,13 +28,10 @@ function strategyLocal(tabela, roleUnico = false) {
 }
 
 async function verifyEmail(email, tabela, roleUnico) {
-  const data = await paiarPrisma(
-    prisma[tabela].findFirst({
-      where: { email },
-      select: { id: true, roles: !roleUnico && true, senha: true },
-    }),
-  );
-
+  const data = await prismaPaiado[tabela].findFirst({
+    where: { email },
+    select: { id: true, roles: !roleUnico && true, senha: true },
+  });
   // se o role/papel for unico ent n existe uma col roles
   const { id, roles, senha } = data || {};
 

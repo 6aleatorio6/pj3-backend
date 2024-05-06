@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 import 'dotenv/config.js';
-import prisma from '../prisma.js';
+import { prismaPaiado } from '../customPrisma/prismaController.js';
 
 export function jwtSign(user, expiresIn) {
   return jwt.sign(user, process.env.SECKET, expiresIn && { expiresIn });
@@ -15,7 +15,7 @@ export function jwtSign(user, expiresIn) {
  * @returns {void}
  */
 export async function authOAuth2(whereClause, profile, done) {
-  const user = await prisma.usuario.findFirst({
+  const user = await prismaPaiado.usuario.findFirst({
     where: {
       ...whereClause,
     },
