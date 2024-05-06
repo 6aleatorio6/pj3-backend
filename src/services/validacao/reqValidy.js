@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import { ZodObject } from 'zod';
+import { z, ZodObject } from 'zod';
 import { ErrorController } from '../../helpers/erroController.js';
 import { allValid } from './allValidations.js';
 
@@ -8,7 +8,7 @@ import { allValid } from './allValidations.js';
  *
  *  AVISO:Só funciona dentro do createController
  *
- * @typedef {{[key in keyof typeof allValid._type]: true | ZodObject}} Validacao
+ * @typedef {{[key in keyof typeof allValid]: "required" | "partial" | ZodObject}} Validacao
  *
  * @argument { {body:Validacao, params: Validacao, query: Validacao}} validObj
  */
@@ -17,7 +17,7 @@ export function reqValidy(req, validObj) {
 
   converterNumParaOtipoCerto(req.params);
   converterNumParaOtipoCerto(req.query);
-  converterNumParaOtipoCerto(req.body);
+  // converterNumParaOtipoCerto(req.body);
 
   if (params) req.params = validy(params, req.params);
   if (query) req.query = validy(query, req.query);
@@ -25,10 +25,13 @@ export function reqValidy(req, validObj) {
 }
 
 function validy(validObj, data) {
-  const [zPartials, zCustom] = dividirObj(validObj);
+  const { zPick, zPartial, zRequired, zCustom } = dividirObj(validObj);
 
-  const result = allValid
-    .pick(zPartials)
+  const result = z
+    .object(allValid)
+    .pick(zPick)
+    .partial(zPartial)
+    .required(zRequired)
     .extend(zCustom)
     .safeParse(data || {});
 
@@ -48,14 +51,23 @@ function validy(validObj, data) {
 }
 
 function dividirObj(validObj) {
-  const objDivido = [{}, {}];
+  const objDivido = { zPick: {}, zPartial: {}, zRequired: {}, zCustom: {} };
 
   for (const key in validObj) {
     const element = validObj[key];
 
-    const isBoolean = typeof element === 'boolean';
+    const isString = typeof element === 'string';
 
-    objDivido[isBoolean ? 0 : 1][key] = element;
+    if (!isString) {
+      objDivido.zCustom[key] = element;
+      continue;
+    }
+
+    objDivido.zPick[key] = true;
+
+    const isRequired = element === 'required';
+    const keyObj = isRequired ? 'zRequired' : 'zPartial';
+    objDivido[keyObj][key] = true;
   }
 
   return objDivido;

@@ -74,10 +74,10 @@ describe('helpers Controller', () => {
       const endpoint = createController((req, res) => {
         reqValidy(req, {
           query: {
-            id: true,
+            id: 'required',
           },
           body: {
-            nome: true,
+            nome: 'required',
           },
         });
 

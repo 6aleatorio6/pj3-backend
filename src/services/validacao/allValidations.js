@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const allValid = z.object({
+export const allValid = {
   id: z.number().int(),
   uuid: z.string(),
 
@@ -8,13 +8,13 @@ export const allValid = z.object({
   googleId: z.string().max(45),
   facebookId: z.string().max(45),
   email: z.string().email().max(80),
-  senhaHash: z.string().max(100),
   foto: z.string().max(45),
   apelido: z.string().max(45),
   nome: z.string().max(50),
   cidade: z.string().max(50),
   sexo: z.enum(['F', 'M', 'O']),
   cpf: z.string().max(14),
+  senha: z.string().max(10),
 
   // Modelo "catalogo"
   descricao: z.string().max(255),
@@ -32,4 +32,4 @@ export const allValid = z.object({
   // Modelo "visitas" e "lidoPeloUser"
   dataDaVisita: z.string().max(45),
   dataDaDescoberta: z.string().max(45),
-});
+};
