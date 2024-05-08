@@ -18,3 +18,5 @@ const todosUsuariosPDF = async (req, res) => {
         return res.status(500).json({ error: 'Houve um erro no nosso servidor, tente novamente!' })
     }
 }
+
+export default todosUsuariosPDF
