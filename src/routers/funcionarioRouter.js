@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import listAll from '../controllers/funcionario/listAll.js'
-import getById from '../controllers/funcionario/getById.js'
+import getById from '../controllers/funcionario/getByToken.js'
 import create from '../controllers/funcionario/create.js'
 import update from '../controllers/funcionario/update.js'
-import remove from '../controllers/funcionario/remove.js'
+import remove from '../controllers/funcionario/removeByToken.js'
 import { loginFuncionario } from '../services/auth/local-strategy.js';
 import login from '../controllers/auth/login.js';
 

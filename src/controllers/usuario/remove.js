@@ -22,5 +22,5 @@ export default createController(async (req, res) => {
     where: { id },
   });
 
-  res.json({ message: `Usuário ${id} removido`, usuario });
+  res.json({ message: `Usuário ${usuario.apelido} removido`, usuario });
 });

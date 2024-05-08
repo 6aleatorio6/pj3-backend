@@ -32,5 +32,5 @@ export default createController(async (req, res) => {
     data: req.body,
   });
 
-  res.json({ success: `Usuário ${usuario.id} criado com sucesso!`, usuario });
+  res.json({ message: `Usuário ${usuario.apelido} criado com sucesso!`, usuario });
 });

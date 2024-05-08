@@ -1,8 +1,9 @@
 import createController from '../../helpers/createController.js';
+import { reqValidy } from '../../services/validacao/reqValidy.js';
 import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
 
 /**
- *  Endpoint para buscar todos os item do catalogo
+ *  Endpoint para procurar item no catalogo
  *
  *  tipo: POST
  *  autenticação: ADM ou USUARIO
@@ -11,7 +12,16 @@ import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
  *      SiTE ou APP
  */
 export default createController(async (req, res) => {
-  const cata = await prismaPaiado.catalogo.findMany({
+  reqValidy(req, {
+    params: {
+      uuid: 'required',
+    },
+  });
+
+  const cata = await prismaPaiado.catalogo.findFirst({
+    where: {
+      uuid: req.params.uuid,
+    },
     select: {
       uuid: true,
       nomeCientifico: true,
@@ -26,7 +36,7 @@ export default createController(async (req, res) => {
   });
 
   res.json({
-    message: `todos os item do catalogo buscados!`,
+    message: `item '${cata.nome}' buscado!`,
     cata,
   });
 });

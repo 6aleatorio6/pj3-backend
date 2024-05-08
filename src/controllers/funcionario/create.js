@@ -1,16 +1,42 @@
-import prisma from "../../prisma.js";
+import createController from '../../helpers/createController.js';
+import { reqValidy } from '../../services/validacao/reqValidy.js';
+import { allValid } from '../../services/validacao/allValidations.js';
+import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
+import { gerarHash } from '../../services/auth/bcrypt.js';
 
-const create = async (req, res) => {
-    try {
-        const data = req.body
-        const funcionario = await prisma.funcionario.create({
-            data
-        });
-        res.json({ success: `Funcionário ${funcionario.id} criado com sucesso!`, funcionario })
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({ error: 'Houve um erro no nosso servidor, tente novamente!' })
-    }
-}
+/**
+ *  Endpoint de cadastro de funcionario
+ *
+ *  tipo: POST
+ *  autenticação: somente funcionario
+ *
+ *  Criado para ser usado no:
+ *      SiTE
+ */
+export default createController(async (req, res) => {
+  reqValidy(req, {
+    body: {
+      roles: 'required',
+      nome: 'required',
+      cpf: 'required',
+      email: 'required',
+      senha: allValid.senha.transform(gerarHash),
+    },
+  });
 
-export default create
+  const funcionario = await prismaPaiado.funcionario.create({
+    simularUnique: ['email'],
+    select: {
+      id: true,
+      email: true,
+      nome: true,
+      roles: true,
+    },
+    data: req.body,
+  });
+
+  res.json({
+    message: `Funcionario ${funcionario.nome} criado com sucesso!`,
+    funcionario,
+  });
+});

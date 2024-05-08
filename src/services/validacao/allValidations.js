@@ -4,6 +4,7 @@ export const allValid = {
   id: z.number().int(),
   uuid: z.string(),
 
+
   // Modelo "usuario" e "funcionario"
   googleId: z.string().max(45),
   facebookId: z.string().max(45),
@@ -15,6 +16,7 @@ export const allValid = {
   sexo: z.enum(['F', 'M', 'O']),
   cpf: z.string().max(14),
   senha: z.string().max(10),
+  roles: z.enum(['ADM', 'TOTEM']),
 
   // Modelo "catalogo"
   descricao: z.string().max(255),

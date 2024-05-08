@@ -6,23 +6,25 @@ import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
  *  Endpoint da tela Profile
  *
  *  tipo: GET
- *  autenticação: somente USER
+ *  autenticação: somente ADM
  *
  *  Criado para ser usado no:
- *      APP MOBILE
+ *      SITE
  */
 export default createController(async (req, res) => {
   const id = +req.user.id;
 
-  const usuario = await prismaPaiado.usuario.findFirstOrThrow({
+  const funcionario = await prismaPaiado.funcionario.findFirstOrThrow({
     select: {
       id: true,
-      apelido: true,
+      email:true,
+      cpf:true,
+      nome: true,
       foto: true,
     },
     where: { id },
   });
 
 
-  res.json({ message: `Usuário ${usuario.apelido} encontrado com sucesso`, usuario });
+  res.json({ message: `Funcionario ${funcionario.nome} encontrado `, funcionario });
 });

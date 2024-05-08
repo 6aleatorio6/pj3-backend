@@ -1,19 +1,35 @@
-import prisma from "../../prisma.js";
+import createController from '../../helpers/createController.js';
+import { reqValidy } from '../../services/validacao/reqValidy.js';
+import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
 
-const remove = async (req, res) => {
-    try {
-        const { id } = req.params
-        const catalogo = await prisma.catalogo.delete({
-            where: {
-                id: +id
-            }
-        })
-        res.json({ success: `Catalogo ${id} removido com sucesso`, catalogo })
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({ error: 'Houve um erro no nosso servidor, tente novamente!' })
-    }
+/**
+ *  Endpoint para deletar um item do catalogo
+ *
+ *  tipo: POST
+ *  autenticação: somente ADM
+ *
+ *  Criado para ser usado no:
+ *      SiTE
+ */
+export default createController(async (req, res) => {
+  reqValidy(req, {
+    params: {
+      uuid: 'required',
+    },
+  });
 
-}
+  const cata = await prismaPaiado.catalogo.delete({
+    where: {
+      uuid: req.params.uuid,
+    },
+    select: {
+      uuid: true,
+      nomePopular: true,
+    },
+  });
 
-export default remove
+  res.json({
+    message: `item '${cata.nome}' excluido do catalogo!`,
+    cata,
+  });
+});
