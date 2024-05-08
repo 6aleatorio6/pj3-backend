@@ -43,12 +43,11 @@ model catalogo {
 }
 
 model foto {
-  id                Int       @id @unique(map: "id_UNIQUE") @default(autoincrement())
-  url               String    @db.VarChar(45)
-  mostrarNoCarrosel Int       @default(0) @db.TinyInt
-  catalogo_uuid     String    @db.VarChar(50)
-  deleted_at        DateTime? @db.DateTime(0)
-  catalogo          catalogo  @relation(fields: [catalogo_uuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "fk_foto_catalogo1")
+  id            Int       @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  catalogo_uuid String    @db.VarChar(50)
+  url           String    @db.VarChar(45)
+  deleted_at    DateTime? @db.DateTime(0)
+  catalogo      catalogo  @relation(fields: [catalogo_uuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "fk_foto_catalogo1")
 
   @@index([catalogo_uuid], map: "fk_foto_catalogo1_idx")
 }
