@@ -7,7 +7,7 @@ import { gerarHash } from '../../services/auth/bcrypt.js';
 /**
  *  Endpoint da tela de configurações
  *
- *  tipo: UPDATE
+ *  tipo: PUT
  *  autenticação: somente USER
  *
  *  Criado para ser usado no:

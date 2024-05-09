@@ -7,16 +7,19 @@ import { gerarHash } from '../../services/auth/bcrypt.js';
 /**
  *  Endpoint da tela de configurações
  *
- *  tipo: UPDATE
+ *  tipo: PUT
  *  autenticação: somente ADM
+ * 
+ *  OBS: se não tiver id no params ele pegara do token 
  *
  *  Criado para ser usado no:
  *      SITE
  */
 export default createController(async (req, res) => {
-  const id = +req.user.id;
-
   reqValidy(req, {
+    params: {
+      id: 'required',
+    },
     body: {
       senha: allValid.senha.optional().transform(gerarHash),
       foto: 'partial',
@@ -24,6 +27,8 @@ export default createController(async (req, res) => {
       cpf: 'partial',
     },
   });
+
+  const id = req.params.id || +req.user.id;
 
   const func = await prismaPaiado.funcionario.update({
     simularUnique: ['email'],
@@ -37,5 +42,5 @@ export default createController(async (req, res) => {
     where: { id },
   });
 
-  res.json({ message: `Usuário ${func.nome} atualizado`, func });
+  res.json({ message: `Funcionario ${func.nome} atualizado`, func });
 });

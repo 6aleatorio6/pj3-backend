@@ -5,7 +5,7 @@ import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
 /**
  *  Endpoint para atualizar um item do catalogo
  *
- *  tipo: POST
+ *  tipo: PUT
  *  autenticação: somente ADM
  *
  *  Criado para ser usado no:

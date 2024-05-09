@@ -3,10 +3,13 @@ import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
 import { reqValidy } from '../../services/validacao/reqValidy.js';
 
 /**
- *  Endpoint da tela de configurações
  *
- *  tipo: DELETE
+ *  Endpoint
+ *
+ *  tipo: GET
  *  autenticação: somente ADM
+ *
+ *  OBS: se não tiver id no params ele pegara do token
  *
  *  Criado para ser usado no:
  *      SITE
@@ -14,18 +17,25 @@ import { reqValidy } from '../../services/validacao/reqValidy.js';
 export default createController(async (req, res) => {
   reqValidy(req, {
     params: {
-      id: 'required',
+      id: 'partial',
     },
   });
 
-  const fun = await prismaPaiado.funcionario.delete({
+  const id = req.params.id || +req.user.id;
+
+  const funcionario = await prismaPaiado.funcionario.findFirstOrThrow({
     select: {
-      nome: true,
-      roles: true,
       id: true,
+      email: true,
+      cpf: true,
+      nome: true,
+      foto: true,
     },
-    where: { id: req.params.id },
+    where: { id },
   });
 
-  res.json({ message: `Funcionario '${fun.nome}' removido`, fun });
+  res.json({
+    message: `Funcionario ${funcionario.nome} encontrado `,
+    funcionario,
+  });
 });

@@ -5,7 +5,7 @@ import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
 /**
  *  Endpoint para procurar item no catalogo
  *
- *  tipo: POST
+ *  tipo: GET
  *  autenticação: ADM ou USUARIO
  *
  *  Criado para ser usado no:

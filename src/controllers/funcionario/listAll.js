@@ -3,7 +3,7 @@ import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
 
 /**
  *
- *  Endpoint da tela Profile
+ *  Endpoint  que busca todos os funcionarios
  *
  *  tipo: GET
  *  autenticação: somente ADM
@@ -12,19 +12,19 @@ import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
  *      SITE
  */
 export default createController(async (req, res) => {
-  const id = +req.user.id;
-
-  const funcionario = await prismaPaiado.funcionario.findFirstOrThrow({
+  const funcionario = await prismaPaiado.funcionario.findMany({
     select: {
       id: true,
-      email:true,
-      cpf:true,
+      email: true,
+      cpf: true,
       nome: true,
       foto: true,
+      roles: true,
     },
-    where: { id },
   });
 
-
-  res.json({ message: `Funcionario ${funcionario.nome} encontrado `, funcionario });
+  res.json({
+    message: `todos os funcionarios `,
+    funcionario,
+  });
 });

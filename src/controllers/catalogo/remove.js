@@ -5,7 +5,7 @@ import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
 /**
  *  Endpoint para deletar um item do catalogo
  *
- *  tipo: POST
+ *  tipo: DELETE
  *  autenticação: somente ADM
  *
  *  Criado para ser usado no:
