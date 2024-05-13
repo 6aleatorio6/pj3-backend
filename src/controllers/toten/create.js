@@ -3,14 +3,19 @@ import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
 import { reqValidy } from '../../services/validacao/reqValidy.js';
 
 export default createController( async (req, res) => {
+
+    let dataAtual = new Date()
+
     reqValidy(req, {
         body: {
             nome: 'required',
             cidade: 'required',
             sexo: 'required',
-
+            nascimento: 'required'
         }
     })
+
+    req.body.nascimento = dataAtual.setFullYear(dataAtual.getFullYear() - req.body.nascimento)
 
     const usuarioParcial = await prismaPaiado.usuario.create({
         select: {
@@ -18,6 +23,7 @@ export default createController( async (req, res) => {
             nome: true,
             cidade: true,
             sexo: true,
+            nascimento: true,
         }, 
         data: {
             visitas: {
@@ -36,5 +42,5 @@ export default createController( async (req, res) => {
         id: true
     })
 
-    res.json({ sucess: `Visita`})
+    res.json({  message: `Visita ${visita} do usuário ${usuarioParcial} criado com sucesso!`, usuarioParcial, visita })
 })
