@@ -7,7 +7,7 @@ import { gerarHash } from '../../services/auth/bcrypt.js';
 /**
  *  Endpoint da tela de configurações
  *
- *  tipo: UPDATE
+ *  tipo: PUT
  *  autenticação: somente USER
  *
  *  Criado para ser usado no:
@@ -35,7 +35,6 @@ export default createController(async (req, res) => {
       nome: true,
       email: true,
       cidade: true,
-
       sexo: true,
       id: true,
     },
@@ -43,5 +42,5 @@ export default createController(async (req, res) => {
     where: { id },
   });
 
-  res.json({ message: `Usuário ${id} atualizado`, usuario });
+  res.json({ message: `Usuário ${usuario.apelido} atualizado`, usuario });
 });

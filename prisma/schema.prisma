@@ -8,18 +8,19 @@ datasource db {
 }
 
 model usuario {
-  id           Int           @id @unique(map: "id_UNIQUE") @default(autoincrement())
-  email        String?       @db.VarChar(80)
-  senha        String?       @default("") @db.VarChar(100)
-  googleId     String?       @db.VarChar(45)
-  facebookId   String?       @db.VarChar(45)
-  foto         String?       @db.VarChar(45)
-  apelido      String?       @db.VarChar(45)
-  nome         String?       @db.VarChar(50)
-  cidade       String?       @db.VarChar(50)
+  id           Int            @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  email        String?        @db.VarChar(80)
+  senha        String?        @default("") @db.VarChar(100)
+  googleId     String?        @db.VarChar(45)
+  nascimento   DateTime?      @db.Date
+  facebookId   String?        @db.VarChar(45)
+  foto         String?        @db.VarChar(45)
+  apelido      String?        @db.VarChar(45)
+  nome         String?        @db.VarChar(50)
+  cidade       String?        @db.VarChar(50)
   sexo         usuario_sexo?
-  deleted_at   DateTime?     @db.DateTime(0)
-  lidoPeloUser lidoPeloUser?
+  deleted_at   DateTime?      @db.DateTime(0)
+  lidoPeloUser lidoPeloUser[]
   visitas      visitas?
 }
 
@@ -42,12 +43,11 @@ model catalogo {
 }
 
 model foto {
-  id                Int       @id @unique(map: "id_UNIQUE") @default(autoincrement())
-  url               String    @db.VarChar(45)
-  mostrarNoCarrosel Int       @default(0) @db.TinyInt
-  catalogo_uuid     String    @db.VarChar(50)
-  deleted_at        DateTime? @db.DateTime(0)
-  catalogo          catalogo  @relation(fields: [catalogo_uuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "fk_foto_catalogo1")
+  id            Int       @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  catalogo_uuid String    @db.VarChar(50)
+  url           String    @db.VarChar(45)
+  deleted_at    DateTime? @db.DateTime(0)
+  catalogo      catalogo  @relation(fields: [catalogo_uuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "fk_foto_catalogo1")
 
   @@index([catalogo_uuid], map: "fk_foto_catalogo1_idx")
 }
@@ -75,9 +75,10 @@ model visitas {
 }
 
 model lidoPeloUser {
-  usuario_id       Int       @id @unique(map: "usuario_id_UNIQUE")
-  dataDaDescoberta DateTime  @default(now()) @db.DateTime(0)
+  id               Int       @id @default(autoincrement())
+  usuario_id       Int
   catalogo_uuid    String    @db.VarChar(50)
+  dataDaDescoberta DateTime  @default(now()) @db.DateTime(0)
   deleted_at       DateTime? @db.DateTime(0)
   usuario          usuario   @relation(fields: [usuario_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_descobertasInteressantes_usuario1")
   catalogo         catalogo  @relation(fields: [catalogo_uuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "fk_lidoPeloUser_catalogo1")

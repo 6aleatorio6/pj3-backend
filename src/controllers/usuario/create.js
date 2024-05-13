@@ -23,7 +23,7 @@ export default createController(async (req, res) => {
   });
 
   const usuario = await prismaPaiado.usuario.create({
-    simularUnique:['email'],
+    simularUnique: ['email'],
     select: {
       id: true,
       apelido: true,
@@ -31,6 +31,6 @@ export default createController(async (req, res) => {
     },
     data: req.body,
   });
-  
-  res.json({ success: `Usuário ${usuario.id} criado com sucesso!`, usuario });
+
+  res.json({ message: `Usuário ${usuario.apelido} criado com sucesso!`, usuario });
 });

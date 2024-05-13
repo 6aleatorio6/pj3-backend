@@ -16,6 +16,7 @@ export default createController(async (req, res) => {
 
   const usuario = await prismaPaiado.usuario.findFirstOrThrow({
     select: {
+      id: true,
       apelido: true,
       foto: true,
     },
@@ -23,5 +24,5 @@ export default createController(async (req, res) => {
   });
 
 
-  res.json({ message: `Usuário ${id} encontrado com sucesso`, usuario });
+  res.json({ message: `Usuário ${usuario.apelido} encontrado com sucesso`, usuario });
 });

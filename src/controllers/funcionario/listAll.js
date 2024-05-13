@@ -1,17 +1,30 @@
-import prisma from "../../prisma.js";
+import createController from '../../helpers/createController.js';
+import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
 
-const listAll = async (req, res) => {
-    try {
-        const funcionarios = await prisma.funcionario.findMany({
-            where: {
-                deleted_at: null
-            }
-        })
-        res.json({ success: `Funcionários listados com sucesso!`, funcionarios })
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({ error: 'Houve um erro no nosso servidor, tente novamente!' })
-    }
-}
+/**
+ *
+ *  Endpoint  que busca todos os funcionarios
+ *
+ *  tipo: GET
+ *  autenticação: somente ADM
+ *
+ *  Criado para ser usado no:
+ *      SITE
+ */
+export default createController(async (req, res) => {
+  const funcionario = await prismaPaiado.funcionario.findMany({
+    select: {
+      id: true,
+      email: true,
+      cpf: true,
+      nome: true,
+      foto: true,
+      roles: true,
+    },
+  });
 
-export default listAll
+  res.json({
+    message: `todos os funcionarios `,
+    funcionario,
+  });
+});

@@ -1,20 +1,46 @@
-import prisma from "../../prisma.js";
+import createController from '../../helpers/createController.js';
+import { reqValidy } from '../../services/validacao/reqValidy.js';
+import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
 
-const update = async (req, res) => {
-    try {
-        const { id } = req.params
-        const data = req.body
-        const catalogo = await prisma.catalogo.update({
-            where: {
-                id: +id
-            },
-            data
-        })
-        res.json({ success: `Catalogo ${catalogo.id} atualizado com sucesso!`, catalogo })
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({ error: 'Houve um erro no nosso servidor, tente novamente!' })
-    }
-}
+/**
+ *  Endpoint para atualizar um item do catalogo
+ *
+ *  tipo: PUT
+ *  autenticação: somente ADM
+ *
+ *  Criado para ser usado no:
+ *      SiTE
+ */
+export default createController(async (req, res) => {
+  reqValidy(req, {
+    params: {
+      uuid: 'required',
+    },
+    body: {
+      nomeCientifico: 'partial',
+      nascimento: 'partial',
+      estrela: 'partial',
+      descricao: 'partial',
+      foto: 'partial',
+      medalha: 'partial',
+      som: 'partial',
+      nomePopular: 'partial',
+    },
+  });
 
-export default update
+  const cata = await prismaPaiado.catalogo.update({
+    where: {
+      uuid: req.params.uuid,
+    },
+    select: {
+      uuid: true,
+      nomePopular: true,
+    },
+    data: req.body,
+  });
+
+  res.json({
+    message: `item '${cata.nome}' atualizado!`,
+    cata,
+  });
+});
