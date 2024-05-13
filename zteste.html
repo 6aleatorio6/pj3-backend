@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista-Usuarios</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background-color: #FCFFFC;
+        }
+
+        .cabecalho {
+            margin-top: 3px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #424643;
+            position: relative;
+        }
+        h1{
+            margin-top: 15px;
+            margin-block-end: 15px;
+        }
+
+        .data {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        table {
+            width: 100%
+        }
+
+        .centralizado {
+            font-size: 23px;
+        }
+
+        /* Estilo para linhas pares */
+        tr:nth-child(even) {
+            background-color: #e6fff2;
+        }
+
+        /* Estilo para linhas ímpares */
+        tr:nth-child(odd) {
+            background-color: #e6ffe6;
+        }
+
+        td {
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <header class="cabecalho">
+                <img src="https://picsum.photos/200/100" alt="">
+                <h1>Parque Natural Municipal do Juqueriquerê</h1>
+                <div class="data">${datetime}</div>
+            </header>
+            <tr>
+                <th colspan="5" class="centralizado">Relatorio Total de Visitas</th>
+            </tr>
+            <tr>
+                <td>Id</td>
+                <td>Nome</td>
+                <td>Telefone</td>
+                <td>Usuario</td>
+                <td>Data</td>
+            </tr>
+            <button onclick="window.print()">print</button>
+        </thead>
+    <!-- ${linhas.join('')} -->
+
+        <tfoot>
+
+        </tfoot>
+    </table>
+</body>
+
+</html>
