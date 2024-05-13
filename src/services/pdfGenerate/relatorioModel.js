@@ -2,13 +2,13 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient()
 
-const totalUsuarios = async ({sexo, cidade, email, foto, numeroUsuarios, puleUsuarios = 0}) => {
+const totalUsuarios = async ({ sexo, cidade, email, foto, numeroUsuarios, puleUsuarios = 0 }) => {
 
     const filtro = {
-        ...(sexo && {sexo}),
-        ...(cidade && {cidade}),
-        ...(email && {email: {not: null}}),
-        ...(foto && {foto: {not: null}})
+        ...(sexo && { sexo }),
+        ...(cidade && { cidade }),
+        ...(email && { email: { not: null } }),
+        ...(foto && { foto: { not: null } })
     }
     const users = await prisma.usuario.findMany({
         select: {
@@ -22,10 +22,10 @@ const totalUsuarios = async ({sexo, cidade, email, foto, numeroUsuarios, puleUsu
     })
 
     const countUsers = users.length
-    return {countUsers, users}
+    return { countUsers, users }
 }
 
-const totalFuncionarios = async ({adm, numerofuncionario, pulefuncionario = 0}) => {
+const totalFuncionarios = async ({ adm, numerofuncionario, pulefuncionario = 0 }) => {
     const filtro = {
         adm
     }
@@ -42,36 +42,33 @@ const totalFuncionarios = async ({adm, numerofuncionario, pulefuncionario = 0}) 
 
     const countFuncionarios = funcionarios.length
 
-    return {countFuncionarios, funcionarios}
+    return { countFuncionarios, funcionarios }
 }
 
-const totalVisitas = async (numerovisitas, pulevisitas = 0) => {
+const totalVisitas = async ({ sexo, cidade, email, foto, numeroVisitas, puleVisitas = 0 }) => {
     const filtro = {
-        sexo,
-        cidade
+        ...(sexo && { sexo }),
+        ...(cidade && { cidade }),
+        ...(email && { email: { not: null } }),
+        ...(foto && { foto: { not: null } })
     }
 
-    const countUsers = await prisma.visitas.count({
+
+    const visitas = await prisma.visitas.findMany({
         select: {
-            foto: foto,
-            email: email
+            usuario: {
+                select: {
+                    senhaHash: false,
+                    id: false
+                },
+                where: filtro
+            }
         },
-        where: filtro,
-        skip: pulevisitas,
-        take: numerovisitas
+        skip: puleVisitas,
+        take: numeroVisitas
     })
-    const users = await prisma.visitas.findMany({
-        select: {
-            id: false,
-            senhaHash: false
-        },
-        where: filtro,
-        skip: pulevisitas,
-        take: numerovisitas
-    })
-    return {countUsers, users}
+    const countVisitas = visitas.length 
+    return { visitas, countVisitas }
 }
 
-const contagem = {totalFuncionarios,totalUsuarios,totalVisitas}
-
-export default contagem
+export default {totalVisitas, totalFuncionarios, totalUsuarios}
