@@ -37,7 +37,6 @@ const todosUsuariosPDFTeste = async (req, res) => {
           ];
         //  no navegador:    http://localhost:3000/gerapdf/listar-usuarios
         const htmlContent = generateHTML(mockDados) // Usando o generateHTML para gerar o HTML ao invez do compileTemplate
-        console.log(htmlContent);
         const pdf = await generatePDF(htmlContent)
         res.contentType('application/pdf')
         

@@ -14,6 +14,7 @@
 
         body {
             background-color: #FCFFFC;
+            padding: 20px;
         }
 
         .cabecalho {
@@ -25,9 +26,10 @@
             color: #424643;
             position: relative;
         }
-        h1{
+
+        h2 {
             margin-top: 15px;
-            margin-block-end: 15px;
+            margin-bottom: 15px;
         }
 
         .data {
@@ -37,11 +39,15 @@
         }
 
         table {
-            width: 100%
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
         }
 
         .centralizado {
             font-size: 23px;
+            text-align: center;
+            margin-top: 25px;
         }
 
         /* Estilo para linhas pares */
@@ -54,36 +60,42 @@
             background-color: #e6ffe6;
         }
 
+        th,
         td {
-            font-size: 18px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
         }
     </style>
 </head>
 
 <body>
+    <div class="cabecalho">
+        <img src="https://picsum.photos/200/100" alt="">
+        <h2>Parque Natural Municipal do Juqueriquerê</h2>
+    </div>
+    <div>
+        <p class="centralizado">Relatorio Total de Visitas</p>
+    </div>
     <table>
         <thead>
-            <header class="cabecalho">
-                <img src="https://picsum.photos/200/100" alt="">
-                <h1>Parque Natural Municipal do Juqueriquerê</h1>
-                <div class="data">${datetime}</div>
-            </header>
             <tr>
-                <th colspan="5" class="centralizado">Relatorio Total de Visitas</th>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>Data</th>
             </tr>
-            <tr>
-                <td>Id</td>
-                <td>Nome</td>
-                <td>Telefone</td>
-                <td>Usuario</td>
-                <td>Data</td>
-            </tr>
-            <button onclick="window.print()">print</button>
         </thead>
-    <!-- ${linhas.join('')} -->
-
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>fulano</td>
+                <td>99123-1234</td>
+                <td>1998-10-10</td>
+            </tr>
+        </tbody>
         <tfoot>
-
+            <!-- Pode adicionar rodapé aqui se necessário -->
         </tfoot>
     </table>
 </body>
