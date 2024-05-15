@@ -1,48 +1,71 @@
-import prisma from '../../prisma.js';
+import { Prisma } from '@prisma/client';
+
+
+export const prismaExtensionSoftDelete = Prisma.defineExtension((client) =>
+  client.$extends({
+    query: {
+      $allOperations({ query, model, operation, args }) {
+        if (operation === 'delete' || operation === 'deleteMany') {
+          return client[model][operation.replace('delete', 'update')]({
+            ...args,
+            where: {
+              ...args.where,
+              deleted_at: null,
+            },
+            data: {
+              deleted_at: new Date(),
+            },
+          });
+        }
+
+        deepChange(args, ['where', 'select', 'include'], (e, key) => {
+          if (key === 'where') {
+            e.deleted_at = null;
+            return;
+          }
+
+          for (const keySelect in e) {
+            if (!Object.keys(Prisma.ModelName).includes(keySelect)) return;
+            const v = e[keySelect];
+            const isObject = typeof v === 'object';
+
+            e[keySelect] = {
+              ...(isObject ? v : {}),
+              where: { ...(isObject ? v.where : {}), deleted_at: null },
+            };
+          }
+        });
+
+        if (operation === 'findUnique' || operation === 'findUniqueOrThrow') {
+          return client[model][operation.replace('Unique', 'First')](args);
+        }
+
+        return query(args);
+      },
+    },
+  }),
+);
 
 /**
- * @type {typeof prisma}
- * */
-export const prismaSoftDelete = prisma.$extends({
-  query: {
-    $allModels({ query, model, operation, args }) {
-      if (operation === 'delete' || operation === 'deleteMany') {
-        return this[model][operation.replace('delete', 'update')]({
-          ...args,
-          where: {
-            ...args.where,
-            deleted_at: null,
-          },
-          data: {
-            deleted_at: new Date(),
-          },
-        });
-      }
-
-      deepChangeWhere(args, 'where', (e) => {
-        e.deleted_at = null;
-      }); 
-
-      if (operation === 'findUnique' || operation === 'findUniqueOrThrow') {
-        return this[model][operation.replace('Unique', 'First')](args);
-      }
-
-      return query(args);
-    },
-  },
-});
-
-function deepChangeWhere(arg, propsAlvo, mudanca) {
+ *
+ * @param {object} arg
+ * @param {Array} propsAlvos
+ * @param {(prop: object, propName: string) => any} mudanca
+ */
+function deepChange(arg, propsAlvos, mudanca) {
   for (const key in arg) {
     const element = arg[key];
 
-    if (key === propsAlvo) mudanca(element);
+    if (propsAlvos.includes(key)) {
+      mudanca(element, key);
+      continue;
+    }
 
     const isObject =
       element !== null &&
       typeof element === 'object' &&
       !Array.isArray(element);
 
-    if (isObject) deepChangeWhere(element);
+    if (isObject) deepChange(element, propsAlvos, mudanca);
   }
 }
