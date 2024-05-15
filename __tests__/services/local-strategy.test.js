@@ -1,8 +1,8 @@
-import prisma from '../../src/prisma.js';
 import bcrypt from 'bcrypt';
 import app from '../../src/app.js';
 import supertest from 'supertest';
 import jwt from 'jsonwebtoken';
+import { prismaPaiado } from '../../src/services/customPrisma/prismaController.js';
 
 const request = supertest(app);
 
@@ -13,12 +13,12 @@ function reqUserPost(data, isNotUser) {
   return request.post(`/${rota}/login`).send(data);
 }
 
-const mockFindUser = jest.spyOn(prisma.usuario, 'findFirst');
-const mockFindFuncio = jest.spyOn(prisma.funcionario, 'findFirst');
+const mockFindUser = jest.spyOn(prismaPaiado.usuario, 'findFirst');
+const mockFindFuncio = jest.spyOn(prismaPaiado.funcionario, 'findFirst');
 const userMock = {
   id: 1,
   email: 'usuario@example.com',
-  senhaHash: bcrypt.hashSync('senhaCerta', 10),
+  senha: bcrypt.hashSync('senhaCerta', 8),
 };
 
 describe('local-strategy', () => {
@@ -27,7 +27,7 @@ describe('local-strategy', () => {
   });
 
   it('ceu azul | email e senha estao correto, conta USER', async () => {
-    mockFindUser.mockResolvedValueOnce(userMock);
+    mockFindUser.mockResolvedValue(userMock);
     const response = await reqUserPost({
       email: 'n importa',
       senha: 'senhaCerta',

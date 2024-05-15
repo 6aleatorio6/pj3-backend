@@ -31,7 +31,7 @@ describe('jwt-strategy', () => {
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toHaveProperty('id');
-  });
+  }); 
 
   it('céu azul | token certo e rota permitida para USER e ADM', async () => {
     const responseUser = await reqTest('user&adm', tokenData);
