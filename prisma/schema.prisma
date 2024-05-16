@@ -3,12 +3,12 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model usuario {
-  id           Int            @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  id           Int            @id @unique(map: "user_id_UNIQUE") @default(autoincrement())
   email        String?        @db.VarChar(80)
   senha        String?        @default("") @db.VarChar(100)
   googleId     String?        @db.VarChar(45)
@@ -19,13 +19,13 @@ model usuario {
   nome         String?        @db.VarChar(50)
   cidade       String?        @db.VarChar(50)
   sexo         usuario_sexo?
-  deleted_at   DateTime?      @db.DateTime(0)
+  deleted_at   DateTime?
   lidoPeloUser lidoPeloUser[]
   visitas      visitas?
 }
 
 model catalogo {
-  uuid              String         @id @unique(map: "id_UNIQUE") @default(uuid()) @db.VarChar(50)
+  uuid              String         @id @unique(map: "Cat_id_UNIQUE") @default(uuid()) @db.VarChar(50)
   funcionario_autor Int            @unique(map: "funcionario_autor_UNIQUE")
   descricao         String         @db.VarChar(255)
   nomePopular       String         @db.VarChar(45)
@@ -34,7 +34,7 @@ model catalogo {
   medalha           String?        @db.VarChar(45)
   estrela           Decimal?       @db.Decimal(1, 1)
   nascimento        DateTime?      @db.Date
-  deleted_at        DateTime?      @db.DateTime(0)
+  deleted_at        DateTime?
   funcionario       funcionario    @relation(fields: [funcionario_autor], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_arvore_funcionario1")
   foto              foto[]
   lidoPeloUser      lidoPeloUser[]
@@ -43,31 +43,31 @@ model catalogo {
 }
 
 model foto {
-  id            Int       @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  id            Int       @id @unique(map: "foto_id_UNIQUE") @default(autoincrement())
   catalogo_uuid String    @db.VarChar(50)
   url           String    @db.VarChar(45)
-  deleted_at    DateTime? @db.DateTime(0)
+  deleted_at    DateTime?
   catalogo      catalogo  @relation(fields: [catalogo_uuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "fk_foto_catalogo1")
 
   @@index([catalogo_uuid], map: "fk_foto_catalogo1_idx")
 }
 
 model funcionario {
-  id         Int               @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  id         Int               @id @unique(map: "fun_id_UNIQUE") @default(autoincrement())
   email      String            @db.VarChar(80)
   senha      String            @db.VarChar(100)
   cpf        String            @db.VarChar(14)
   nome       String            @db.VarChar(50)
   roles      funcionario_roles
-  deleted_at DateTime?         @db.DateTime(0)
+  deleted_at DateTime?
   catalogo   catalogo?
 }
 
 model visitas {
-  id           Int       @unique(map: "id_UNIQUE") @default(autoincrement())
+  id           Int       @unique(map: "vi_id_UNIQUE") @default(autoincrement())
   usuario_id   Int       @unique(map: "usuario_id_UNIQUE")
-  dataDaVisita DateTime  @default(now()) @db.DateTime(0)
-  deleted_at   DateTime? @db.DateTime(0)
+  dataDaVisita DateTime  @default(now())
+  deleted_at   DateTime?
   usuario      usuario   @relation(fields: [usuario_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_visitas_usuario1")
 
   @@id([id, usuario_id])
@@ -78,8 +78,8 @@ model lidoPeloUser {
   id               Int       @id @default(autoincrement())
   usuario_id       Int
   catalogo_uuid    String    @db.VarChar(50)
-  dataDaDescoberta DateTime  @default(now()) @db.DateTime(0)
-  deleted_at       DateTime? @db.DateTime(0)
+  dataDaDescoberta DateTime  @default(now())
+  deleted_at       DateTime?
   usuario          usuario   @relation(fields: [usuario_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_descobertasInteressantes_usuario1")
   catalogo         catalogo  @relation(fields: [catalogo_uuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "fk_lidoPeloUser_catalogo1")
 
