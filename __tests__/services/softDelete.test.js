@@ -1,11 +1,6 @@
 import prisma from '../../src/prisma.js';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
-import { prismaExtensionSoftDelete } from '../../src/services/customPrisma/softDelete.js';
-
-/**
- * @type {typeof prisma}
- */
-const prismaSoftDelete = prisma.$extends(prismaExtensionSoftDelete);
+import { prismaSoftDelete } from '../../src/services/customPrisma/softDelete.js';
 
 describe('prisma extends softDelete', () => {
   let id;
