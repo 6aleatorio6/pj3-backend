@@ -1,6 +1,7 @@
 import { Prisma } from '@prisma/client';
-import { prismaSoftDelete } from './softDelete.js';
 import { ErrorController } from '../../helpers/erroController.js';
+import prisma from '../../prisma.js';
+import { prismaSoftDelete } from './softDelete.js';
 
 /**
  * @description cliente prisma estendido para ser usado dentro do `createController`
@@ -21,9 +22,9 @@ import { ErrorController } from '../../helpers/erroController.js';
  *   }
  * }}
  */
-export const prismaPaiado = prismaSoftDelete.$extends({
+export const prismaPaiado = prisma.$extends({
   query: {
-    async $allOperations({ args, query, model }) {
+    async $allOperations({ args, operation, model }) {
       try {
         const { simularUnique = [], ...argsNormal } = args;
 
@@ -31,7 +32,7 @@ export const prismaPaiado = prismaSoftDelete.$extends({
           await UniqueArtificial(model, coluna, args.data[coluna]);
         }
 
-        return await query(argsNormal);
+        return await prismaSoftDelete[model][operation](argsNormal);
       } catch (e) {
         if (e instanceof Prisma.PrismaClientKnownRequestError) {
           const esseErroSabido = errosSabidos[e.code];
