@@ -11,6 +11,7 @@ import loginAuth from '../controllers/auth/loginAuth.js';
 import getByToken from '../controllers/usuario/getByToken.js';
 import getRankByToken from '../controllers/usuario/getRankByToken.js';
 import { acessoApenasPara } from '../services/auth/jwt-strategy.js';
+import getQrCode from '../controllers/usuario/getQrCode.js';
 
 const router = Router();
 
@@ -21,8 +22,9 @@ router.post('/login', loginUsuario, login);
 router.post('/', create);
 
 // rotas protegidas
-router.get('/rank', acessoApenasPara('USER'), getRankByToken);
 router.get('/', acessoApenasPara('USER'), getByToken);
+router.get('/rank', acessoApenasPara('USER'), getRankByToken);
+router.get('/lerQrCode/:uuid', acessoApenasPara('USER'), getQrCode);
 router.put('/', acessoApenasPara('USER'), update);
 router.delete('/', acessoApenasPara('USER'), remove);
 
