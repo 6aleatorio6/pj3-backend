@@ -1,5 +1,9 @@
 import app, { corsOptions } from '../app.js';
 
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'servidor online!' });
+});
+
 app.use((req, res, next) => {
   res.status(404).json({
     message: 'esse endpoint não existe',
