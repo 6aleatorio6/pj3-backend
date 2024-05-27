@@ -25,7 +25,7 @@ export const allValid = {
   som: z.string().max(45),
   medalha: z.string().max(45),
   estrela: z.number().max(5),
-  nascimento: z.string(),
+  nascimento: z.coerce.date(),
 
   // Modelo "foto"
   url: z.string().max(45),
