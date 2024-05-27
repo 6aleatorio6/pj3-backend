@@ -45,7 +45,7 @@ const totalFuncionarios = async ({ adm, numerofuncionario, pulefuncionario = 0 }
     return { countFuncionarios, funcionarios }
 }
 
-const totalVisitas = async ({ sexo, cidade, email, foto, numeroVisitas, puleVisitas = 0 }) => {
+const totalVisitas = async ({ sexo, cidade, email, foto, dataDaVisitaMin, dataDaVisitaMax, numeroVisitas, puleVisitas = 0 }) => {
     const filtro = {
         ...(sexo && { sexo }),
         ...(cidade && { cidade }),
@@ -60,8 +60,14 @@ const totalVisitas = async ({ sexo, cidade, email, foto, numeroVisitas, puleVisi
                 select: {
                     senhaHash: false,
                     id: false
-                },
-                where: filtro
+                }
+            }
+        },
+        where: {
+            usuario: filtro,
+            dataDaVisita: {
+                gte: dataDaVisitaMin,
+                lte: dataDaVisitaMax
             }
         },
         skip: puleVisitas,
