@@ -17,9 +17,13 @@ import totenRouter from './routers/totenRouter.js'
 
 const app = express();
 
+export const corsOptions = JSON.parse(
+  `{"origin": ${process.env.CORS_ORIGIN || '"*"'} }`,
+);
+
 // middleware
 app.use(
-  cors({ origin: JSON.parse(process.env.CORS_ORIGINS || '["*"]') }),
+  cors(corsOptions),
   morgan('dev'),
   express.json(),
   express.urlencoded({ extended: false }),
@@ -31,9 +35,5 @@ app.use(
 app.use('/funcionario', funcionarioRouter);
 app.use('/usuario', usuarioRouter);
 app.use('/catalogo', catalogoRouter);
-app.use('/toten', totenRouter)
-
-
 
 export default app;
- 
