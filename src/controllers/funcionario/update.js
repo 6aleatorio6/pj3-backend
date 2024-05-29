@@ -9,8 +9,8 @@ import { gerarHash } from '../../services/auth/bcrypt.js';
  *
  *  tipo: PUT
  *  autenticação: somente ADM
- * 
- *  OBS: se não tiver id no params ele pegara do token 
+ *
+ *  OBS: se não tiver id no params ele pegara do token
  *
  *  Criado para ser usado no:
  *      SITE

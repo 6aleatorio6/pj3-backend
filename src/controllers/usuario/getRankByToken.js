@@ -26,6 +26,5 @@ export default createController(async (req, res) => {
     take: 30,
   });
 
-
   res.json({ message: 'sucesso', rank });
 });

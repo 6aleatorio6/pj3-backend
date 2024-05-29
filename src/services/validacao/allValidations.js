@@ -4,7 +4,6 @@ export const allValid = {
   id: z.number().int(),
   uuid: z.string(),
 
-
   // Modelo "usuario" e "funcionario"
   googleId: z.string().max(45),
   facebookId: z.string().max(45),

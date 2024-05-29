@@ -8,8 +8,8 @@ import { reqValidy } from '../../services/validacao/reqValidy.js';
  *  tipo: DELETE
  *  autenticação: somente ADM
  *
- *  OBS: se não tiver id no params ele pegara do token 
- * 
+ *  OBS: se não tiver id no params ele pegara do token
+ *
  *  Criado para ser usado no:
  *      SITE
  */

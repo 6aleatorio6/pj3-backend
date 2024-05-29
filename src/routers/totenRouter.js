@@ -2,8 +2,8 @@ import { Router } from 'express';
 
 import create from '../controllers/toten/create.js';
 
-const router = Router()
+const router = Router();
 
-router.post('/visita', create)
+router.post('/visita', create);
 
 export default router;
