@@ -34,6 +34,13 @@ export const prismaPaiado = prisma.$extends({
 
         return await prismaSoftDelete[model][operation](argsNormal);
       } catch (e) {
+        if (e instanceof Prisma.PrismaClientInitializationError)
+          throw new ErrorController(
+            500,
+            'erro ao inicializar o banco de dados',
+            e.message,
+          );
+
         if (e instanceof Prisma.PrismaClientKnownRequestError) {
           const esseErroSabido = errosSabidos[e.code];
           if (!esseErroSabido) throw new ErrorController();
