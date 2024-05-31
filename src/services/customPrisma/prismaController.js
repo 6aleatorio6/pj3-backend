@@ -37,9 +37,12 @@ export const prismaPaiado = prisma.$extends({
         if (e instanceof Prisma.PrismaClientInitializationError)
           throw new ErrorController(
             500,
-            'erro ao inicializar o banco de dados',
-            e.message,
+            'erro ao se comunicar com o banco de dados',
+            e.name,
           );
+
+        if (!e?.meta)
+          throw new ErrorController(500, 'erro desconhecido do ORM');
 
         if (e instanceof Prisma.PrismaClientKnownRequestError) {
           const esseErroSabido = errosSabidos[e.code];
