@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 const saltOrRounds = Number(process.env.PASSWORD_SALTS) || 8;
 const secketJwt = process.env.SECKET || 'paia';
 const expiresJwt = process.env.JwtExpiresIn || '3m';
+const urlBase = process.env.URLBASE || 'http://localhost:3000';
 
 export function gerarHash(senha) {
   if (senha) return hashSync(senha, saltOrRounds);
@@ -23,4 +24,8 @@ export function extractTokenFromHeader(req) {
   const [type, token] = req.headers.authorization?.split(' ') ?? [];
 
   return type === 'Bearer' ? token : undefined;
+}
+
+export function urlOauthCallback(oauthName) {
+  return `${urlBase}/usuario/login/${oauthName}/callback`;
 }

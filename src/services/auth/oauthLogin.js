@@ -3,10 +3,10 @@ import { prismaPaiado } from '../customPrisma/prismaController.js';
 import { jwtSign } from './helpersAuth.js';
 
 export default async function loginOrSignUp(payload) {
-  const idModel = Object.keys(payload).find((k) => k.includes('id'));
+  const idModel = Object.keys(payload).find((k) => k.endsWith('Id'));
 
   if (!payload[idModel])
-    throw new ErrorController('400', 'id do oauth não fornecido');
+    throw new ErrorController('400', 'id do oauth não foi fornecido');
 
   let user = await prismaPaiado.usuario.findFirst({
     where: { [idModel]: payload[idModel] },
@@ -15,8 +15,12 @@ export default async function loginOrSignUp(payload) {
 
   if (!user)
     user = await prismaPaiado.usuario.create({
-      simularUnique: ['email', idModel],
-      data: payload,
+      simularUnique: [idModel],
+      data: {
+        [idModel]: payload[idModel], // ex: googleId
+        apelido: payload.id,
+        foto: payload.foto,
+      },
       select: {
         id: true,
       },
