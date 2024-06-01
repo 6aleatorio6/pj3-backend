@@ -8,4 +8,8 @@ import { authGoogleUrl, googleCallback } from './google.js';
  * @type {{[key:string]: {url:string, callback: (query) => Promise<Payload>}}}
  */
 export const oauthIndex = {
+  google: {
+    url: authGoogleUrl,
+    callback: googleCallback,
+  },
 };
