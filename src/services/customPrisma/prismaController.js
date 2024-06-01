@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+/* eslint-disable camelcase */
 import { ErrorController } from '../../helpers/erroController.js';
 import prisma from '../../prisma.js';
 import { prismaSoftDelete } from './softDelete.js';
@@ -34,32 +34,35 @@ export const prismaPaiado = prisma.$extends({
 
         return await prismaSoftDelete[model][operation](argsNormal);
       } catch (e) {
-        if (e instanceof Prisma.PrismaClientKnownRequestError && e?.meta) {
-          const esseErroSabido = errosSabidos[e.code];
-          if (!esseErroSabido) throw new ErrorController();
+        switch (e.name) {
+          case 'PrismaClientKnownRequestError':
+            tratarErrosSabidos(e);
+            break;
 
-          const sabedoriaSabia = esseErroSabido(e.meta.modelName);
+          case 'PrismaClientInitializationError':
+            console.error(e);
+            throw new ErrorController(
+              500,
+              'Erro ao se comunicar com o banco de dados',
+              e.name,
+            );
 
-          throw new ErrorController(sabedoriaSabia[0], sabedoriaSabia[1], e);
+          case 'PrismaClientValidationError':
+            console.error(e);
+            throw new ErrorController(
+              500,
+              'Chamada do Prisma inválida. Verifique a sua consulta do prisma (se for dev)',
+              e.message,
+            );
+
+          case 'PrismaClientUnknownRequestError':
+          case 'PrismaClientRustPanicError':
+            console.error(e);
+            throw new ErrorController(500, 'Erro desconhecido do Prisma');
+
+          default:
+            throw e; // Se o erro não for identificado, relança o erro original
         }
-
-        console.error(e);
-
-        if (e instanceof Prisma.PrismaClientInitializationError)
-          throw new ErrorController(
-            500,
-            'erro ao se comunicar com o banco de dados',
-            e.name,
-          );
-
-        if (
-          e instanceof Prisma.PrismaClientUnknownRequestError ||
-          e instanceof Prisma.PrismaClientRustPanicError ||
-          e instanceof Prisma.PrismaClientValidationError
-        )
-          throw new ErrorController(500, 'erro desconhecido do ORM'); // ou não tratado
-
-        throw e;
       }
     },
   },
