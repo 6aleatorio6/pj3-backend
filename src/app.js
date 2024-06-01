@@ -3,12 +3,6 @@ import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import express from 'express';
 import cors from 'cors';
-import passport from 'passport';
-
-import './services/auth/jwt-strategy.js';
-import './services/auth/local-strategy.js';
-import './services/auth/google-strategy.js';
-import './services/auth/facebook-strategy.js';
 
 import funcionarioRouter from './routers/funcionarioRouter.js';
 import usuarioRouter from './routers/usuarioRouter.js';
@@ -27,7 +21,6 @@ app.use(
   express.json(),
   express.urlencoded({ extended: false }),
   cookieParser(),
-  passport.initialize(),
 );
 
 // controllers

@@ -2,7 +2,7 @@ import createController from '../../helpers/createController.js';
 import { allValid } from '../../services/validacao/allValidations.js';
 import { reqValidy } from '../../services/validacao/reqValidy.js';
 import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
-import { gerarHash } from '../../services/auth/bcrypt.js';
+import { gerarHash } from '../../services/auth/helpersAuth.js';
 
 /**
  *  Endpoint da tela de configurações
