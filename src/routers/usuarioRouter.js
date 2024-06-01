@@ -11,12 +11,14 @@ import getRankByToken from '../controllers/usuario/getRankByToken.js';
 import getQrCode from '../controllers/usuario/getQrCode.js';
 import { useGuard } from '../services/auth/guardJwt.js';
 import middleLogin from '../services/auth/authLogin.js';
+import oAuth from '../controllers/auth/oAuth.js';
+import oauthCallback from '../controllers/auth/oauthCallback.js';
 
 const router = Router();
 
 // login
-// router.get('/login/google', loginGoogle, loginAuth);
-// router.get('/login/facebook', loginFacebook, loginAuth);
+router.get('/login/:oauthApi', oAuth);
+router.get('/login/:oauthApi/callback', oauthCallback);
 router.post('/login', middleLogin('usuario'), login);
 router.post('/', create);
 
