@@ -3,13 +3,14 @@ import { ErrorController } from './erroController.js';
 /**
  * @typedef {import("express").Request} Req
  * @typedef {import("express").Response} Res
+ * @typedef {import("express").NextFunction} Next
  *
- * @argument { (req:Req , res: Res) => Promise<any>} endpoint
+ * @argument { (req:Req , res: Res, next: Next) => Promise<any>} endpoint
  */
-export default function createController(endpoint) {
-  return async (req, res) => {
+export default function createPaia(endpoint) {
+  return async (req, res, next) => {
     try {
-      await endpoint(req, res);
+      await endpoint(req, res, next);
     } catch (erroBruto) {
       const { code, message, details } =
         ErrorController.getInfoError(erroBruto);
