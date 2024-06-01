@@ -14,7 +14,7 @@ model usuario {
   googleId     String?        @db.VarChar(45)
   nascimento   DateTime?      @db.Date
   facebookId   String?        @db.VarChar(45)
-  foto         String?        @db.VarChar(45)
+  foto         String?        @db.VarChar(200)
   apelido      String?        @db.VarChar(45)
   nome         String?        @db.VarChar(50)
   cidade       String?        @db.VarChar(50)
