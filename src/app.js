@@ -1,12 +1,11 @@
-import 'dotenv/config.js';
 import cookieParser from 'cookie-parser';
-import morgan from 'morgan';
 import express from 'express';
 import cors from 'cors';
 
 import funcionarioRouter from './routers/funcionarioRouter.js';
 import usuarioRouter from './routers/usuarioRouter.js';
 import catalogoRouter from './routers/catalogoRouter.js';
+import { loggerMiddleware } from './helpers/loggerMidleware.js';
 
 const app = express();
 
@@ -17,7 +16,7 @@ export const corsOptions = JSON.parse(
 // middleware
 app.use(
   cors(corsOptions),
-  morgan('dev'),
+  loggerMiddleware,
   express.json(),
   express.urlencoded({ extended: false }),
   cookieParser(),

@@ -1,4 +1,3 @@
-import 'dotenv/config.js';
 import app, { corsOptions } from '../app.js';
 
 app.use((req, res, next) => {
