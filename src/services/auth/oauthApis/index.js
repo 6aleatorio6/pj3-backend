@@ -1,3 +1,4 @@
+import { authFacebookUrl, facebookCallback } from './facebook.js';
 import { authGoogleUrl, googleCallback } from './google.js';
 
 /**
@@ -11,5 +12,9 @@ export const oauthIndex = {
   google: {
     url: authGoogleUrl,
     callback: googleCallback,
+  },
+  facebook: {
+    url: authFacebookUrl,
+    callback: facebookCallback,
   },
 };
