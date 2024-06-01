@@ -17,8 +17,8 @@ import oauthCallback from '../controllers/auth/oauthCallback.js';
 const router = Router();
 
 // login
-router.get('/login/:oauthApi', oAuth);
-router.get('/login/:oauthApi/callback', oauthCallback);
+router.get('/login/:oauthName', oAuth);
+router.get('/login/:oauthName/callback', oauthCallback);
 router.post('/login', middleLogin('usuario'), login);
 router.post('/', create);
 
