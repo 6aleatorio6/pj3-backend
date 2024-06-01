@@ -1,8 +1,9 @@
-import createController from '../../helpers/createController.js';
+import createPaia from '../../helpers/createController.js';
+import { jwtSign } from '../../services/auth/helpersAuth.js';
 
-export default createController((req, res) => {
-  res.json({
+export default createPaia(async (req, res) => {
+  res.status(200).json({
     message: 'sucesso no login',
-    token: req.user.token,
+    token: jwtSign(req.user),
   });
 });
