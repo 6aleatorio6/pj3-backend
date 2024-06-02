@@ -13,6 +13,7 @@ import { useGuard } from '../services/auth/guardJwt.js';
 import middleLogin from '../services/auth/authLogin.js';
 import oAuth from '../controllers/auth/oAuth.js';
 import oauthCallback from '../controllers/auth/oauthCallback.js';
+import verifyEmail from '../controllers/usuario/verify.js';
 
 const router = Router();
 
@@ -21,6 +22,8 @@ router.get('/login/:oauthName', oAuth);
 router.get('/login/:oauthName/callback', oauthCallback);
 router.post('/login', middleLogin('usuario'), login);
 router.post('/', create);
+
+router.get('/verify/?', verifyEmail);
 
 // rotas protegidas
 router.get('/', useGuard('USER'), getByToken);

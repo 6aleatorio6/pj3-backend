@@ -28,7 +28,6 @@ export default endpointBoxSafe(async (req, res) => {
     select: { id: true },
   });
 
-  console.log(user);
   if (!user) throw HttpException(400, 'conta da sessão não foi encontrada');
 
   res.status(200).json({
