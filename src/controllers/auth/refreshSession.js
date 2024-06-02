@@ -31,7 +31,7 @@ export default endpointBoxSafe(async (req, res) => {
   if (!user) throw HttpException(400, 'conta da sessão não foi encontrada');
 
   res.status(200).json({
-    message: 'token atualizado',
+    message: 'atualize o token',
     token: jwtSign({ id, roles }),
   });
 });

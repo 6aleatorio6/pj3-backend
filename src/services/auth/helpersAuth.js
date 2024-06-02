@@ -23,8 +23,8 @@ export function extractTokenFromHeader(req) {
   return type === 'Bearer' ? token : undefined;
 }
 
-export function urlOauthCallback(oauthName) {
-  return `${urlBase}/usuario/login/${oauthName}/callback`;
+export function urlOauthCallback(oauthName, redirectUri) {
+  return `${urlBase}/usuario/login/${oauthName}/callback/?${redirectUri}`;
 }
 
 export function jwtVerify(token) {

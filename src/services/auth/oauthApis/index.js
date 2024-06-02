@@ -1,5 +1,5 @@
-import { authFacebookUrl, facebookCallback } from './facebook.js';
-import { authGoogleUrl, googleCallback } from './google.js';
+import { oauthFB } from './facebook.js';
+import { oauthGoogle } from './google.js';
 
 /**
  *  INDICE DAS APIS OAUTH DISPONIVEL
@@ -9,12 +9,6 @@ import { authGoogleUrl, googleCallback } from './google.js';
  * @type {{[key:string]: {url:string, callback: (query) => Promise<Payload>}}}
  */
 export const oauthIndex = {
-  google: {
-    url: authGoogleUrl,
-    callback: googleCallback,
-  },
-  facebook: {
-    url: authFacebookUrl,
-    callback: facebookCallback,
-  },
+  google: oauthGoogle,
+  facebook: oauthFB,
 };
