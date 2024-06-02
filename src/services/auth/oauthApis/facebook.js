@@ -28,7 +28,6 @@ export async function facebookCallback({ code }) {
       foto,
     };
   } catch (error) {
-    console.log(error);
     throw new HttpException(500, 'erro no oAuth2Client do facebook', error);
   }
 }

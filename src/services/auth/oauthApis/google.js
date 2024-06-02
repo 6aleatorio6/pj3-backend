@@ -32,7 +32,13 @@ export async function googleCallback({ code }) {
       apelido: payload.given_name,
     };
   } catch (error) {
-    console.log(error);
-    throw new HttpException(500, 'erro no oAuth2Client do google', error);
+    if (error.response)
+      throw new HttpException(
+        error.response.status,
+        'erro no oAuth2Client do google',
+        error.response.data,
+      );
+
+    throw new HttpException(500, 'erro no oAuth2Client do google');
   }
 }
