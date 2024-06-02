@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const allValid = {
-  id: z.number().int(),
+  id: z.coerce.number().int(),
   uuid: z.string(),
 
   // Modelo "usuario" e "funcionario"
@@ -23,12 +23,12 @@ export const allValid = {
   nomeCientifico: z.string().max(45),
   som: z.string().max(45),
   medalha: z.string().max(45),
-  estrela: z.number().max(5),
+  estrela: z.coerce.number().max(5),
   nascimento: z.coerce.date(),
 
   // Modelo "foto"
   url: z.string().max(45),
-  mostrarNoCarrosel: z.number().int().max(255),
+  mostrarNoCarrosel: z.coerce.number().int().max(255),
 
   // Modelo "visitas" e "lidoPeloUser"
   dataDaVisita: z.string().max(45),

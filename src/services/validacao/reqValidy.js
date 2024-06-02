@@ -15,10 +15,6 @@ import { allValid } from './allValidations.js';
 export function reqValidy(req, validObj) {
   const { body, params, query } = validObj;
 
-  converterNumParaOtipoCerto(req.params);
-  converterNumParaOtipoCerto(req.query);
-  // converterNumParaOtipoCerto(req.body);
-
   if (params) req.params = validy(params, req.params);
   if (query) req.query = validy(query, req.query);
   if (body) req.body = validy(body, req.body);
@@ -71,10 +67,4 @@ function dividirObj(validObj) {
   }
 
   return objDivido;
-}
-
-function converterNumParaOtipoCerto(objeto = {}) {
-  Object.entries(objeto).forEach(([key, v]) => {
-    if (!isNaN(v)) objeto[key] = Number(v);
-  });
 }
