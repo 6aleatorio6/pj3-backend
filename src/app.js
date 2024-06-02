@@ -6,6 +6,7 @@ import funcionarioRouter from './routers/funcionarioRouter.js';
 import usuarioRouter from './routers/usuarioRouter.js';
 import catalogoRouter from './routers/catalogoRouter.js';
 import { loggerMiddleware } from './helpers/loggerMidleware.js';
+import refreshSession from './controllers/auth/refreshSession.js';
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use(
 );
 
 // controllers
+app.use('/token/refresh', refreshSession);
 app.use('/funcionario', funcionarioRouter);
 app.use('/usuario', usuarioRouter);
 app.use('/catalogo', catalogoRouter);

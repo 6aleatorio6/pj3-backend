@@ -2,8 +2,9 @@ import { hashSync } from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 const saltOrRounds = Number(process.env.PASSWORD_SALTS) || 8;
-const secketJwt = process.env.SECKET || 'paia';
-const expiresJwt = process.env.JwtExpiresIn || '3m';
+const secretJwt = process.env.SECRET_JWT || 'paia';
+const expiresJwt = process.env.EXPIRES_JWT || '3m';
+const refreshJwt = Number(process.env.REFRESH_JWT) || 364;
 const urlBase = process.env.URLBASE || 'http://localhost:3000';
 
 export function gerarHash(senha) {
@@ -11,13 +12,9 @@ export function gerarHash(senha) {
 }
 
 export function jwtSign(payload) {
-  return jwt.sign(payload, secketJwt, {
+  return jwt.sign(payload, secretJwt, {
     expiresIn: expiresJwt,
   });
-}
-
-export function jwtVerify(token) {
-  return jwt.verify(token, secketJwt);
 }
 
 export function extractTokenFromHeader(req) {
@@ -28,4 +25,15 @@ export function extractTokenFromHeader(req) {
 
 export function urlOauthCallback(oauthName) {
   return `${urlBase}/usuario/login/${oauthName}/callback`;
+}
+
+export function jwtVerify(token) {
+  try {
+    return jwt.verify(token, secretJwt);
+  } catch (error) {
+    if (!(error instanceof jwt.TokenExpiredError)) return false;
+
+    const minDesdeExp = (Date.now() - error.expiredAt.valueOf()) / 1000 / 60;
+    return minDesdeExp <= 60 * 24 * refreshJwt ? 'REFRESH' : null;
+  }
 }

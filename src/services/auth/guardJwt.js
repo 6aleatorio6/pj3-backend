@@ -1,42 +1,30 @@
-import jwt from 'jsonwebtoken';
-import createPaia from '../../helpers/createController.js';
-import { HttpException } from '../../helpers/erroController.js';
+import endpointBoxSafe from '../secureController/handlerBox.js';
+import { HttpException } from '../secureController/handlersPaia.js';
 import { extractTokenFromHeader, jwtVerify } from './helpersAuth.js';
 
 /**
  * @param {"USER" | "ADM" | "TOTEM"} roles
  */
 export function useGuard(...roles) {
-  return createPaia(async (req, res, next) => {
+  return endpointBoxSafe(async (req, res, next) => {
     const token = extractTokenFromHeader(req);
 
-    if (!token) throw new HttpException(401, 'você não está logado');
+    if (!token) throw new HttpException(401, 'sem token de sessão');
 
-    const payload = jwtLogica(token);
+    const result = jwtVerify(token);
 
-    const isAuth = !roles.includes(payload.roles);
+    if (!result) throw new HttpException(401, 'token de sessão invalido');
+    if (result === 'REFRESH') return res.status(302).redirect('/token/refresh');
 
-    if (isAuth) throw new HttpException(403, 'você não está autorizado');
+    const isAuth = !roles.includes(result.roles);
+
+    if (isAuth) throw new HttpException(403, 'Você não tem permissão');
 
     req.user = {
-      id: payload.id,
-      roles: payload.roles,
+      id: result.id,
+      roles: result.roles,
     };
 
     next();
   });
-}
-
-function jwtLogica(token) {
-  try {
-    return jwtVerify(token);
-  } catch (error) {
-    if (error instanceof jwt.TokenExpiredError)
-      throw new HttpException(401, 'token expirado');
-
-    if (error instanceof jwt.JsonWebTokenError)
-      throw new HttpException(401, 'token invalido');
-
-    throw error;
-  }
 }
