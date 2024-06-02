@@ -1,4 +1,4 @@
-import { ErrorController } from '../../helpers/erroController.js';
+import { HttpException } from '../secureController/handlersPaia.js';
 import { prismaPaiado } from '../customPrisma/prismaController.js';
 import { jwtSign } from './helpersAuth.js';
 
@@ -6,7 +6,7 @@ export default async function loginOrSignUp(payload) {
   const idModel = Object.keys(payload).find((k) => k.endsWith('Id'));
 
   if (!payload[idModel])
-    throw new ErrorController('400', 'id do oauth não foi fornecido');
+    throw new HttpException('400', 'id do oauth não foi fornecido');
 
   let user = await prismaPaiado.usuario.findFirst({
     where: { [idModel]: payload[idModel] },

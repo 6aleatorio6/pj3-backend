@@ -1,7 +1,7 @@
-import createPaia from '../../helpers/createController.js';
+import endpointBoxSafe from '../secureController/handlerBox.js';
 import { prismaPaiado } from '../customPrisma/prismaController.js';
 import { reqValidy } from '../validacao/reqValidy.js';
-import { ErrorController } from '../../helpers/erroController.js';
+import { HttpException } from '../secureController/handlersPaia.js';
 import { compare } from 'bcrypt';
 
 /**
@@ -10,7 +10,7 @@ import { compare } from 'bcrypt';
  * @returns
  */
 export default function middleLogin(TipoDaConta) {
-  return createPaia(async (req, res, next) => {
+  return endpointBoxSafe(async (req, res, next) => {
     reqValidy(req, {
       body: {
         email: 'required',
@@ -32,7 +32,7 @@ export default function middleLogin(TipoDaConta) {
 
     const isValid = conta && (await compare(senha, conta.senha));
 
-    if (!isValid) throw new ErrorController(401, 'email ou senha invalida');
+    if (!isValid) throw new HttpException(401, 'email ou senha invalida');
 
     req.user = {
       id: conta.id,

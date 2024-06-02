@@ -1,7 +1,7 @@
 /**
  * uma classe de erro para ser usada na função CreateController
  */
-export class ErrorController {
+export class HttpException {
   /**
    * @param {number} code
    * @param {string} message
@@ -14,7 +14,7 @@ export class ErrorController {
   }
 
   static getInfoError(error) {
-    const isMyError = error instanceof ErrorController;
+    const isMyError = error instanceof HttpException;
 
     if (!isMyError && !error.code) {
       console.log(error);

@@ -1,4 +1,4 @@
-import createController from '../../helpers/createController.js';
+import endpointBoxSafe from '../../services/secureController/handlerBox.js';
 import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
 
 /**
@@ -11,7 +11,7 @@ import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
  *  Criado para ser usado no:
  *      APP MOBILE
  */
-export default createController(async (req, res) => {
+export default endpointBoxSafe(async (req, res) => {
   const id = +req.user.id;
 
   const usuario = await prismaPaiado.usuario.findFirstOrThrow({

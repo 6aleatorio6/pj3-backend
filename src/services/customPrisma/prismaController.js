@@ -1,12 +1,12 @@
 /* eslint-disable camelcase */
 // eslint-disable-next-line no-unused-vars
 import { Prisma } from '@prisma/client';
-import { ErrorController } from '../../helpers/erroController.js';
+import { HttpException } from '../secureController/handlersPaia.js';
 import prisma from '../../prisma.js';
 import { prismaSoftDelete } from './softDelete.js';
 
 /**
- * @description cliente prisma estendido para ser usado dentro do `createController`
+ * @description cliente prisma estendido para ser usado dentro do `endpointBoxSafe`
  *
  *
  *
@@ -43,7 +43,7 @@ export const prismaPaiado = prisma.$extends({
 
           case 'PrismaClientInitializationError':
             console.error(e);
-            throw new ErrorController(
+            throw new HttpException(
               500,
               'Erro ao se comunicar com o banco de dados',
               e.name,
@@ -51,7 +51,7 @@ export const prismaPaiado = prisma.$extends({
 
           case 'PrismaClientValidationError':
             console.error(e);
-            throw new ErrorController(
+            throw new HttpException(
               500,
               'Chamada do Prisma inválida. Verifique a sua consulta do prisma (se for dev)',
               e.message,
@@ -60,7 +60,7 @@ export const prismaPaiado = prisma.$extends({
           case 'PrismaClientUnknownRequestError':
           case 'PrismaClientRustPanicError':
             console.error(e);
-            throw new ErrorController(500, 'Erro desconhecido do Prisma');
+            throw new HttpException(500, 'Erro desconhecido do Prisma');
 
           default:
             throw e; // Se o erro não for identificado, relança o erro original
@@ -78,18 +78,17 @@ async function UniqueArtificial(tabela, coluna, value) {
     where: { [coluna]: value },
   });
 
-  if (isNotUnique)
-    throw new ErrorController(400, `esse ${coluna} já foi usado`);
+  if (isNotUnique) throw new HttpException(400, `esse ${coluna} já foi usado`);
 }
 
 function tratarErrosSabidos(e) {
-  if (!e.meta) throw new ErrorController(400, e.message);
+  if (!e.meta) throw new HttpException(400, e.message);
 
   const sabedoriaSabia = errosSabidos(e.meta)[e.code];
 
-  if (!sabedoriaSabia) throw new ErrorController(400, e.message);
+  if (!sabedoriaSabia) throw new HttpException(400, e.message);
 
-  throw new ErrorController(sabedoriaSabia[0], sabedoriaSabia[1]);
+  throw new HttpException(sabedoriaSabia[0], sabedoriaSabia[1]);
 }
 
 const errosSabidos = (metaError) => {

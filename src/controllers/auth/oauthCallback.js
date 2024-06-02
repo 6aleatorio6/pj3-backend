@@ -1,5 +1,5 @@
-import createController from '../../helpers/createController.js';
-import { ErrorController } from '../../helpers/erroController.js';
+import endpointBoxSafe from '../../services/secureController/handlerBox.js';
+import { HttpException } from '../../services/secureController/handlersPaia.js';
 import { oauthIndex } from '../../services/auth/oauthApis/index.js';
 import loginOrSignUp from '../../services/auth/oauthLogin.js';
 
@@ -9,13 +9,13 @@ import loginOrSignUp from '../../services/auth/oauthLogin.js';
  *  PARAMS:
  *      oauthApi: facebook | google
  */
-export default createController(async (req, res) => {
+export default endpointBoxSafe(async (req, res) => {
   const oauthName = req.params?.oauthName;
   const query = req.query;
 
   const oauthApi = oauthIndex[oauthName];
 
-  if (!oauthApi) throw new ErrorController(400, 'params invalido');
+  if (!oauthApi) throw new HttpException(400, 'params invalido');
 
   const payload = await oauthApi.callback(query);
 

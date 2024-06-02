@@ -1,4 +1,4 @@
-import { ErrorController } from './erroController.js';
+import { HttpException } from './handlersPaia.js';
 
 /**
  * @typedef {import("express").Request} Req
@@ -7,13 +7,12 @@ import { ErrorController } from './erroController.js';
  *
  * @argument { (req:Req , res: Res, next: Next) => Promise<any>} endpoint
  */
-export default function createPaia(endpoint) {
+export default function endpointBoxSafe(endpoint) {
   return async (req, res, next) => {
     try {
       await endpoint(req, res, next);
     } catch (erroBruto) {
-      const { code, message, details } =
-        ErrorController.getInfoError(erroBruto);
+      const { code, message, details } = HttpException.getInfoError(erroBruto);
 
       res.status(code).json({ message, details });
     }

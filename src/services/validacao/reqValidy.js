@@ -1,12 +1,12 @@
 // eslint-disable-next-line no-unused-vars
 import { z, ZodObject } from 'zod';
-import { ErrorController } from '../../helpers/erroController.js';
+import { HttpException } from '../secureController/handlersPaia.js';
 import { allValid } from './allValidations.js';
 
 /**
  *  Serve para validar o request do endpoint
  *
- *  AVISO:Só funciona dentro do createController
+ *  AVISO:Só funciona dentro do endpointBoxSafe
  *
  * @typedef {{[key in keyof typeof allValid]: "required" | "partial" | ZodObject}} Validacao
  *
@@ -36,7 +36,7 @@ function validy(validObj, data) {
     .safeParse(data || {});
 
   if (!result.success)
-    throw new ErrorController(
+    throw new HttpException(
       400,
       'dados invalidos ou incompleto, tente novamente',
       {

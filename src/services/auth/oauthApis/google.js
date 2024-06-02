@@ -1,5 +1,5 @@
 import { OAuth2Client } from 'google-auth-library';
-import { ErrorController } from '../../../helpers/erroController.js';
+import { HttpException } from '../../secureController/handlersPaia.js';
 import { urlOauthCallback } from '../helpersAuth.js';
 
 const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
@@ -33,6 +33,6 @@ export async function googleCallback({ code }) {
     };
   } catch (error) {
     console.log(error);
-    throw new ErrorController(500, 'erro no oAuth2Client do google', error);
+    throw new HttpException(500, 'erro no oAuth2Client do google', error);
   }
 }

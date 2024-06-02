@@ -1,4 +1,4 @@
-import { ErrorController } from '../../../helpers/erroController.js';
+import { HttpException } from '../../secureController/handlersPaia.js';
 import { urlOauthCallback } from '../helpersAuth.js';
 
 /* eslint-disable camelcase */
@@ -29,6 +29,6 @@ export async function facebookCallback({ code }) {
     };
   } catch (error) {
     console.log(error);
-    throw new ErrorController(500, 'erro no oAuth2Client do facebook', error);
+    throw new HttpException(500, 'erro no oAuth2Client do facebook', error);
   }
 }
