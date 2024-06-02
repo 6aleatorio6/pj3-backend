@@ -16,7 +16,7 @@ export class HttpException {
   static getInfoError(error) {
     const isMyError = error instanceof HttpException;
 
-    if (!isMyError && !error.code) {
+    if (!isMyError || !error.code) {
       console.log(error);
 
       return { code: 500, message: 'erro interno no servidor' };

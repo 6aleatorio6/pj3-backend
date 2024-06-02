@@ -18,7 +18,7 @@ export default endpointBoxSafe(async (req, res) => {
     },
   });
 
-  const cata = await prismaPaiado.catalogo.findFirst({
+  const cata = await prismaPaiado.catalogo.findFirstOrThrow({
     where: {
       uuid: req.params.uuid,
     },
