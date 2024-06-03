@@ -6,13 +6,13 @@ const APP_ID = process.env.FACEBOOK_APP_ID;
 const APP_SECRET = process.env.FACEBOOK_APP_SECRET;
 const FB_VERSION = process.env.FB_VERSION;
 
-const urlBaseFbG = 'https://graph.facebook.com/' + FB_VERSION;
-const urlBaseFbW = 'https://wwww.facebook.com/' + FB_VERSION;
+const urlBaseFbW = `https://www.facebook.com/${FB_VERSION}`;
+const urlBaseFbG = `https://graph.facebook.com/${FB_VERSION}`;
 const REDIRECT_URI = urlOauthCallback('facebook');
 
 export function oauthFB(stateRedirect = '') {
   return {
-    url: `${urlBaseFbW}/dialog/oauth?client_id=${APP_ID}&redirect_uri=${REDIRECT_URI}&state=${stateRedirect}&scope=email,public_profile`,
+    url: `${urlBaseFbW}/dialog/oauth?client_id=${APP_ID}&redirect_uri=${REDIRECT_URI}&state=${stateRedirect}`,
     async callback(code) {
       try {
         const { access_token } = await fetchPaiado(
