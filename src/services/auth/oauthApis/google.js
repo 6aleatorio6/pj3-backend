@@ -6,21 +6,22 @@ const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
 /**
+ *  'redirect_uri_mismatch' me lembrarei desse erro fdp por um bom tempo
  *
  * @param {string} redirectUri
  * @returns {{url: string, callback: Function}}
  */
-export function oauthGoogle(redirectUri = '') {
+export function oauthGoogle(stateRedirect = '') {
   const oAuth2Client = new OAuth2Client(
     CLIENT_ID,
     CLIENT_SECRET,
-    urlOauthCallback('google', redirectUri),
+    urlOauthCallback('google'),
   );
 
-  console.log(urlOauthCallback('google', redirectUri));
   return {
     url: oAuth2Client.generateAuthUrl({
       access_type: 'online',
+      state: stateRedirect,
       scope: ['profile'],
     }),
     async callback(code) {
@@ -38,7 +39,7 @@ export function oauthGoogle(redirectUri = '') {
         return {
           googleId: payload.sub,
           foto: payload.picture,
-          apelido: payload.given_name,
+          apelido: payload.given_name || payload.name,
         };
       } catch (error) {
         if (error.response)

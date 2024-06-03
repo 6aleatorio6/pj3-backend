@@ -10,14 +10,14 @@ import { oauthIndex } from '../../services/auth/oauthApis/index.js';
  */
 export default endpointBoxSafe((req, res) => {
   const oauthName = req.params?.oauthName;
-  const { redirectUri } = req.query;
+  const { stateRedirect } = req.query;
 
   const oauthApi = oauthIndex[oauthName];
 
   if (!oauthApi) throw new HttpException(400, 'params invalido');
-  if (!redirectUri) throw new HttpException(400, 'redirectUri invalido');
+  if (!stateRedirect) throw new HttpException(400, 'stateRedirect invalido');
 
-  const { url } = oauthApi(redirectUri);
+  const { url } = oauthApi(stateRedirect);
 
   res.status(303).redirect(url);
 });

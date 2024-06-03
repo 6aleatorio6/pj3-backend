@@ -1,5 +1,6 @@
 import { hashSync } from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { HttpException } from '../secureController/handlersPaia.js';
 
 const saltOrRounds = Number(process.env.PASSWORD_SALTS) || 8;
 const secretJwt = process.env.SECRET_JWT || 'paia';
@@ -23,8 +24,8 @@ export function extractTokenFromHeader(req) {
   return type === 'Bearer' ? token : undefined;
 }
 
-export function urlOauthCallback(oauthName, redirectUri) {
-  return `${urlBase}/usuario/login/${oauthName}/callback/?${redirectUri}`;
+export function urlOauthCallback(oauthName) {
+  return `${urlBase}/usuario/login/${oauthName}/callback`;
 }
 
 export function jwtVerify(token) {
@@ -36,4 +37,20 @@ export function jwtVerify(token) {
     const minDesdeExp = (Date.now() - error.expiredAt.valueOf()) / 1000 / 60;
     return minDesdeExp <= 60 * 24 * refreshJwt ? 'REFRESH' : null;
   }
+}
+
+/**
+ * @param {Parameters<fetch>} options
+ */
+export async function fetchPaiado(...options) {
+  const data = await fetch(...options);
+
+  if (!data.ok)
+    throw new HttpException(
+      data.status,
+      data.statusText,
+      'erro ao requisitar um serviço externo',
+    );
+
+  return await data.json();
 }

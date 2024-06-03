@@ -11,17 +11,18 @@ import loginOrSignUp from '../../services/auth/oauthLogin.js';
  */
 export default endpointBoxSafe(async (req, res) => {
   const oauthName = req.params?.oauthName;
-  const { redirectUri, code } = req.query;
+  const { state: stateRedirect, code } = req.query; // me considero um homem feliz dps de finalmente ter conseguido
 
   const oauthApi = oauthIndex[oauthName];
 
   if (!oauthApi) throw new HttpException(400, 'params invalido');
 
-  const { callback } = oauthApi(redirectUri);
+  const { callback } = oauthApi(stateRedirect);
 
   const payload = await callback(code);
 
   const token = await loginOrSignUp(payload);
 
-  res.redirect(`${redirectUri}/?token=${token}`);
+  console.log(req.query);
+  res.redirect(`${stateRedirect}/?token=${token}`);
 });
