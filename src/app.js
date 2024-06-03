@@ -5,6 +5,7 @@ import cors from 'cors';
 import funcionarioRouter from './routers/funcionarioRouter.js';
 import usuarioRouter from './routers/usuarioRouter.js';
 import catalogoRouter from './routers/catalogoRouter.js';
+import totenRouter from './routers/totenRouter.js'
 import { loggerMiddleware } from './helpers/loggerMidleware.js';
 import refreshSession from './controllers/auth/refreshSession.js';
 
@@ -28,5 +29,6 @@ app.use('/token/refresh', refreshSession);
 app.use('/funcionario', funcionarioRouter);
 app.use('/usuario', usuarioRouter);
 app.use('/catalogo', catalogoRouter);
+app.use('/toten', totenRouter)
 
 export default app;
