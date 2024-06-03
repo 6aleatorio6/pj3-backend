@@ -18,7 +18,7 @@ export default async function loginOrSignUp(payload) {
       simularUnique: [idModel],
       data: {
         [idModel]: payload[idModel], // ex: googleId
-        apelido: payload.id,
+        apelido: payload.apelido,
         foto: payload.foto,
       },
       select: {

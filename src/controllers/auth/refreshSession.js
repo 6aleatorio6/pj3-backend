@@ -15,7 +15,7 @@ export default endpointBoxSafe(async (req, res) => {
 
   if (!RefreshIsValid)
     throw HttpException(
-      400,
+      401,
       'Não foi possivel atualizar o token, faça login novamente',
     );
 
@@ -28,7 +28,7 @@ export default endpointBoxSafe(async (req, res) => {
     select: { id: true },
   });
 
-  if (!user) throw HttpException(400, 'conta da sessão não foi encontrada');
+  if (!user) throw new HttpException(401, 'conta da sessão não foi encontrada');
 
   res.status(200).json({
     message: 'atualize o token',
