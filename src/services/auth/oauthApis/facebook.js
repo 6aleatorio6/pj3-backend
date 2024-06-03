@@ -4,9 +4,10 @@ import { fetchPaiado, urlOauthCallback } from '../helpersAuth.js';
 /* eslint-disable camelcase */
 const APP_ID = process.env.FACEBOOK_APP_ID;
 const APP_SECRET = process.env.FACEBOOK_APP_SECRET;
+const FB_VERSION = process.env.FB_VERSION;
 
-const urlBaseFbG = 'https://graph.facebook.com/v19.0';
-const urlBaseFbW = 'https://wwww.facebook.com/v19.0';
+const urlBaseFbG = 'https://graph.facebook.com/' + FB_VERSION;
+const urlBaseFbW = 'https://wwww.facebook.com/' + FB_VERSION;
 const REDIRECT_URI = urlOauthCallback('facebook');
 
 export function oauthFB(stateRedirect = '') {
