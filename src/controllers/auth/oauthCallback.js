@@ -23,6 +23,5 @@ export default endpointBoxSafe(async (req, res) => {
 
   const token = await loginOrSignUp(payload);
 
-  console.log(req.query);
   res.redirect(`${stateRedirect}/?token=${token}`);
 });
