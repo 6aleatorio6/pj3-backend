@@ -2,7 +2,6 @@ import cookieParser from 'cookie-parser';
 import express from 'express';
 import cors from 'cors';
 
-import routerAuth from './routers/auth.js';
 import funcionarioRouter from './routers/funcionarioRouter.js'
 import usuarioRouter from './routers/usuarioRouter.js'
 import catalogoRouter from './routers/catalogoRouter.js'
