@@ -1,8 +1,8 @@
-import createController from '../../helpers/createController.js';
+import endpointBoxSafe from '../../services/secureController/handlerBox.js';
 import { reqValidy } from '../../services/validacao/reqValidy.js';
 import { allValid } from '../../services/validacao/allValidations.js';
 import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
-import { gerarHash } from '../../services/auth/bcrypt.js';
+import { gerarHash } from '../../services/auth/helpersAuth.js';
 
 /**
  *  Endpoint de cadastro de funcionario
@@ -13,7 +13,7 @@ import { gerarHash } from '../../services/auth/bcrypt.js';
  *  Criado para ser usado no:
  *      SiTE
  */
-export default createController(async (req, res) => {
+export default endpointBoxSafe(async (req, res) => {
   reqValidy(req, {
     body: {
       roles: 'required',

@@ -1,4 +1,4 @@
-import createController from '../../helpers/createController.js';
+import endpointBoxSafe from '../../services/secureController/handlerBox.js';
 import { reqValidy } from '../../services/validacao/reqValidy.js';
 import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
 
@@ -11,14 +11,14 @@ import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
  *  Criado para ser usado no:
  *      SiTE ou APP
  */
-export default createController(async (req, res) => {
+export default endpointBoxSafe(async (req, res) => {
   reqValidy(req, {
     params: {
       uuid: 'required',
     },
   });
 
-  const cata = await prismaPaiado.catalogo.findFirst({
+  const cata = await prismaPaiado.catalogo.findFirstOrThrow({
     where: {
       uuid: req.params.uuid,
     },

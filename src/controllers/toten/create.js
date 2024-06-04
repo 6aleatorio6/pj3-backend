@@ -1,8 +1,8 @@
-import createController from '../../helpers/createController.js';
+import endpointBoxSafe from '../../services/secureController/handlerBox.js';
 import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
 import { reqValidy } from '../../services/validacao/reqValidy.js';
 
-export default createController(async (req, res) => {
+export default endpointBoxSafe(async (req, res) => {
   reqValidy(req, {
     body: {
       nome: 'required',

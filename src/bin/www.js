@@ -1,5 +1,8 @@
-import 'dotenv/config.js';
-import app from '../app.js';
+import app, { corsOptions } from '../app.js';
+
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'servidor online!' });
+});
 
 app.use((req, res, next) => {
   res.status(404).json({
@@ -17,8 +20,9 @@ app.use((error, req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
 
-let corsTexto = JSON.parse(process.env.CORS_ORIGINS || '["*"]').toString();
-corsTexto = corsTexto.includes('*') ? 'all' : corsTexto;
+const origin = corsOptions.origin.toString();
+
+const corsTexto = origin.includes('*') ? 'all' : origin;
 
 app.listen(PORT, () => {
   console.log(`Porta: ${PORT} | Cors: ${corsTexto}`);

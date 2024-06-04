@@ -8,36 +8,31 @@ datasource db {
 }
 
 model usuario {
-  id           Int            @id @unique(map: "id_UNIQUE") @default(autoincrement())
-  email        String?        @db.VarChar(80)
-  senha        String?        @default("") @db.VarChar(100)
-  googleId     String?        @db.VarChar(45)
-  nascimento   DateTime?      @db.Date
-  facebookId   String?        @db.VarChar(45)
-  foto         String?        @db.VarChar(45)
-  apelido      String?        @db.VarChar(45)
-  nome         String?        @db.VarChar(50)
-  cidade       String?        @db.VarChar(50)
-  sexo         usuario_sexo?
-  deleted_at   DateTime?      @db.DateTime(0)
-  lidoPeloUser lidoPeloUser[]
-  visitas      visitas?
+  id         Int           @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  email      String?       @db.VarChar(80)
+  senha      String?       @default("") @db.VarChar(100)
+  googleId   String?       @db.VarChar(45)
+  nascimento DateTime?     @db.Date
+  facebookId String?       @db.VarChar(45)
+  foto       String?       @db.VarChar(200)
+  apelido    String?       @db.VarChar(45)
+  nome       String?       @db.VarChar(50)
+  cidade     String?       @db.VarChar(50)
+  sexo       usuario_sexo?
+  deleted_at DateTime?     @db.DateTime(0)
 }
 
 model catalogo {
-  uuid              String         @id @unique(map: "id_UNIQUE") @default(uuid()) @db.VarChar(50)
-  funcionario_autor Int            @unique(map: "funcionario_autor_UNIQUE")
-  descricao         String         @db.VarChar(255)
-  nomePopular       String         @db.VarChar(45)
-  nomeCientifico    String         @db.VarChar(45)
-  som               String?        @db.VarChar(45)
-  medalha           String?        @db.VarChar(45)
-  estrela           Decimal?       @db.Decimal(1, 1)
-  nascimento        DateTime?      @db.Date
-  deleted_at        DateTime?      @db.DateTime(0)
-  funcionario       funcionario    @relation(fields: [funcionario_autor], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_arvore_funcionario1")
-  foto              foto[]
-  lidoPeloUser      lidoPeloUser[]
+  uuid              String    @id @unique(map: "id_UNIQUE") @default(uuid()) @db.VarChar(50)
+  funcionario_autor Int       @unique(map: "funcionario_autor_UNIQUE")
+  descricao         String    @db.VarChar(255)
+  nomePopular       String    @db.VarChar(45)
+  nomeCientifico    String    @db.VarChar(45)
+  som               String?   @db.VarChar(45)
+  medalha           String?   @db.VarChar(45)
+  estrela           Decimal?  @db.Decimal(1, 1)
+  nascimento        DateTime? @db.Date
+  deleted_at        DateTime? @db.DateTime(0)
 
   @@index([funcionario_autor], map: "fk_arvore_funcionario1_idx")
 }
@@ -47,7 +42,6 @@ model foto {
   catalogo_uuid String    @db.VarChar(50)
   url           String    @db.VarChar(45)
   deleted_at    DateTime? @db.DateTime(0)
-  catalogo      catalogo  @relation(fields: [catalogo_uuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "fk_foto_catalogo1")
 
   @@index([catalogo_uuid], map: "fk_foto_catalogo1_idx")
 }
@@ -60,7 +54,6 @@ model funcionario {
   nome       String            @db.VarChar(50)
   roles      funcionario_roles
   deleted_at DateTime?         @db.DateTime(0)
-  catalogo   catalogo?
 }
 
 model visitas {
@@ -68,20 +61,17 @@ model visitas {
   usuario_id   Int       @unique(map: "usuario_id_UNIQUE")
   dataDaVisita DateTime  @default(now()) @db.DateTime(0)
   deleted_at   DateTime? @db.DateTime(0)
-  usuario      usuario   @relation(fields: [usuario_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_visitas_usuario1")
 
   @@id([id, usuario_id])
   @@index([usuario_id], map: "fk_visitas_usuario1_idx")
 }
 
-model lidoPeloUser {
+model lidopelouser {
   id               Int       @id @default(autoincrement())
   usuario_id       Int
   catalogo_uuid    String    @db.VarChar(50)
   dataDaDescoberta DateTime  @default(now()) @db.DateTime(0)
   deleted_at       DateTime? @db.DateTime(0)
-  usuario          usuario   @relation(fields: [usuario_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_descobertasInteressantes_usuario1")
-  catalogo         catalogo  @relation(fields: [catalogo_uuid], references: [uuid], onDelete: NoAction, onUpdate: NoAction, map: "fk_lidoPeloUser_catalogo1")
 
   @@index([usuario_id], map: "fk_descobertasInteressantes_usuario1_idx")
   @@index([catalogo_uuid], map: "fk_lidoPeloUser_catalogo1_idx")

@@ -3,33 +3,28 @@ import { reqValidy } from '../../services/validacao/reqValidy.js';
 import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
 
 /**
- *  Endpoint para deletar um item do catalogo
+ *  Endpoint para verificar se o email está em uso
  *
- *  tipo: DELETE
- *  autenticação: somente ADM
+ *  tipo: GET
+ *  autenticação: Não precisa
  *
  *  Criado para ser usado no:
- *      SiTE
+ *      APP MOBILE
  */
 export default endpointBoxSafe(async (req, res) => {
   reqValidy(req, {
-    params: {
-      uuid: 'required',
+    query: {
+      email: 'required',
     },
   });
 
-  const cata = await prismaPaiado.catalogo.delete({
-    where: {
-      uuid: req.params.uuid,
-    },
-    select: {
-      uuid: true,
-      nomePopular: true,
-    },
+  const user = await prismaPaiado.usuario.findFirst({
+    select: { id: true },
+    where: req.query,
   });
 
   res.json({
-    message: `item '${cata.nome}' excluido do catalogo!`,
-    cata,
+    message: user ? 'email em uso' : 'email disponivel',
+    emailDisponivel: !user,
   });
 });

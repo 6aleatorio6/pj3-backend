@@ -1,7 +1,7 @@
 import supertest from 'supertest';
-import createController from '../../src/helpers/createController.js';
+import endpointBoxSafe from '../../src/services/secureController/handlerBox.js';
 import express, { json } from 'express';
-import { ErrorController } from '../../src/helpers/erroController.js';
+import { HttpException } from '../../src/services/secureController/handlersPaia.js';
 import { reqValidy } from '../../src/services/validacao/reqValidy.js';
 
 function supertestCreateController(endpoint) {
@@ -24,7 +24,7 @@ function returnMsgErrorValid(...fieldErros) {
 describe('helpers Controller', () => {
   it('céu azul', async () => {
     const request = await supertestCreateController(
-      createController((req, res) => {
+      endpointBoxSafe((req, res) => {
         res.json({ message: 'paiaPaiosa' });
       }),
     );
@@ -36,7 +36,7 @@ describe('helpers Controller', () => {
   describe('erros', () => {
     it('erro desconhecido', async () => {
       const request = await supertestCreateController(
-        createController((req, res) => {
+        endpointBoxSafe((req, res) => {
           throw new Error('paia morreu');
         }),
       );
@@ -49,8 +49,8 @@ describe('helpers Controller', () => {
 
     it('erro com erroController', async () => {
       const request = await supertestCreateController(
-        createController((req, res) => {
-          throw new ErrorController(406, 'não foi aceito', { paia: 123 });
+        endpointBoxSafe((req, res) => {
+          throw new HttpException(406, 'não foi aceito', { paia: 123 });
         }),
       );
 
@@ -71,7 +71,7 @@ describe('helpers Controller', () => {
       const app = express();
       app.use(json());
 
-      const endpoint = createController((req, res) => {
+      const endpoint = endpointBoxSafe((req, res) => {
         reqValidy(req, {
           query: {
             id: 'required',
