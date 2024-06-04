@@ -32,7 +32,7 @@ export default function middleLogin(TipoDaConta) {
 
     const isValid = conta && (await compare(senha, conta.senha));
 
-    if (!isValid) throw new HttpException(401, 'email ou senha invalida');
+    if (!isValid) throw new HttpException(400, 'email ou senha invalida');
 
     req.user = {
       id: conta.id,
