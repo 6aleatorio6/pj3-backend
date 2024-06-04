@@ -58,8 +58,11 @@ const totalVisitas = async ({ sexo, cidade, email, foto, dataDaVisitaMin, dataDa
         select: {
             usuario: {
                 select: {
-                    senhaHash: false,
-                    id: false
+                    email: true,
+                    nascimento: true,
+                    nome: true,
+                    cidade: true,
+                    sexo: true
                 }
             }
         },
