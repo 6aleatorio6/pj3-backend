@@ -84,22 +84,14 @@ const generateHTML = (users) => {
         <table>
             <thead>
                 <tr>
-                    <th>Id</th>
+                    <th>Sexo</th>
                     <th>Nome</th>
-                    <th>Telefone</th>
-                    <th>Data</th>
+                    <th>Foto</th>
+                    <th>email</th>
+                    <th>email</th>
                 </tr>
             </thead>
             <tbody>
-                ${linhas.join('')}
-                ${linhas.join('')}
-                ${linhas.join('')}
-                ${linhas.join('')}
-                ${linhas.join('')}
-                ${linhas.join('')}
-                ${linhas.join('')}
-                ${linhas.join('')}
-                ${linhas.join('')}
                 ${linhas.join('')}
             </tbody>
             <tfoot>

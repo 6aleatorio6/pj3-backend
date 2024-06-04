@@ -1,0 +1,3 @@
+rode o npm i 
+desinstale o puppeteer( npm un puppeteer)
+e baixe novamente ( npm i puppeteer@22.6.1 )
