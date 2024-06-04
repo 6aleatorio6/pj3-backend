@@ -20,6 +20,7 @@ model usuario {
   cidade     String?       @db.VarChar(50)
   sexo       usuario_sexo?
   deleted_at DateTime?     @db.DateTime(0)
+  visitas    visitas[]
 }
 
 model catalogo {
@@ -61,8 +62,8 @@ model visitas {
   usuario_id   Int       @unique(map: "usuario_id_UNIQUE")
   dataDaVisita DateTime  @default(now()) @db.DateTime(0)
   deleted_at   DateTime? @db.DateTime(0)
+  usuario      usuario   @relation(fields: [usuario_id], references: [id])
 
-  @@id([id, usuario_id])
   @@index([usuario_id], map: "fk_visitas_usuario1_idx")
 }
 
