@@ -25,20 +25,20 @@ model usuario {
 }
 
 model catalogo {
-  uuid            String            @id @unique() @default(uuid()) @db.VarChar(60)
-  funcionarioId   Int
-  descricao       String            @db.VarChar(255)
-  nomePopular     String            @db.VarChar(45)
-  nomeCientifico  String            @db.VarChar(45)
-  som             String?           @db.VarChar(45)
-  medalha         String?           @db.VarChar(45)
-  estrela         Decimal?          @db.Decimal(1, 1)
-  nascimento      DateTime?         @db.Date
-  deleted_at      DateTime?
-  
-  lidoPeloUser    lidoPeloUser[]
-  catalogoGaleria catalogoGaleria[]
-  funcionario_autor funcionario @relation(fields: [funcionarioId], references: [id])
+  uuid           String    @id @unique() @default(uuid()) @db.VarChar(60)
+  funcionarioId  Int
+  descricao      String    @db.VarChar(255)
+  nomePopular    String    @db.VarChar(45)
+  nomeCientifico String    @db.VarChar(45)
+  som            String?   @db.VarChar(45)
+  medalha        String?   @db.VarChar(45)
+  estrela        Decimal?  @db.Decimal(1, 1)
+  nascimento     DateTime? @db.Date
+  deleted_at     DateTime?
+
+  lidoPeloUser      lidoPeloUser[]
+  catalogoGaleria   catalogoGaleria[]
+  funcionario_autor funcionario       @relation(fields: [funcionarioId], references: [id])
 
   @@index([funcionarioId])
 }
@@ -88,6 +88,14 @@ model lidoPeloUser {
 
   @@index([usuario_id])
   @@index([catalogo_uuid])
+}
+
+// se todo mundo acreditar que isso é um banco de arquivos, então é um banco de arquivos
+model fileBasePaia {
+  uuid String @id() @default(uuid())
+  file Bytes
+
+  @@index([uuid])
 }
 
 enum usuario_sexo {
