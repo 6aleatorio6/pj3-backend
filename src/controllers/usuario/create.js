@@ -23,7 +23,6 @@ export default endpointBoxSafe(async (req, res) => {
   });
 
   const usuario = await prismaPaiado.usuario.create({
-    simularUnique: ['email'],
     select: {
       id: true,
       apelido: true,

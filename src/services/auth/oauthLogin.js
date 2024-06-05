@@ -15,7 +15,6 @@ export default async function loginOrSignUp(payload) {
 
   if (!user)
     user = await prismaPaiado.usuario.create({
-      simularUnique: [idModel],
       data: {
         [idModel]: payload[idModel], // ex: googleId
         apelido: payload.apelido,

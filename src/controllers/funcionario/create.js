@@ -25,7 +25,6 @@ export default endpointBoxSafe(async (req, res) => {
   });
 
   const funcionario = await prismaPaiado.funcionario.create({
-    simularUnique: ['email'],
     select: {
       id: true,
       email: true,

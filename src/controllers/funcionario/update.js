@@ -31,7 +31,6 @@ export default endpointBoxSafe(async (req, res) => {
   const id = req.params.id || +req.user.id;
 
   const func = await prismaPaiado.funcionario.update({
-    simularUnique: ['email'],
     select: {
       foto: true,
       nome: true,
