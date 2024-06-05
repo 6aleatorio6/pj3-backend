@@ -19,6 +19,7 @@ export default endpointBoxSafe(async (req, res) => {
       id: true,
       apelido: true,
       foto: true,
+      lidoPeloUser: { include: { catalogo: true } },
     },
     where: { id },
   });
