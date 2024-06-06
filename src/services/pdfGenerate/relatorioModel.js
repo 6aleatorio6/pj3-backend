@@ -45,7 +45,7 @@ const totalFuncionarios = async ({ adm, numerofuncionario, pulefuncionario = 0 }
     return { countFuncionarios, funcionarios }
 }
 
-const totalVisitas = async ({ sexo, cidade, email, foto, dataDaVisitaMin, dataDaVisitaMax, numeroVisitas, puleVisitas = 0 }) => {
+const totalVisitas = async ({ sexo, cidade, email, foto, dataDaVisitaMin, dataDaVisitaMax, numeroVisitas = undefined, puleVisitas = 0 }) => {
     const filtro = {
         ...(sexo && { sexo }),
         ...(cidade && { cidade }),
