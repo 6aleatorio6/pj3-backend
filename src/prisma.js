@@ -21,13 +21,17 @@ export default prisma;
 
 /**
  * prisma com os tratamentos de erros do SecureController e a lógica de softdelete
+ *
+ * @type {typeof prisma}
  */
 export const prismaPaiado = prisma
   .$extends(PrismaErrorInterceptor)
-  .$extends(UniquesPaiasPrisma('email', 'apelido', 'facebookId'))
+  .$extends(UniquesPaiasPrisma('email', 'googleId', 'facebookId'))
   .$extends(SoftDeletePrisma);
 
 /**
  * Sem a logica do softDelete, mas com os tratamentos de erros do SecureController
+ *
+ * @type {typeof prisma}
  */
 export const prismaApenasPaiado = prisma.$extends(PrismaErrorInterceptor);

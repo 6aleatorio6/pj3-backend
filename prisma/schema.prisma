@@ -92,8 +92,9 @@ model lidoPeloUser {
 
 // se todo mundo acreditar que isso é um banco de arquivos, então é um banco de arquivos
 model fileBasePaia {
-  uuid String @id() @default(uuid())
-  file Bytes
+  uuid     String @id() @default(uuid())
+  file     Bytes
+  mimeType String @db.VarChar(10)
 
   @@index([uuid])
 }
