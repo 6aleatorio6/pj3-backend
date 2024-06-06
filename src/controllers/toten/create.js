@@ -1,5 +1,5 @@
 import endpointBoxSafe from '../../services/secureController/handlerBox.js';
-// import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
+import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
 import prisma from '../../prisma.js';
 import { reqValidy } from '../../services/validacao/reqValidy.js';
 
@@ -12,7 +12,8 @@ export default endpointBoxSafe(async (req, res) => {
       nascimento: 'required',
     },
   });
-  const usuarioParcial = await prisma.usuario.create({
+
+  const usuarioParcial = await prismaPaiado.usuario.create({
     select: {
       id: true,
       nome: true,
