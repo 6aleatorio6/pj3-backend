@@ -1,17 +1,24 @@
 import { Prisma } from '@prisma/client';
 
 /**
+ * @typedef {keyof Prisma.TypeMap['model']} Models
  *
- *
- * @param { (keyof Prisma.TypeMap['model'][key in keyof Prisma.TypeMap['model']]['fields'])[]} colsUniques
+ * @param { ({[M in Models]: keyof Prisma.TypeMap['model'][M]['fields']}[Models])[] } colsUniques
  */
-export function prismaSoftDeleteExtension(colsUniques) {
+export function UniquesPaiasPrisma(...colsUniques) {
   return Prisma.defineExtension((dbClient) =>
     dbClient.$extends({
       query: {
         async $allOperations({ query, model, operation, args }) {
-          for (const coluna of colsUniques) {
-            await UniqueArtificial(model, coluna, args.data[coluna]);
+          if (args.data && /(create)|(up)/g.test(operation)) {
+            for (const fields of colsUniques) {
+              await UniqueArtificial(
+                model,
+                fields,
+                args.data[fields],
+                dbClient,
+              );
+            }
           }
 
           return query(args);
@@ -20,6 +27,7 @@ export function prismaSoftDeleteExtension(colsUniques) {
     }),
   );
 }
+
 async function UniqueArtificial(tabela, coluna, value, dbClient) {
   if (!value) return;
 

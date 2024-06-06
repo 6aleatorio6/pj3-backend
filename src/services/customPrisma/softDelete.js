@@ -1,11 +1,9 @@
 import { Prisma } from '@prisma/client';
 
-export const prismaSoftDeleteExtension = Prisma.defineExtension((dbClient) =>
+export const SoftDeletePrisma = Prisma.defineExtension((dbClient) =>
   dbClient.$extends({
     query: {
       $allOperations({ query, model, operation, args }) {
-        console.log('s');
-
         if (operation === 'delete' || operation === 'deleteMany') {
           return dbClient[model][operation.replace('delete', 'update')]({
             ...args,
