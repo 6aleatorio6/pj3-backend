@@ -16,9 +16,20 @@ const formatarData = (data) => {
     return null; // Caso nenhum formato seja válido
 };
 
+const limparFiltro = (filtro) => {
+    for (const prop in filtro) {
+        if (filtro[prop] === null || filtro[prop] === "" || filtro[prop] === undefined) {
+            delete filtro[prop];
+        }
+    }
+    return filtro;
+};
+
 const todosUsuariosPDF = async (req, res) => {
     try {
-        const filtro = req.body.filtro
+        console.log(req.body);
+        const filtro = limparFiltro(req.body)
+        console.log(filtro);
          // Define as datas se não estiverem presentes no filtro
          const hoje = new Date();
          const umMesAFrente = new Date();
@@ -49,15 +60,16 @@ const todosUsuariosPDF = async (req, res) => {
                 return res.status(400).json({ error: 'Formato de dataDaVisitaMax inválido' });
             }
         }
+
+        const resultado = await relatorioModel.totalVisitas(filtro)
+        console.log(resultado);
         
-        const resultado = await relatorioModel.totalUsuarios(filtro)
-        
-        // const htmlContent = await compileTemplate(generateHTML, resultado) //antiga formatação html
-        const htmlContent = generateHTML(resultado) // Usando o generateHTML para gerar o HTML ao invez do compileTemplate
+        const htmlContent = generateHTML(resultado.visitas)
         const pdf = await generatePDF(htmlContent)
         res.contentType('application/pdf')
         
         res.send(pdf)
+        // res.send('deu certo karai')
     } catch (error) {
         console.log(error);
         return res.status(500).json({ error: 'Houve um erro no nosso servidor, tente novamente!' })

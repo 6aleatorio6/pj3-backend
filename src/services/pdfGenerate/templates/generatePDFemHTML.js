@@ -1,7 +1,18 @@
-const generateHTML = (users) => {
+const formatarData = (nascimento) => {
+    const data = new Date(nascimento);
+    const dia = data.getDate().toString().padStart(2, '0');
+    const mes = (data.getMonth() + 1).toString().padStart(2, '0');
+    const ano = data.getFullYear().toString();
+    const dataFormatada = `${dia}/${mes}/${ano}`;
+
+    return dataFormatada
+}
+
+const generateHTML = (visitas) => {
+
     let linhas = [];
-    users.forEach(user => {
-        linhas.push(`<tr><td>${user.sexo}</td><td>${user.nome}</td><td>${user.nascimento}</td><td>${user.email ? user.email : "não possui" }</td><td>${user.cidade? user.cidade: "não informou"}</td></tr>`);
+    visitas.forEach(visita => {
+        linhas.push(`<tr><td>${visita.usuario.sexo}</td><td>${visita.usuario.nome}</td><td>${formatarData(visita.usuario.nascimento)}</td><td>${visita.usuario.email ? visita.usuario.email : "não possui"}</td><td>${visita.usuario.cidade ? visita.usuario.cidade : "não informou"}</td></tr>`);
     });
 
     let Graficos = `
@@ -157,7 +168,7 @@ const generateHTML = (users) => {
             <tbody>
                 ${linhas.join('')}
 
-                ${ Graficos}
+                ${Graficos}
             </tbody>
             
         </table>
