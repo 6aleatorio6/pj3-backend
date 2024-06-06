@@ -1,6 +1,6 @@
 import endpointBoxSafe from '../../services/secureController/handlerBox.js';
 import { reqValidy } from '../../services/validacao/reqValidy.js';
-import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
+import { prismaPaiado } from '../../prisma.js';
 
 /**
  *  Endpoint para procurar item no catalogo
