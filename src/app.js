@@ -8,6 +8,7 @@ import catalogoRouter from './routers/catalogoRouter.js';
 import totenRouter from './routers/totenRouter.js';
 import { loggerMiddleware } from './helpers/loggerMidleware.js';
 import refreshSession from './controllers/auth/refreshSession.js';
+import { convertFilesToURLs } from './services/uploadFiles/upload.js';
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(
   loggerMiddleware,
   express.json(),
   express.urlencoded({ extended: false }),
+  convertFilesToURLs,
   cookieParser(),
 );
 
