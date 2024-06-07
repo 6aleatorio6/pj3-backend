@@ -1,5 +1,5 @@
 import endpointBoxSafe from '../secureController/handlerBox.js';
-import { prismaPaiado } from '../customPrisma/prismaController.js';
+import { prismaPaiado } from '../../prisma.js';
 import { reqValidy } from '../validacao/reqValidy.js';
 import { HttpException } from '../secureController/handlersPaia.js';
 import { compare } from 'bcrypt';

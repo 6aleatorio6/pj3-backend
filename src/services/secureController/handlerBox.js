@@ -5,12 +5,13 @@ import { HttpException } from './handlersPaia.js';
  * @typedef {import("express").Response} Res
  * @typedef {import("express").NextFunction} Next
  *
- * @argument { (req:Req , res: Res, next: Next) => Promise<any>} endpoint
+ * @argument { (req:Req , res: Res, next: Next) => Promise<'nextPaia' | void>} endpoint
  */
 export default function endpointBoxSafe(endpoint) {
   return async (req, res, next) => {
     try {
-      await endpoint(req, res, next);
+      const isNext = await endpoint(req, res, next);
+      if (isNext === 'nextPaia') next();
     } catch (erroBruto) {
       const { code, message, details } = HttpException.getInfoError(erroBruto);
 

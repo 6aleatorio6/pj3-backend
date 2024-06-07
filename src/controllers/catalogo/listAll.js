@@ -1,5 +1,5 @@
 import endpointBoxSafe from '../../services/secureController/handlerBox.js';
-import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
+import { prismaPaiado } from '../../prisma.js';
 
 /**
  *  Endpoint para buscar todos os item do catalogo

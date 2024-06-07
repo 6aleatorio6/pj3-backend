@@ -1,7 +1,7 @@
 import endpointBoxSafe from '../../services/secureController/handlerBox.js';
 import { reqValidy } from '../../services/validacao/reqValidy.js';
 import { allValid } from '../../services/validacao/allValidations.js';
-import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
+import { prismaPaiado } from '../../prisma.js';
 import { gerarHash } from '../../services/auth/helpersAuth.js';
 
 /**
@@ -25,7 +25,6 @@ export default endpointBoxSafe(async (req, res) => {
   });
 
   const funcionario = await prismaPaiado.funcionario.create({
-    simularUnique: ['email'],
     select: {
       id: true,
       email: true,

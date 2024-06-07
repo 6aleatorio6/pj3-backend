@@ -1,5 +1,5 @@
 import endpointBoxSafe from '../../services/secureController/handlerBox.js';
-// import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
+// import { prismaPaiado } from '../../prisma.js';
 import prisma from '../../prisma.js';
 import { reqValidy } from '../../services/validacao/reqValidy.js';
 

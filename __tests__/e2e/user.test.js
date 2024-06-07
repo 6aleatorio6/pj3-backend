@@ -1,6 +1,6 @@
 import supertest from 'supertest';
 import app from '../../src/app.js';
-import { prismaPaiado } from '../../src/services/customPrisma/prismaController.js';
+import { prismaPaiado } from '../../src/prisma.js';
 
 const api = supertest(app);
 

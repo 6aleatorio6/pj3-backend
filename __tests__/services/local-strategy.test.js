@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import app from '../../src/app.js';
 import supertest from 'supertest';
 import jwt from 'jsonwebtoken';
-import { prismaPaiado } from '../../src/services/customPrisma/prismaController.js';
+import { prismaPaiado } from '../../src/prisma.js';
 
 const request = supertest(app);
 
