@@ -1,13 +1,23 @@
 import { prismaApenasPaiado } from '../../prisma.js';
+import endpointBoxSafe from '../secureController/handlerBox.js';
+import { reqValidy } from '../validacao/reqValidy.js';
 
 // externa
-export async function getFiles(uuid) {
-  const { file } = await prismaApenasPaiado.fileBasePaia.findFirstOrThrow({
-    where: { uuid },
+// url: {url-base}/files/:uuid
+export const getFilesEndpoint = endpointBoxSafe(async (req, res) => {
+  reqValidy(req, {
+    params: { uuid: 'required' },
   });
 
-  return file;
-}
+  const { file, mimeType } =
+    await prismaApenasPaiado.fileBasePaia.findFirstOrThrow({
+      where: { uuid: req.params.uuid },
+    });
+
+  console.log(file.readUint8());
+  res.set('Content-Type', mimeType);
+  res.send(Buffer.from(file, 'base64url'));
+});
 
 // interna
 export async function uploadFile(file, info) {

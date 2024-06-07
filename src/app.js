@@ -9,6 +9,7 @@ import totenRouter from './routers/totenRouter.js';
 import { loggerMiddleware } from './helpers/loggerMidleware.js';
 import refreshSession from './controllers/auth/refreshSession.js';
 import { convertFilesToURLs } from './services/uploadFiles/upload.js';
+import { getFilesEndpoint } from './services/uploadFiles/pontasFiles.js';
 
 const app = express();
 
@@ -26,8 +27,11 @@ app.use(
   cookieParser(),
 );
 
-// controllers
+// services
+app.get('/files/:uuid', getFilesEndpoint);
 app.use('/token/refresh', refreshSession);
+
+// controllers
 app.use('/funcionario', funcionarioRouter);
 app.use('/usuario', usuarioRouter);
 app.use('/catalogo', catalogoRouter);
