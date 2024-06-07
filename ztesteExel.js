@@ -24,10 +24,10 @@ async function createWorkbook() {
 
 
     //usar for nesta parte para cada visita
-    worksheet.addRow({id: 1, name: 'João', email: 'joao@email.com'});
-    worksheet.addRow({id: 2, name: 'Maria', email: 'maria@email.com'});
-    worksheet.addRow({id: 2, name: 'Maria', email: 'maria@email.com'});
-    worksheet.addRow({id: 2, name: 'Maria', email: 'maria@email.com'});
+    worksheet.addRow({name: 'João', email: 'joao@email.com'});
+    worksheet.addRow({name: 'Maria', email: 'maria@email.com'});
+    worksheet.addRow({name: 'Maria', email: 'maria@email.com'});
+    worksheet.addRow({name: 'Maria', email: 'maria@email.com'});
 
     await workbook.xlsx.writeFile(`relatorioDeVisitas${formatarTimestampParaData()}.xlsx`);
     console.log("Arquivo criado com sucesso!");
