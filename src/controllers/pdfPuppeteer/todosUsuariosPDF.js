@@ -1,6 +1,7 @@
 import relatorioModel from "../../services/pdfGenerate/relatorioModel.js";
 import generatePDF from "../../services/pdfGenerate/pdfGenerator.js";
 import generateHTML from "../../services/pdfGenerate/templates/generatePDFemHTML.js";
+import calcularIdade from "../../helpers/calcularIdade.js";
 import moment from "moment";
 
 const formatarData = (data) => {
@@ -27,19 +28,29 @@ const limparFiltro = (filtro) => {
 
 const todosUsuariosPDF = async (req, res) => {
     try {
-        console.log(req.body);
         const filtro = limparFiltro(req.body)
-        console.log(filtro);
-         // Define as datas se não estiverem presentes no filtro
-         const hoje = new Date();
-         const umMesAFrente = new Date();
-         umMesAFrente.setMonth(hoje.getMonth() + 1);
- 
-         // Formatação das datas para o formato ISO 8601
-         const dataHojeFormatada = hoje.toISOString();
-         const dataUmMesAFrenteFormatada = umMesAFrente.toISOString();
- 
-         if (!filtro.dataDaVisitaMin) {
+        // const filtro = limparFiltro({
+        //     sexo: "F",
+        //     // cidade: "Cidade1",
+        //     cidade: "",
+        //     email: undefined,
+        //     foto: undefined,
+        //     dataDaVisitaMin: "2024-06-01",
+        //     dataDaVisitaMax: "30/06/2024",
+        //     numeroVisitas: null,
+        //     puleVisitas: ""
+        // })
+
+        // Define as datas se não estiverem presentes no filtro
+        const hoje = new Date();
+        const umMesAFrente = new Date();
+        umMesAFrente.setMonth(hoje.getMonth() + 1);
+
+        // Formatação das datas para o formato ISO 8601
+        const dataHojeFormatada = hoje.toISOString();
+        const dataUmMesAFrenteFormatada = umMesAFrente.toISOString();
+
+        if (!filtro.dataDaVisitaMin) {
             filtro.dataDaVisitaMin = dataHojeFormatada;
         } else {
             const dataFormatada = formatarData(filtro.dataDaVisitaMin);
@@ -60,14 +71,15 @@ const todosUsuariosPDF = async (req, res) => {
                 return res.status(400).json({ error: 'Formato de dataDaVisitaMax inválido' });
             }
         }
+        console.log(filtro);
 
         const resultado = await relatorioModel.totalVisitas(filtro)
-        console.log(resultado);
-        
+        resultado.visitas[1].usuario.nascimento
+
         const htmlContent = generateHTML(resultado.visitas)
         const pdf = await generatePDF(htmlContent)
         res.contentType('application/pdf')
-        
+
         res.send(pdf)
         // res.send('deu certo karai')
     } catch (error) {

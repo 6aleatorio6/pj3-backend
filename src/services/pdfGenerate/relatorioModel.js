@@ -45,17 +45,20 @@ const totalFuncionarios = async ({ adm, numerofuncionario, pulefuncionario = 0 }
     return { countFuncionarios, funcionarios }
 }
 
-const totalVisitas = async ({ sexo, cidade, email, foto, dataDaVisitaMin, dataDaVisitaMax, numeroVisitas = undefined, puleVisitas = 0 }) => {
+const totalVisitas = async ({ sexo, cidade, email, foto, dataDaVisitaMin, dataDaVisitaMax, numeroVisitas, puleVisitas = 0 }) => {
     const filtro = {
         ...(sexo && { sexo }),
         ...(cidade && { cidade }),
         ...(email && { email: { not: null } }),
-        ...(foto && { foto: { not: null } })
+        ...(email === false && { email: null }),
+        ...(foto && { foto: { not: null } }),
+        ...(foto === false && { foto: null })
     }
 
 
     const visitas = await prisma.visitas.findMany({
         select: {
+            dataDaVisita: true,
             usuario: {
                 select: {
                     email: true,
