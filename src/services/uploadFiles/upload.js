@@ -4,6 +4,7 @@ import endpointBoxSafe from '../secureController/handlerBox.js';
 import { uploadFile } from './pontasFiles.js';
 import { HttpException } from '../secureController/handlersPaia.js';
 
+// TODO: refatorar mais tarde
 export const convertFilesToURLs = endpointBoxSafe((req, res) => {
   return new Promise((resolve, reject) => {
     const isMultiPart =
@@ -28,19 +29,19 @@ export const convertFilesToURLs = endpointBoxSafe((req, res) => {
         arrayBuffer.push(c);
       });
 
-      paiaFiles.push(
-        new Promise((res, rej) => {
-          file.on('end', async () => {
-            try {
-              const uriFile = await uploadFile(Buffer.from(arrayBuffer), info);
-              req.body[field] = uriFile;
-              res(uriFile);
-            } catch (error) {
-              rej(error);
-            }
-          });
-        }),
-      );
+      const promiseFile = new Promise((res, rej) => {
+        file.on('end', async () => {
+          try {
+            const uriFile = await uploadFile(Buffer.concat(arrayBuffer), info);
+            req.body[field] = uriFile;
+            res(uriFile);
+          } catch (error) {
+            rej(error);
+          }
+        });
+      });
+
+      paiaFiles.push(promiseFile);
     });
 
     bb.on('finish', () => {

@@ -14,9 +14,8 @@ export const getFilesEndpoint = endpointBoxSafe(async (req, res) => {
       where: { uuid: req.params.uuid },
     });
 
-  console.log(file.readUint8());
   res.set('Content-Type', mimeType);
-  res.send(Buffer.from(file, 'base64url'));
+  res.send(file);
 });
 
 // interna
