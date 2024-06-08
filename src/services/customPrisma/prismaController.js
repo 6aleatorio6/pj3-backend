@@ -22,6 +22,7 @@ export const PrismaErrorInterceptor = Prisma.defineExtension((dbClient) =>
               [
                 500,
                 'Chamada do Prisma inválida. Verifique a sua consulta do prisma (se for dev)',
+                e,
               ],
             ],
           ];

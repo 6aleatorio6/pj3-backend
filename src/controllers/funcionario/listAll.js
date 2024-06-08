@@ -18,7 +18,6 @@ export default endpointBoxSafe(async (req, res) => {
       email: true,
       cpf: true,
       nome: true,
-      foto: true,
       roles: true,
     },
   });

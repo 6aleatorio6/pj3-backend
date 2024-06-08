@@ -13,13 +13,20 @@ const router = Router();
 
 router.post('/login', middleLogin('funcionario'), login);
 
+//
 router.post('/', useGuard('ADM'), create);
 router.get('/', useGuard('ADM'), listAll);
-router.get('/', useGuard('ADM', 'TOTEM'), get);
+
+//
+router.get('/my', useGuard('ADM', 'TOTEM'), get);
 router.get('/:id', useGuard('ADM'), get);
-router.put('/', useGuard('ADM', 'TOTEM'), update);
+
+//
+router.put('/my', useGuard('ADM', 'TOTEM'), update);
 router.put('/:id', useGuard('ADM'), update);
-router.delete('/', useGuard('ADM', 'TOTEM'), remove);
+
+//
+router.delete('/my', useGuard('ADM', 'TOTEM'), remove);
 router.delete('/:id', useGuard('ADM'), remove);
 
 export default router;

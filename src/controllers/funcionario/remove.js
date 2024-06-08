@@ -20,7 +20,7 @@ export default endpointBoxSafe(async (req, res) => {
     },
   });
 
-  const id = req.params.id || +req.user.id;
+  const id = req.params.id || req.user.id;
 
   const fun = await prismaPaiado.funcionario.delete({
     select: {

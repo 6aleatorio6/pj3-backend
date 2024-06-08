@@ -21,7 +21,7 @@ export default endpointBoxSafe(async (req, res) => {
     },
   });
 
-  const id = req.params.id || +req.user.id;
+  const id = req.params.id || req.user.id;
 
   const funcionario = await prismaPaiado.funcionario.findFirstOrThrow({
     select: {
@@ -29,7 +29,7 @@ export default endpointBoxSafe(async (req, res) => {
       email: true,
       cpf: true,
       nome: true,
-      foto: true,
+      roles: true,
     },
     where: { id },
   });
