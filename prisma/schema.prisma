@@ -94,7 +94,7 @@ model lidoPeloUser {
 model fileBasePaia {
   uuid     String @id() @default(uuid())
   file     Bytes
-  mimeType String @db.VarChar(10)
+  mimeType String @db.VarChar(50)
 
   @@index([uuid])
 }

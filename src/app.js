@@ -19,11 +19,11 @@ export const corsOptions = JSON.parse(
 
 // middleware
 app.use(
-  loggerMiddleware,
   cors(corsOptions),
   express.json(),
   express.urlencoded({ extended: false }),
   convertFilesToURLs, // mais pra frente tem que mover para dps da autenticacao
+  loggerMiddleware,
   cookieParser(),
 );
 
