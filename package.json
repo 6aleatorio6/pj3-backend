@@ -7,7 +7,8 @@
     "start": "node ./src/bin/www.js",
     "dev": "node --env-file=.env --watch ./src/bin/www.js ",
     "format": "prettier --write \"src/**/*.js\"",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "seed": "node ./src/services/customPrisma/seed.js"
   },
   "dependencies": {
     "@prisma/client": "^5.15.0",
