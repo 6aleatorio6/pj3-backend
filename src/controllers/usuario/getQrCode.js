@@ -1,5 +1,5 @@
-import endpointBoxSafe from '../../services/secureController/handlerBox.js';
 import { prismaPaiado } from '../../prisma.js';
+import endpointBoxSafe from '../../services/secureController/handlerBox.js';
 import { reqValidy } from '../../services/validacao/reqValidy.js';
 
 /**
@@ -14,15 +14,27 @@ import { reqValidy } from '../../services/validacao/reqValidy.js';
  */
 export default endpointBoxSafe(async (req, res) => {
   reqValidy(req, { params: { uuid: 'required' } });
-  const id = +req.user.id;
 
+  console.log(req.params.uuid);
   const { catalogo } = await prismaPaiado.lidoPeloUser.create({
     data: {
-      usuario_id: id,
-      catalogo_uuid: req.params.uuid,
+      usuario: { connect: { id: req.user.id } },
+      catalogo: { connect: { uuid: req.params.uuid } },
     },
     select: {
-      catalogo: true,
+      catalogo: {
+        select: {
+          uuid: true,
+          medalha: true,
+          som: true,
+          nomePopular: true,
+          nomeCientifico: true,
+          nascimento: true,
+          estrela: true,
+          descricao: true,
+          catalogoGaleria: true,
+        },
+      },
     },
   });
 
