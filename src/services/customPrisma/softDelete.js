@@ -23,16 +23,18 @@ export const SoftDeletePrisma = Prisma.defineExtension((dbClient) =>
             return;
           }
 
-          for (const keySelect in e) {
-            if (!Object.keys(Prisma.ModelName).includes(keySelect)) return;
-            const v = e[keySelect];
-            const isObject = typeof v === 'object';
+          // TODO: revisar isso
+          // for (const keySelect in e) {
+          //   if (!Object.keys(Prisma.ModelName).includes(keySelect)) return;
+          //   const v = e[keySelect];
+          //   const isObject = typeof v === 'object';
 
-            e[keySelect] = {
-              ...(isObject ? v : {}),
-              where: { ...(isObject ? v.where : {}), deleted_at: null },
-            };
-          }
+          //   console.log(key, keySelect);
+          //   e[keySelect] = {
+          //     ...(isObject ? v : {}),
+          //     where: { ...(isObject ? v.where : {}), deleted_at: null },
+          //   };
+          // }
         });
 
         if (operation === 'findUnique' || operation === 'findUniqueOrThrow') {

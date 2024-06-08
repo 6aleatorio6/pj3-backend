@@ -22,13 +22,15 @@ export const PrismaErrorInterceptor = Prisma.defineExtension((dbClient) =>
               [
                 500,
                 'Chamada do Prisma inválida. Verifique a sua consulta do prisma (se for dev)',
-                e,
+                e.stack,
               ],
             ],
           ];
-
           const achandoErro = errosTrataveis.find(([er]) => e instanceof er);
 
+          if (!(e instanceof Prisma.PrismaClientKnownRequestError)) {
+            console.error(e);
+          }
           if (!achandoErro)
             throw new HttpException(500, 'Erro desconhecido do Prisma');
 
