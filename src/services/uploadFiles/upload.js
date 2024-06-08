@@ -22,32 +22,52 @@ export const convertFilesToURLs = endpointBoxSafe((req, res) => {
       req.body[field] = value;
     });
 
+    // criar um array para amazenar as promessas das respostas do uploadFiles com os arquivos
     const paiaFiles = [];
+
     bb.on('file', (field, file, info) => {
       const arrayBuffer = [];
       file.on('data', (c) => {
         arrayBuffer.push(c);
       });
 
+      // promessa
       const promiseFile = new Promise((res, rej) => {
         file.on('end', async () => {
           try {
             const uriFile = await uploadFile(Buffer.concat(arrayBuffer), info);
-            req.body[field] = uriFile;
-            res(uriFile);
+
+            res([field, uriFile]);
           } catch (error) {
             rej(error);
           }
         });
       });
 
+      // dar um push na promessa
       paiaFiles.push(promiseFile);
     });
 
-    bb.on('finish', () => {
-      Promise.all(paiaFiles)
-        .then(() => resolve('nextPaia'))
-        .catch(reject);
+    bb.on('finish', async () => {
+      try {
+        // pegar as respostas do uploadFiles com as Uri dos arquivos
+        const allFiles = await Promise.all(paiaFiles);
+
+        // mandar as uri das fotos para o req.body
+        allFiles.forEach(([field, uri]) => {
+          const hasUri = req.body[field];
+
+          if (!hasUri) return (req.body[field] = uri);
+
+          if (!Array.isArray(hasUri)) req.body[field] = [hasUri];
+
+          req.body[field].push(uri);
+        });
+
+        resolve('nextPaia');
+      } catch (error) {
+        reject(error);
+      }
     });
 
     bb.on('error', (e) => {
