@@ -1,4 +1,7 @@
 import { PrismaClient } from '@prisma/client';
+import { UniquesPaiasPrisma } from './services/customPrisma/uniqueArtificial.js';
+import { SoftDeletePrisma } from './services/customPrisma/softDelete.js';
+import { PrismaErrorInterceptor } from './services/customPrisma/prismaController.js';
 
 const PrismClass = class prisma extends PrismaClient {
   constructor() {
@@ -9,4 +12,26 @@ const PrismClass = class prisma extends PrismaClient {
   }
 };
 
-export default new PrismClass();
+const prisma = new PrismClass();
+
+/**
+ * prisma normal
+ */
+export default prisma;
+
+/**
+ * prisma com os tratamentos de erros do SecureController e a lógica de softdelete
+ *
+ * @type {typeof prisma}
+ */
+export const prismaPaiado = prisma
+  .$extends(PrismaErrorInterceptor)
+  .$extends(UniquesPaiasPrisma('email', 'googleId', 'facebookId'))
+  .$extends(SoftDeletePrisma);
+
+/**
+ * Sem a logica do softDelete, mas com os tratamentos de erros do SecureController
+ *
+ * @type {typeof prisma}
+ */
+export const prismaApenasPaiado = prisma.$extends(PrismaErrorInterceptor);

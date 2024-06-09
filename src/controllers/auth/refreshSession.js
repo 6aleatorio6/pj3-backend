@@ -6,7 +6,7 @@ import {
 } from '../../services/auth/helpersAuth.js';
 import { HttpException } from '../../services/secureController/handlersPaia.js';
 import { decode } from 'jsonwebtoken';
-import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
+import { prismaPaiado } from '../../prisma.js';
 
 export default endpointBoxSafe(async (req, res) => {
   const token = extractTokenFromHeader(req);
