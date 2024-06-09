@@ -5,7 +5,7 @@ import getToten from '../controllers/toten/getToten.js';
 
 const router = Router();
 
-router.post('/visita/:dataToten', create);
-router.get('/visita', getToten)
+router.post('/visita', create);
+router.get('/visita/:dataToten', getToten)
 
 export default router;
