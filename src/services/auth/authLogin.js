@@ -35,7 +35,7 @@ export default function middleLogin(tabelaDaConta) {
       id: conta.id,
       roles: conta.roles || 'USER',
     };
-    console.log(req.user);
+
     next();
   });
 }
