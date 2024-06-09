@@ -18,7 +18,7 @@ export default endpointBoxSafe(async (req, res) => {
       nascimento: true,
       estrela: true,
       descricao: true,
-      foto: true,
+      catalogoGaleria: true,
       medalha: true,
       som: true,
       nomePopular: true,
