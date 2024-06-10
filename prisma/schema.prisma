@@ -31,9 +31,9 @@ model catalogo {
   nomePopular    String    @db.VarChar(45)
   nomeCientifico String    @db.VarChar(45)
   som            String?   @db.VarChar(200)
+  ftModel       String?   @db.VarChar(200)
   medalha        String?   @db.VarChar(200)
   estrela        Decimal?  @db.Decimal(2, 1)
-  nascimento     DateTime? @db.Date
   deleted_at     DateTime?
 
   lidoPeloUser      lidoPeloUser[]
@@ -55,13 +55,13 @@ model catalogoGaleria {
 }
 
 model funcionario {
-  id       Int               @id @unique() @default(autoincrement())
-  email    String            @db.VarChar(80)
-  senha    String            @db.VarChar(100)
-  cpf      String            @db.VarChar(14)
-  nome     String            @db.VarChar(50)
-  roles    funcionario_roles
-  catalogo catalogo[]
+  id         Int               @id @unique() @default(autoincrement())
+  email      String            @db.VarChar(80)
+  senha      String            @db.VarChar(100)
+  cpf        String            @db.VarChar(14)
+  nome       String            @db.VarChar(50)
+  roles      funcionario_roles
+  catalogo   catalogo[]
   deleted_at DateTime?
 }
 

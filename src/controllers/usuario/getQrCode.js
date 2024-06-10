@@ -16,7 +16,7 @@ export default endpointBoxSafe(async (req, res) => {
   reqValidy(req, { params: { uuid: 'required' } });
 
   const id = +req.user.id;
-  const apelido = +req.user.apelido;
+  const apelido = req.user.apelido;
   const uuid = req.params.uuid;
 
   if (uuid === 'qrcodetoten.com') {
@@ -45,8 +45,8 @@ export default endpointBoxSafe(async (req, res) => {
           som: true,
           nomePopular: true,
           nomeCientifico: true,
-          nascimento: true,
           estrela: true,
+          ftPerfil: true,
           descricao: true,
           catalogoGaleria: true,
         },

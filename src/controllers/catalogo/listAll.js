@@ -15,12 +15,12 @@ export default endpointBoxSafe(async (req, res) => {
     select: {
       uuid: true,
       nomeCientifico: true,
-      nascimento: true,
       estrela: true,
       descricao: true,
       catalogoGaleria: true,
       medalha: true,
       som: true,
+      ftModel: true,
       nomePopular: true,
     },
   });
