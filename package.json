@@ -8,7 +8,8 @@
     "dev": "node --env-file=.env --watch ./src/bin/www.js ",
     "format": "prettier --write \"src/**/*.js\"",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "seed": "node ./src/services/customPrisma/seed.js"
+    "seed": "node ./src/services/customPrisma/seed.js",
+    "init": "npm i && npx prisma db push && npm run seed"
   },
   "dependencies": {
     "@prisma/client": "^5.15.0",
