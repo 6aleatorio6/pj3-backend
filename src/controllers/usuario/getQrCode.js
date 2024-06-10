@@ -17,6 +17,7 @@ export default endpointBoxSafe(async (req, res) => {
 
   const id = +req.user.id;
   const apelido = +req.user.apelido;
+  const uuid = req.params.uuid;
 
   if (uuid === 'qrcodetoten.com') {
     const qrCodeToten = await prismaPaiado.visitas.create({
@@ -25,12 +26,11 @@ export default endpointBoxSafe(async (req, res) => {
         dataDaVisita: new Date(),
       },
     });
-    res.json({
+    return res.json({
       message: `Visita do ${apelido} feita pelo app com sucesso`,
       qrCodeToten,
     });
   }
-  console.log(req.params.uuid);
 
   const { catalogo } = await prismaPaiado.lidoPeloUser.create({
     data: {
