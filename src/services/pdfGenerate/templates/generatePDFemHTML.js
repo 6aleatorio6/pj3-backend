@@ -51,6 +51,7 @@ const generateHTML = (visitas) => {
             data: data,
             options: {
                 responsive: true,
+                animation: false,
                 plugins: {
                     legend: {
                         position: 'top',
@@ -160,7 +161,7 @@ const generateHTML = (visitas) => {
                 <tr>
                     <th>Sexo</th>
                     <th>Nome</th>
-                    <th>nascimento</th>
+                    <th>Data da Visita</th>
                     <th>email</th>
                     <th>cidade</th>
                 </tr>
