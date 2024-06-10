@@ -50,12 +50,15 @@ const totalVisitas = async ({ sexo, cidade, email, foto, dataDaVisitaMin, dataDa
         ...(sexo && { sexo }),
         ...(cidade && { cidade }),
         ...(email && { email: { not: null } }),
-        ...(foto && { foto: { not: null } })
+        ...(email === false && { email: null }),
+        ...(foto && { foto: { not: null } }),
+        ...(foto === false && { foto: null })
     }
 
 
     const visitas = await prisma.visitas.findMany({
         select: {
+            dataDaVisita: true,
             usuario: {
                 select: {
                     email: true,

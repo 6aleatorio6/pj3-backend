@@ -1,13 +1,11 @@
 import { Router } from 'express';
 
-// import todosUsuariosPDF from '../controllers/pdfPuppeteer/todosUsuariosPDF.js';
-import todosUsuariosPDFTeste from '../controllers/pdfPuppeteer/testePDF.js';
+import todosUsuariosPDF from '../controllers/pdfPuppeteer/todosUsuariosPDF.js';
 
 const router = Router();
 
 
-// router.post('/listar-usuarios', todosUsuariosPDF)
-router.get('/listar-usuarios', todosUsuariosPDFTeste)
+router.get('/listar-usuarios', todosUsuariosPDF)
 
 
 
