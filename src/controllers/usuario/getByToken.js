@@ -1,5 +1,5 @@
 import endpointBoxSafe from '../../services/secureController/handlerBox.js';
-import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
+import { prismaPaiado } from '../../prisma.js';
 
 /**
  *
@@ -19,6 +19,7 @@ export default endpointBoxSafe(async (req, res) => {
       id: true,
       apelido: true,
       foto: true,
+      lidoPeloUser: { include: { catalogo: true } },
     },
     where: { id },
   });

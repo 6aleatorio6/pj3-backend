@@ -1,6 +1,6 @@
 import endpointBoxSafe from '../../services/secureController/handlerBox.js';
 import { reqValidy } from '../../services/validacao/reqValidy.js';
-import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
+import { prismaPaiado } from '../../prisma.js';
 
 /**
  *  Endpoint de cadastro do catalogo
@@ -15,22 +15,34 @@ export default endpointBoxSafe(async (req, res) => {
   reqValidy(req, {
     body: {
       nomeCientifico: 'required',
-      nascimento: 'required',
-      estrela: 'required',
+      nomePopular: 'required',
       descricao: 'required',
-      foto: 'required',
+      estrela: 'required',
+      nascimento: 'required',
       medalha: 'required',
       som: 'required',
-      nomePopular: 'required',
+
+      // estou usando o zod para transformar o valor recebido. Se for modificar veja em `/src/services/validacao/allValidations.js`
+      catalogoGaleria: 'required',
     },
   });
+
+  const { catalogoGaleria, ...rest } = req.body;
 
   const cata = await prismaPaiado.catalogo.create({
     select: {
       uuid: true,
       nomePopular: true,
     },
-    data: req.body,
+    data: {
+      funcionario_autor: { connect: { id: req.user.id } },
+      catalogoGaleria: {
+        createMany: {
+          data: catalogoGaleria,
+        },
+      },
+      ...rest,
+    },
   });
 
   res.json({

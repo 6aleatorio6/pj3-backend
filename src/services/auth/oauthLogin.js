@@ -1,5 +1,5 @@
 import { HttpException } from '../secureController/handlersPaia.js';
-import { prismaPaiado } from '../customPrisma/prismaController.js';
+import { prismaPaiado } from '../../prisma.js';
 import { jwtSign } from './helpersAuth.js';
 
 export default async function loginOrSignUp(payload) {
@@ -15,7 +15,6 @@ export default async function loginOrSignUp(payload) {
 
   if (!user)
     user = await prismaPaiado.usuario.create({
-      simularUnique: [idModel],
       data: {
         [idModel]: payload[idModel], // ex: googleId
         apelido: payload.apelido,

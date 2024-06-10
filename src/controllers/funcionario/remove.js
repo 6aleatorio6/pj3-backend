@@ -1,5 +1,5 @@
 import endpointBoxSafe from '../../services/secureController/handlerBox.js';
-import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
+import { prismaPaiado } from '../../prisma.js';
 import { reqValidy } from '../../services/validacao/reqValidy.js';
 
 /**
@@ -20,7 +20,7 @@ export default endpointBoxSafe(async (req, res) => {
     },
   });
 
-  const id = req.params.id || +req.user.id;
+  const id = req.params.id || req.user.id;
 
   const fun = await prismaPaiado.funcionario.delete({
     select: {

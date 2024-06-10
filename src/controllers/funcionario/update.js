@@ -1,7 +1,7 @@
 import endpointBoxSafe from '../../services/secureController/handlerBox.js';
 import { allValid } from '../../services/validacao/allValidations.js';
 import { reqValidy } from '../../services/validacao/reqValidy.js';
-import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
+import { prismaPaiado } from '../../prisma.js';
 import { gerarHash } from '../../services/auth/helpersAuth.js';
 
 /**
@@ -28,12 +28,10 @@ export default endpointBoxSafe(async (req, res) => {
     },
   });
 
-  const id = req.params.id || +req.user.id;
+  const id = req.params.id || req.user.id;
 
   const func = await prismaPaiado.funcionario.update({
-    simularUnique: ['email'],
     select: {
-      foto: true,
       nome: true,
       email: true,
       id: true,

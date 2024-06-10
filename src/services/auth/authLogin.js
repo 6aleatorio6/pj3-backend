@@ -1,15 +1,15 @@
 import endpointBoxSafe from '../secureController/handlerBox.js';
-import { prismaPaiado } from '../customPrisma/prismaController.js';
+import { prismaPaiado } from '../../prisma.js';
 import { reqValidy } from '../validacao/reqValidy.js';
 import { HttpException } from '../secureController/handlersPaia.js';
 import { compare } from 'bcrypt';
 
 /**
  *
- * @param {"funcionario" | "usuario"} TipoDaConta
+ * @param {"funcionario" | "usuario"} tabelaDaConta
  * @returns
  */
-export default function middleLogin(TipoDaConta) {
+export default function middleLogin(tabelaDaConta) {
   return endpointBoxSafe(async (req, res, next) => {
     reqValidy(req, {
       body: {
@@ -17,19 +17,16 @@ export default function middleLogin(TipoDaConta) {
         senha: 'required',
       },
     });
-
     const { email, senha } = req.body;
-    const { tipoDeConta } = req.params;
 
-    const conta = await prismaPaiado[TipoDaConta].findUnique({
+    const conta = await prismaPaiado[tabelaDaConta].findUnique({
       where: { email },
       select: {
         id: true,
         senha: true,
-        roles: tipoDeConta === 'funcionario',
+        roles: tabelaDaConta === 'funcionario',
       },
     });
-
     const isValid = conta && (await compare(senha, conta.senha));
 
     if (!isValid) throw new HttpException(400, 'email ou senha invalida');
