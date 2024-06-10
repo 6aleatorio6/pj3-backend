@@ -25,6 +25,10 @@ export const allValid = {
   medalha: z.string().max(45),
   estrela: z.coerce.number().max(5),
   nascimento: z.coerce.date(),
+  catalogoGaleria: z
+    .array(z.string())
+    .transform((ft) => ft.map((f) => ({ url: f })))
+    .or(z.string().transform((ft) => ({ url: ft }))), // aproveito para transformar em um formato aceito ṕelo prisma
 
   // Modelo "foto"
   url: z.string().max(45),

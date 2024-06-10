@@ -1,8 +1,6 @@
+import { prismaPaiado } from '../../prisma.js';
 import endpointBoxSafe from '../../services/secureController/handlerBox.js';
 
-import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
-
-import prisma from '../../prisma.js';
 import { reqValidy } from '../../services/validacao/reqValidy.js';
 
 export default endpointBoxSafe(async (req, res) => {
