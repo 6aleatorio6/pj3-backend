@@ -62,13 +62,12 @@ model funcionario {
   nome     String            @db.VarChar(50)
   roles    funcionario_roles
   catalogo catalogo[]
-
   deleted_at DateTime?
 }
 
 model visitas {
   id           Int       @unique() @default(autoincrement())
-  usuario_id   Int       @unique()
+  usuario_id   Int
   dataDaVisita DateTime  @default(now())
   deleted_at   DateTime?
   usuario      usuario   @relation(fields: [usuario_id], references: [id])
