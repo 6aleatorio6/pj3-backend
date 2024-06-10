@@ -32,7 +32,7 @@ export const errosSabidos = (e, modelOrignal) => {
     P2017: [400, `${model}s não conectados.`],
     P2018: [400, `Falta conexão entre ${model}s.`],
     P2019: [400, `Erro de entrada.`],
-    P2020: [400, `Valor fora do intervalo.`],
+    P2020: [400, `Valor fora do intervalo.`, e?.meta?.details],
     P2021: [404, `Tabela não encontrada.`],
     P2022: [404, `Coluna não encontrada.`],
     P2023: [400, `Dados inconsistentes em ${col}.`],

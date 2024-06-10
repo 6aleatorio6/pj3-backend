@@ -9,6 +9,8 @@ export const PrismaErrorInterceptor = Prisma.defineExtension((dbClient) =>
         try {
           return await query(args);
         } catch (e) {
+          console.error(e);
+
           if (e instanceof HttpException) throw e;
 
           const errosTrataveis = [
@@ -29,7 +31,7 @@ export const PrismaErrorInterceptor = Prisma.defineExtension((dbClient) =>
           const achandoErro = errosTrataveis.find(([er]) => e instanceof er);
 
           if (!(e instanceof Prisma.PrismaClientKnownRequestError)) {
-            console.error(e);
+            // console.error(e);
           }
           if (!achandoErro)
             throw new HttpException(500, 'Erro desconhecido do Prisma');

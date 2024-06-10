@@ -32,7 +32,7 @@ model catalogo {
   nomeCientifico String    @db.VarChar(45)
   som            String?   @db.VarChar(200)
   medalha        String?   @db.VarChar(200)
-  estrela        Decimal?  @db.Decimal(1, 1)
+  estrela        Decimal?  @db.Decimal(2, 1)
   nascimento     DateTime? @db.Date
   deleted_at     DateTime?
 

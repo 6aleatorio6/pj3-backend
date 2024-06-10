@@ -1,5 +1,5 @@
+import { prismaPaiado } from '../../prisma.js';
 import endpointBoxSafe from '../../services/secureController/handlerBox.js';
-import { prismaPaiado } from '../../services/customPrisma/prismaController.js';
 import { reqValidy } from '../../services/validacao/reqValidy.js';
 import { z } from 'zod';
 
@@ -18,6 +18,6 @@ export default endpointBoxSafe(async (req, res) => {
 
   res.json({
     message: `Visita ${getToten.id} encontrada com sucesso`,
-    getToten
+    getToten,
   });
 });
