@@ -2,20 +2,7 @@ import relatorioModel from "../../services/pdfGenerate/relatorioModel.js";
 import generatePDF from "../../services/pdfGenerate/pdfGenerator.js";
 import generateHTML from "../../services/pdfGenerate/templates/generatePDFemHTML.js";
 import calcularIdade from "../../helpers/calcularIdade.js";
-import moment from "moment";
-
-const formatarData = (data) => {
-    // Tenta formatar a data em diferentes formatos aceitos
-    const formatos = ['YYYY-MM-DD', 'DD-MM-YYYY', 'YYYY/MM/DD', 'DD/MM/YYYY'];
-
-    for (const formato of formatos) {
-        const dataFormatada = moment(data, formato, true);
-        if (dataFormatada.isValid()) {
-            return dataFormatada.toISOString();
-        }
-    }
-    return null; // Caso nenhum formato seja válido
-};
+import visitasDateHandler from "../../helpers/visitasDateHandler.js";
 
 const limparFiltro = (filtro) => {
     for (const prop in filtro) {
@@ -28,52 +15,26 @@ const limparFiltro = (filtro) => {
 
 const todosUsuariosPDF = async (req, res) => {
     try {
-        const filtro = limparFiltro(req.body)
-        // const filtro = limparFiltro({
-        //     sexo: "F",
-        //     // cidade: "Cidade1",
-        //     cidade: "",
-        //     email: undefined,
-        //     foto: undefined,
-        //     dataDaVisitaMin: "2024-06-01",
-        //     dataDaVisitaMax: "30/06/2024",
-        //     numeroVisitas: null,
-        //     puleVisitas: ""
-        // })
+        // const filtro = limparFiltro(req.body)
+        const filtro = limparFiltro({
+            sexo: "F",
+            // cidade: "Cidade1",
+            cidade: "",
+            email: undefined,
+            foto: undefined,
+            dataDaVisitaMin: "2024-022226-01",
+            dataDaVisitaMax: "30/06/2024",
+            numeroVisitas: null,
+            puleVisitas: ""
+        })
 
         // Define as datas se não estiverem presentes no filtro
-        const hoje = new Date();
-        const umMesAFrente = new Date();
-        umMesAFrente.setMonth(hoje.getMonth() + 1);
-
-        // Formatação das datas para o formato ISO 8601
-        const dataHojeFormatada = hoje.toISOString();
-        const dataUmMesAFrenteFormatada = umMesAFrente.toISOString();
-
-        if (!filtro.dataDaVisitaMin) {
-            filtro.dataDaVisitaMin = dataHojeFormatada;
-        } else {
-            const dataFormatada = formatarData(filtro.dataDaVisitaMin);
-            if (dataFormatada) {
-                filtro.dataDaVisitaMin = dataFormatada;
-            } else {
-                return res.status(400).json({ error: 'Formato de dataDaVisitaMin inválido' });
-            }
+        const newFiltro = visitasDateHandler(filtro)
+        if (!newFiltro.dataDaVisitaMax || !newFiltro.dataDaVisitaMin) {
+            return res.status(400).json({error: "formato da data mínima ou data máxima informadas é inválido."})
         }
 
-        if (!filtro.dataDaVisitaMax) {
-            filtro.dataDaVisitaMax = dataUmMesAFrenteFormatada;
-        } else {
-            const dataFormatada = formatarData(filtro.dataDaVisitaMax);
-            if (dataFormatada) {
-                filtro.dataDaVisitaMax = dataFormatada;
-            } else {
-                return res.status(400).json({ error: 'Formato de dataDaVisitaMax inválido' });
-            }
-        }
-        console.log(filtro);
-
-        const resultado = await relatorioModel.totalVisitas(filtro)
+        const resultado = await relatorioModel.totalVisitas(newFiltro)
         resultado.visitas[1].usuario.nascimento
 
         const htmlContent = generateHTML(resultado.visitas)
