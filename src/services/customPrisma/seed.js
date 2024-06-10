@@ -45,7 +45,7 @@ const desc =
           som: await uploadFile(audio, { mimeType: 'audio/mp3' }),
           medalha: await uploadFile(ftMedalha, { mimeType: 'image/jpg' }),
           estrela: 0,
-          nascimento: '2022-12-31T00:00:00.000Z',
+          ftModel: await uploadFile(ftMedalha, { mimeType: 'image/jpg' }),
         },
         {
           uuid: '2',
@@ -56,7 +56,7 @@ const desc =
           som: await uploadFile(audio, { mimeType: 'audio/mp3' }),
           medalha: await uploadFile(ftMedalha, { mimeType: 'image/jpg' }),
           estrela: 0,
-          nascimento: '2022-12-31T00:00:00.000Z',
+          ftModel: await uploadFile(ftMedalha, { mimeType: 'image/jpg' }),
         },
         {
           uuid: '3',
@@ -67,7 +67,7 @@ const desc =
           som: await uploadFile(audio, { mimeType: 'audio/mp3' }),
           medalha: await uploadFile(ftMedalha, { mimeType: 'image/jpg' }),
           estrela: 0,
-          nascimento: '2022-12-31T00:00:00.000Z',
+          ftModel: await uploadFile(ftMedalha, { mimeType: 'image/jpg' }),
         },
         {
           uuid: '4',
@@ -78,7 +78,7 @@ const desc =
           som: await uploadFile(audio, { mimeType: 'audio/mp3' }),
           medalha: await uploadFile(ftMedalha, { mimeType: 'image/jpg' }),
           estrela: 0,
-          nascimento: '2022-12-31T00:00:00.000Z',
+          ftModel: await uploadFile(ftMedalha, { mimeType: 'image/jpg' }),
         },
         {
           uuid: '5',
@@ -89,7 +89,7 @@ const desc =
           som: await uploadFile(audio, { mimeType: 'audio/mp3' }),
           medalha: await uploadFile(ftMedalha, { mimeType: 'image/jpg' }),
           estrela: 0,
-          nascimento: '2022-12-31T00:00:00.000Z',
+          ftModel: await uploadFile(ftMedalha, { mimeType: 'image/jpg' }),
         },
         {
           uuid: '6',
@@ -100,7 +100,7 @@ const desc =
           som: await uploadFile(audio, { mimeType: 'audio/mp3' }),
           medalha: await uploadFile(ftMedalha, { mimeType: 'image/jpg' }),
           estrela: 0,
-          nascimento: '2022-12-31T00:00:00.000Z',
+          ftModel: await uploadFile(ftMedalha, { mimeType: 'image/jpg' }),
         },
         {
           uuid: '7',
@@ -111,7 +111,7 @@ const desc =
           som: await uploadFile(audio, { mimeType: 'audio/mp3' }),
           medalha: await uploadFile(ftMedalha, { mimeType: 'image/jpg' }),
           estrela: 0,
-          nascimento: '2022-12-31T00:00:00.000Z',
+          ftModel: await uploadFile(ftMedalha, { mimeType: 'image/jpg' }),
         },
         {
           uuid: '8',
@@ -122,7 +122,7 @@ const desc =
           som: await uploadFile(audio, { mimeType: 'audio/mp3' }),
           medalha: await uploadFile(ftMedalha, { mimeType: 'image/jpg' }),
           estrela: 0,
-          nascimento: '2022-12-31T00:00:00.000Z',
+          ftModel: await uploadFile(ftMedalha, { mimeType: 'image/jpg' }),
         },
         {
           uuid: '9',
@@ -133,7 +133,7 @@ const desc =
           som: await uploadFile(audio, { mimeType: 'audio/mp3' }),
           medalha: await uploadFile(ftMedalha, { mimeType: 'image/jpg' }),
           estrela: 0,
-          nascimento: '2022-12-31T00:00:00.000Z',
+          ftModel: await uploadFile(ftMedalha, { mimeType: 'image/jpg' }),
         },
         {
           uuid: '10',
@@ -144,7 +144,7 @@ const desc =
           som: await uploadFile(audio, { mimeType: 'audio/mp3' }),
           medalha: await uploadFile(ftMedalha, { mimeType: 'image/jpg' }),
           estrela: 0,
-          nascimento: '2022-12-31T00:00:00.000Z',
+          ftModel: await uploadFile(ftMedalha, { mimeType: 'image/jpg' }),
         },
         {
           uuid: '11',
@@ -155,7 +155,7 @@ const desc =
           som: await uploadFile(audio, { mimeType: 'audio/mp3' }),
           medalha: await uploadFile(ftMedalha, { mimeType: 'image/jpg' }),
           estrela: 0,
-          nascimento: '2022-12-31T00:00:00.000Z',
+          ftModel: await uploadFile(ftMedalha, { mimeType: 'image/jpg' }),
         },
         {
           uuid: '12',
@@ -166,7 +166,7 @@ const desc =
           som: await uploadFile(audio, { mimeType: 'audio/mp3' }),
           medalha: await uploadFile(ftMedalha, { mimeType: 'image/jpg' }),
           estrela: 0,
-          nascimento: '2022-12-31T00:00:00.000Z',
+          ftModel: await uploadFile(ftMedalha, { mimeType: 'image/jpg' }),
         },
       ],
     }); // CATALOGO
