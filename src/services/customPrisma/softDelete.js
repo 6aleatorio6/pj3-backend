@@ -17,24 +17,24 @@ export const SoftDeletePrisma = Prisma.defineExtension((dbClient) =>
           });
         }
 
-        deepChange(args, ['where', 'select', 'include'], (e, key) => {
+        deepChange(args, ['where', 'select', 'include'], (objDoKey, key) => {
           if (key === 'where') {
-            e.deleted_at = null;
+            objDoKey.deleted_at = null;
             return;
           }
 
-          // TODO: revisar isso
-          // for (const keySelect in e) {
-          //   if (!Object.keys(Prisma.ModelName).includes(keySelect)) return;
-          //   const v = e[keySelect];
-          //   const isObject = typeof v === 'object';
+          //  só vai rodar essa parte se for select ou include
+          //  o objDoKey pé os select que encontrar
+          for (const keySelect in objDoKey) {
+            if (!Object.keys(Prisma.ModelName).includes(keySelect)) continue; // verifico se tem uma proprieade com o nome de uma tabela do prisma
+            const v = objDoKey[keySelect]; // pego essa propriedade
+            const isObject = typeof v === 'object';
 
-          //   console.log(key, keySelect);
-          //   e[keySelect] = {
-          //     ...(isObject ? v : {}),
-          //     where: { ...(isObject ? v.where : {}), deleted_at: null },
-          //   };
-          // }
+            objDoKey[keySelect] = {
+              ...(isObject ? v : {}), // devolvo as prop se ele for um obj
+              where: { ...(isObject ? v.where : {}), deleted_at: null }, // coloco um where
+            };
+          }
         });
 
         if (operation === 'findUnique' || operation === 'findUniqueOrThrow') {
