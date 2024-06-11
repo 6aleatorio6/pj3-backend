@@ -1,23 +1,23 @@
 import moment from "moment";
 import dateFormatter from "./dateFormatter.js";
 
-const visitasDateHandler = (filtro) => {
+const visitasDateHandler = (filtro, totalMonths = 1) => {
 
     try {
         if (!filtro.dataDaVisitaMin && !filtro.dataDaVisitaMax) {
 
-            filtro.dataDaVisitaMin = moment().subtract(1, 'months').toISOString();
+            filtro.dataDaVisitaMin = moment().subtract(totalMonths, 'months').toISOString();
             filtro.dataDaVisitaMax = moment().toISOString();
     
         } else if (!filtro.dataDaVisitaMin) {
     
             const dataMax = dateFormatter(filtro.dataDaVisitaMax);
-            filtro.dataDaVisitaMin = dataMax.subtract(1, 'months').toISOString();
+            filtro.dataDaVisitaMin = dataMax.subtract(totalMonths, 'months').toISOString();
     
         } else if (!filtro.dataDaVisitaMax) {
     
             const dataMin = dateFormatter(filtro.dataDaVisitaMin);
-            filtro.dataDaVisitaMax = dataMin.add(1, 'months').toISOString();
+            filtro.dataDaVisitaMax = dataMin.add(totalMonths, 'months').toISOString();
             
         } else {
             const dataMin = dateFormatter(filtro.dataDaVisitaMin);

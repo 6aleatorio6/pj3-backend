@@ -3,30 +3,22 @@ import generatePDF from "../../services/pdfGenerate/pdfGenerator.js";
 import generateHTML from "../../services/pdfGenerate/templates/generatePDFemHTML.js";
 import calcularIdade from "../../helpers/calcularIdade.js";
 import visitasDateHandler from "../../helpers/visitasDateHandler.js";
-
-const limparFiltro = (filtro) => {
-    for (const prop in filtro) {
-        if (filtro[prop] === null || filtro[prop] === "" || filtro[prop] === undefined) {
-            delete filtro[prop];
-        }
-    }
-    return filtro;
-};
+import limparFiltro from "../../helpers/limparFiltro.js";
 
 const todosUsuariosPDF = async (req, res) => {
     try {
-        // const filtro = limparFiltro(req.body)
-        const filtro = limparFiltro({
-            sexo: "F",
-            // cidade: "Cidade1",
-            cidade: "",
-            email: undefined,
-            foto: undefined,
-            dataDaVisitaMin: "2024-022226-01",
-            dataDaVisitaMax: "30/06/2024",
-            numeroVisitas: null,
-            puleVisitas: ""
-        })
+        const filtro = limparFiltro(req.body)
+        // const filtro = limparFiltro({
+        //     sexo: "F",
+        //     // cidade: "Cidade1",
+        //     cidade: "",
+        //     email: undefined,
+        //     foto: undefined,
+        //     dataDaVisitaMin: "2024-022226-01",
+        //     dataDaVisitaMax: "30/06/2024",
+        //     numeroVisitas: null,
+        //     puleVisitas: ""
+        // })
 
         // Define as datas se não estiverem presentes no filtro
         const newFiltro = visitasDateHandler(filtro)
@@ -35,6 +27,7 @@ const todosUsuariosPDF = async (req, res) => {
         }
 
         const resultado = await relatorioModel.totalVisitas(newFiltro)
+        console.log(resultado);
         resultado.visitas[1].usuario.nascimento
 
         const htmlContent = generateHTML(resultado.visitas)
