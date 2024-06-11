@@ -46,7 +46,7 @@ export default endpointBoxSafe(async (req, res) => {
           nomePopular: true,
           nomeCientifico: true,
           estrela: true,
-          ftPerfil: true,
+          ftModel: true,
           descricao: true,
           catalogoGaleria: true,
         },

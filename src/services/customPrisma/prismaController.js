@@ -9,10 +9,8 @@ export const PrismaErrorInterceptor = Prisma.defineExtension((dbClient) =>
         try {
           return await query(args);
         } catch (e) {
-          console.error(e);
-
           if (e instanceof HttpException) throw e;
-
+          console.log(e.meta || e.message);
           const errosTrataveis = [
             [Prisma.PrismaClientKnownRequestError, errosSabidos(e, model)],
             [
