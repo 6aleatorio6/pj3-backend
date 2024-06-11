@@ -1,0 +1,15 @@
+-- Inserção de dados mock na tabela `usuario`
+INSERT INTO `dbPj3`.`usuario` (email, senha, googleId, nascimento, facebookId, foto, apelido, nome, cidade, sexo) VALUES
+('joao.silva@example.com', 'senha123', 'google123', '1990-01-01', 'facebook123', 'foto1.jpg', 'joao', 'João Silva', 'São Paulo', 'M'),
+('maria.oliveira@example.com', 'senha456', 'google456', '1985-05-30', 'facebook456', 'foto2.jpg', 'maria', 'Maria Oliveira', 'Rio de Janeiro', 'F'),
+('pedro.costa@example.com', 'senha789', 'google789', '1992-09-20', 'facebook789', 'foto3.jpg', 'pedro', 'Pedro Costa', 'Belo Horizonte', 'M'),
+('ana.pereira@example.com', 'senha012', 'google012', '1988-12-10', 'facebook012', 'foto4.jpg', 'ana', 'Ana Pereira', 'Curitiba', 'F'),
+('carlos.souza@example.com', 'senha345', 'google345', '1995-03-25', 'facebook345', 'foto5.jpg', 'carlos', 'Carlos Souza', 'Porto Alegre', 'M');
+
+-- Inserção de dados mock na tabela `visitas`
+INSERT INTO `dbPj3`.`visitas` (usuario_id, dataDaVisita) VALUES
+(1, '2024-06-01 10:00:00'),
+(2, '2024-06-01 11:00:00'),
+(3, '2024-06-01 12:00:00'),
+(4, '2024-06-01 13:00:00'),
+(5, '2024-06-01 14:00:00');
