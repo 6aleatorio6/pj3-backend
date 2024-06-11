@@ -12,7 +12,6 @@ import { loggerMiddleware } from './helpers/loggerMidleware.js';
 import refreshSession from './controllers/auth/refreshSession.js';
 import { convertFilesToURLs } from './services/uploadFiles/upload.js';
 import { getFilesEndpoint } from './services/uploadFiles/pontasFiles.js';
-import path from 'path';
 
 const app = express();
 
@@ -30,11 +29,8 @@ app.use(
   cookieParser(),
 );
 
-// assets padrão do backend
-app.use('/public', express.static(path.join(import.meta.url, '../assets')));
-
 // services
-app.get('/files/:storage/:uri', getFilesEndpoint);
+app.get('/files/:storage/?', getFilesEndpoint);
 app.use('/token/refresh', refreshSession);
 
 // controllers

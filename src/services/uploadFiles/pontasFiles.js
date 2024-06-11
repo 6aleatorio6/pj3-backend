@@ -7,15 +7,18 @@ import { reqValidy } from '../validacao/reqValidy.js';
 // url: {url-base}/files/:uuid
 export const getFilesEndpoint = endpointBoxSafe(async (req, res) => {
   reqValidy(req, {
-    params: { uri: 'required', storage: z.enum(['db', 'public']) },
+    params: { storage: z.enum(['db', 'public']) },
+    query: { uri: z.string() },
   });
 
-  if (req.params.storage === 'public')
-    return res.redirect('/public/' + req.params.uri);
+  const { uri } = req.query;
+  const { storage } = req.params;
+
+  if (storage === 'public') return res.sendFile(uri, { root: 'public' });
 
   const { file, mimeType } =
     await prismaApenasPaiado.fileBasePaia.findFirstOrThrow({
-      where: { uuid: req.params.uri },
+      where: { uuid: uri },
     });
 
   res.set('Content-Type', mimeType);
@@ -28,5 +31,5 @@ export async function uploadFile(file, info) {
     data: { file, mimeType: info.mimeType },
   });
 
-  return `/db/${uuid}`;
+  return `/db/?uri=${uuid}`;
 }
