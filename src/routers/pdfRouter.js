@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import todasVisitasPDF from '../controllers/pdfPuppeteer/todosUsuariosPDF.js';
+import todasVisitasPDF from '../controllers/pdfPuppeteer/todasVisitasPDF.js';
 
 const router = Router();
 
