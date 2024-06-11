@@ -1,29 +1,30 @@
-const formatarData = (nascimento) => {
-    const data = new Date(nascimento);
-    const dia = data.getDate().toString().padStart(2, '0');
-    const mes = (data.getMonth() + 1).toString().padStart(2, '0');
-    const ano = data.getFullYear().toString();
-    const dataFormatada = `${dia}/${mes}/${ano}`;
-
-    return dataFormatada
-}
-
-const generateHTML = (visitas) => {
-
-    visitas.forEach
-    let linhas = [];
-    visitas.forEach(visita => {
-        linhas.push(`<tr><td>${visita.usuario.sexo}</td><td>${visita.usuario.nome}</td><td>${formatarData(visita.dataDaVisita)}</td><td>${visita.usuario.email ? visita.usuario.email : "não possui"}</td><td>${visita.usuario.cidade ? visita.usuario.cidade : "não informou"}</td></tr>`);
-    });
-
-    let Graficos = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dois Gráficos com Chart.js</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-    <div style="width: 50%; margin: auto;" id="chartContainer">
+    <style>
+        #chartContainer{
+            max-width: 100%;
+            max-height: 500px;
+            display: flex;
+        }
+        #myPieChart1{
+            font-size: 300px;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="chartContainer">
         <canvas id="myPieChart1"></canvas>
         <canvas id="myPieChart2"></canvas>
         <canvas id="myPieChart3"></canvas>
     </div>
+
     <script>
         // Dados do primeiro gráfico de pizza
         const data1 = {
@@ -94,7 +95,7 @@ const generateHTML = (visitas) => {
             labels: ['Cadastrados', 'Não Cadastrados'],
             datasets: [{
                 label: 'Valores',
-                data: ${arrayCadastrados},
+                data: [300, 150],
                 backgroundColor: [
                     'rgba(75, 192, 192, 0.2)',
                     'rgba(153, 102, 255, 0.2)'
@@ -151,109 +152,6 @@ const generateHTML = (visitas) => {
         const ctx2 = document.getElementById('myPieChart2').getContext('2d');
         const myPieChart2 = new Chart(ctx2, config2);
 
-    </script>`
-
-    let BaseHtml = `<!DOCTYPE html>
-    <html lang="en">
-    
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Lista-Usuarios</title>
-        <style>
-            * {
-                padding: 0;
-                margin: 0;
-                font-family: Arial, Helvetica, sans-serif;
-            }
-    
-            body {
-                background-color: #FCFFFC;
-                padding: 20px;
-            }
-    
-            .cabecalho {
-                margin-top: 3px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                color: #424643;
-                position: relative;
-            }
-            h2 {
-                margin-top: 15px;
-                margin-bottom: 15px;
-            }
-    
-            .data {
-                position: absolute;
-                top: 0;
-                right: 0;
-            }
-    
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-top: 10px;
-            }
-    
-            .centralizado {
-                font-size: 23px;
-                text-align: center;
-                margin-top: 25px;
-            }
-    
-            /* Estilo para linhas pares */
-            tr:nth-child(even) {
-                background-color: #e6fff2;
-            }
-    
-            /* Estilo para linhas ímpares */
-            tr:nth-child(odd) {
-                background-color: #e6ffe6;
-            }
-    
-            th, td {
-                padding: 10px;
-                border: 1px solid #ddd;
-                text-align: left;
-            }
-        </style>
-    </head>
-    
-    <body>
-        <div class="cabecalho">
-            <img src="https://picsum.photos/200/100" alt="">
-            <h2>Parque Natural Municipal do Juqueriquerê</h2>
-        </div>
-        <div>
-            <p class="centralizado">Relatorio Total de Visitas</p>
-        </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Sexo</th>
-                    <th>Nome</th>
-                    <th>Data da Visita</th>
-                    <th>email</th>
-                    <th>cidade</th>
-                </tr>
-            </thead>
-            <tbody>
-
-                ${linhas.join('')} 
-
-            </tbody>
-            
-        </table>
-
-        ${Graficos}
-    </body>
-    
-    </html>`;
-
-    return BaseHtml;
-}
-
-export default generateHTML;
+    </script>
+</body>
+</html>
