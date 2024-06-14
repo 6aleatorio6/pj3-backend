@@ -26,8 +26,8 @@ export default prisma;
  */
 export const prismaPaiado = prisma
   .$extends(PrismaErrorInterceptor)
-  .$extends(UniquesPaiasPrisma('email', 'googleId', 'facebookId'))
-  .$extends(SoftDeletePrisma);
+  .$extends(SoftDeletePrisma)
+  .$extends(UniquesPaiasPrisma('email', 'googleId', 'facebookId'));
 
 /**
  * Sem a logica do softDelete, mas com os tratamentos de erros do SecureController

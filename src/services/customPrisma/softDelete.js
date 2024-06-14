@@ -1,6 +1,28 @@
+/* eslint-disable no-unused-vars */
 import { Prisma } from '@prisma/client';
+import { createSoftDeleteExtension } from 'prisma-extension-soft-delete';
 
-export const SoftDeletePrisma = Prisma.defineExtension((dbClient) =>
+/**
+ * SoftDelete usando pacote externo
+ */
+export const SoftDeletePrisma = createSoftDeleteExtension({
+  models: Object.fromEntries(
+    Object.values(Prisma.ModelName).map((m) => [m, true]), // ele monta um obj com as propriedades sendo as model com valor true
+  ),
+  defaultConfig: {
+    field: 'deleted_at',
+    createValue: (deleted) => {
+      if (deleted) return new Date();
+      return null;
+    },
+    allowToOneUpdates: true,
+  },
+});
+
+/**
+ * @deprecated MÉTODO SUBSTITUIDO POR UMA EXTENSAO EXTERNA
+ */
+const SoftDeletePrismaAntigo = Prisma.defineExtension((dbClient) =>
   dbClient.$extends({
     query: {
       $allOperations({ query, model, operation, args }) {
