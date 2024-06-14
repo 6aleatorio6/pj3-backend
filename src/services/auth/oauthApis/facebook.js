@@ -12,7 +12,7 @@ const REDIRECT_URI = urlOauthCallback('facebook');
 
 export function oauthFB(stateRedirect = '') {
   return {
-    url: `${urlBaseFbW}/dialog/oauth?client_id=${APP_ID}&redirect_uri=${REDIRECT_URI}&state=${stateRedirect}`,
+    url: `${urlBaseFbW}/dialog/oauth?client_id=${APP_ID}&redirect_uri=${REDIRECT_URI}&state=${stateRedirect}&scope=email`,
     async callback(code) {
       try {
         const { access_token } = await fetchPaiado(
@@ -20,9 +20,10 @@ export function oauthFB(stateRedirect = '') {
         );
 
         const profile = await fetchPaiado(
-          `${urlBaseFbG}/me?fields=id,name,short_name,picture&access_token=${access_token}`,
+          `${urlBaseFbG}/me?fields=id,email,name,short_name,picture&access_token=${access_token}`,
         );
 
+        console.log(profile);
         const foto = !profile.picture.data.is_silhouette
           ? profile.picture.data.url
           : undefined;
@@ -30,6 +31,7 @@ export function oauthFB(stateRedirect = '') {
         return {
           facebookId: profile.id,
           apelido: profile.short_name || profile.name,
+          email: profile.email,
           foto,
         };
       } catch (error) {

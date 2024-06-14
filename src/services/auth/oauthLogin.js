@@ -19,6 +19,7 @@ export default async function loginOrSignUp(payload) {
         [idModel]: payload[idModel], // ex: googleId
         apelido: payload.apelido,
         foto: payload.foto,
+        email: payload.email,
       },
       select: {
         id: true,

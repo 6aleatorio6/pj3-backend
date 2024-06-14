@@ -19,7 +19,7 @@ export default function middleLogin(tabelaDaConta) {
     });
     const { email, senha } = req.body;
 
-    const conta = await prismaPaiado[tabelaDaConta].findUnique({
+    const conta = await prismaPaiado[tabelaDaConta].findFirst({
       where: { email },
       select: {
         id: true,
