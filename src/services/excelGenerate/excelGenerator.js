@@ -15,7 +15,7 @@ const generateExcel = async (visitas) => {
         worksheet.columns = [
             { header: 'Nome', key: 'name', width: 20 },
             { header: 'Sexo', key: 'sex', width: 10 },
-            { header: 'Idade', key: 'age', width: 16 },
+            { header: 'Nascimento', key: 'age', width: 16 },
             { header: 'Email', key: 'email', width: 30 },
             { header: 'Cidade', key: 'city', width: 20 },
         ];
