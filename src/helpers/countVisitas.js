@@ -1,14 +1,17 @@
 const visitasCadastradas = (visitas) => {
-    visitas.forEach(visita => {
-        visita.usuario
-    });
-}
-
-const visitasCadastradas2 = (visitas) => {
     const cadastrados = visitas.filter(visitas => visitas.usuario.email)
-    return cadastrados
+    const incadastrados = visitas.filter(visitas => !visitas.usuario.email)
+
+    return [cadastrados.length, incadastrados.length]
 }
 
-const array = [1, 2 , 3]
+const visitasTiposSexo = (visitas) => {
+    const SexosO = visitas.filter(visitas => visitas.usuario.sexo =="O")
+    const SexosM = visitas.filter(visitas => visitas.usuario.sexo =="M")
+    const SexosF = visitas.filter(visitas => visitas.usuario.sexo =="F")
 
-const maioresQueTres = numeros.filter(numero => numero == 3);
+    return [SexosM.length, SexosF.length, SexosO.length]
+}
+
+export default {visitasCadastradas, visitasTiposSexo}
+

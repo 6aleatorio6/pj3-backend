@@ -1,3 +1,5 @@
+import countVisitas from "../../../helpers/countVisitas.js";
+
 const formatarData = (nascimento) => {
     const data = new Date(nascimento);
     const dia = data.getDate().toString().padStart(2, '0');
@@ -17,20 +19,21 @@ const generateHTML = (visitas) => {
     });
 
     let Graficos = `
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    
     <div style="width: 50%; margin: auto;" id="chartContainer">
         <canvas id="myPieChart1"></canvas>
         <canvas id="myPieChart2"></canvas>
         <canvas id="myPieChart3"></canvas>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
     <script>
         // Dados do primeiro gráfico de pizza
         const data1 = {
-            labels: ['Masculino', 'Feminino', 'Outros'],
+            labels: ['Masculino: ${countVisitas.visitasTiposSexo(visitas)[0]}', 'Feminino: ${countVisitas.visitasTiposSexo(visitas)[1]}', 'Outros: ${countVisitas.visitasTiposSexo(visitas)[2]}'],
             datasets: [{
                 label: 'Sexos',
-                data: [120, 670, 250],
+                data: [${countVisitas.visitasTiposSexo(visitas)}],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -81,8 +84,7 @@ const generateHTML = (visitas) => {
                         }
                     }
                 }
-            },
-            plugins: [ChartDataLabels],
+            }
         };
 
         // Renderizando o primeiro gráfico
@@ -91,10 +93,10 @@ const generateHTML = (visitas) => {
 
         // Dados do segundo gráfico de pizza
         const data2 = {
-            labels: ['Cadastrados', 'Não Cadastrados'],
+            labels: ['Cadastrados: ${countVisitas.visitasCadastradas(visitas)[0]} ', 'Não Cadastrados: ${countVisitas.visitasCadastradas(visitas)[1]}'],
             datasets: [{
                 label: 'Valores',
-                data: ${arrayCadastrados},
+                data: [${countVisitas.visitasCadastradas(visitas)}],
                 backgroundColor: [
                     'rgba(75, 192, 192, 0.2)',
                     'rgba(153, 102, 255, 0.2)'
@@ -143,8 +145,7 @@ const generateHTML = (visitas) => {
                         }
                     }
                 }
-            },
-            plugins: [ChartDataLabels],
+            }
         };
 
         // Renderizando o segundo gráfico
@@ -219,6 +220,9 @@ const generateHTML = (visitas) => {
                 border: 1px solid #ddd;
                 text-align: left;
             }
+            #chartContainer{
+                height: 50%;
+            }
         </style>
     </head>
     
@@ -252,8 +256,8 @@ const generateHTML = (visitas) => {
     </body>
     
     </html>`;
-
+    console.log(countVisitas.visitasTiposSexo(visitas));
+    console.log(`teste: ${countVisitas.visitasTiposSexo(visitas)}`);
     return BaseHtml;
 }
-
 export default generateHTML;

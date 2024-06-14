@@ -16,7 +16,7 @@ const footerTemplate = '<div style="font-size: 12px; text-align: center; width: 
 
 const generatePDF = async (content) => {
     try {
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({headless: false});
         const page = await browser.newPage();
 
         await page.setContent(content);
