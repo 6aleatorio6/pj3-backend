@@ -8,7 +8,8 @@ function formatBytes(bytes) {
 export function loggerMiddleware(req, res, next) {
   const startTime = Date.now();
   const { method, url, headers } = req;
-  const userAgent = headers['user-agent'].split(' ').slice(-3, -1).join(' ');
+  const userAgent =
+    headers['user-agent']?.split(' ').slice(-3, -1).join(' ') || null;
 
   const requestContentLength = req.headers['content-length'];
   const requestContentLengthStr = requestContentLength

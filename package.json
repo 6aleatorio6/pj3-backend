@@ -7,7 +7,8 @@
     "start": "node ./src/bin/www.js",
     "dev": "node --env-file=.env --watch ./src/bin/www.js ",
     "format": "prettier --write \"src/**/*.js\"",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test": "node --env-file=.env --experimental-vm-modules node_modules/jest/bin/jest.js --config ./jest.config.mjs",
+    "test:watch": "node --env-file=.env --experimental-vm-modules node_modules/jest/bin/jest.js --watch --config ./jest.config.mjs",
     "seed": "node ./seed.js",
     "init": "npm i && npx prisma db push && npm run seed"
   },
@@ -28,6 +29,7 @@
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
+    "@types/supertest": "^6.0.2",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-standard": "^17.1.0",
