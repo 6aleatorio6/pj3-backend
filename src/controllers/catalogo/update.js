@@ -18,7 +18,7 @@ export default endpointBoxSafe(async (req, res) => {
     },
     body: {
       nomeCientifico: 'partial',
-      estrela: 'partial',
+      especie: 'partial',
       descricao: 'partial',
       foto: 'partial',
       medalha: 'partial',

@@ -15,7 +15,7 @@ export default endpointBoxSafe(async (req, res) => {
     select: {
       uuid: true,
       nomeCientifico: true,
-      estrela: true,
+      especie: true,
       descricao: true,
       catalogoGaleria: true,
       medalha: true,

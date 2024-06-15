@@ -17,7 +17,7 @@ export default endpointBoxSafe(async (req, res) => {
       nomeCientifico: 'required',
       nomePopular: 'required',
       descricao: 'required',
-      estrela: 'required',
+      especie: 'required',
       medalha: 'required',
       som: 'required',
       ftModel: 'required',
