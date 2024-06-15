@@ -15,16 +15,29 @@ export default endpointBoxSafe(async (req, res) => {
   const dataAtual = new Date();
 
   // terminarei mais tarde
-  const rank = await prismaPaiado.lidoPeloUser.groupBy({
-    by: ['usuario_id'],
-    _count: { _all: true },
-    where: {
-      dataDaDescoberta: {
-        gte: new Date(dataAtual.getFullYear(), dataAtual.getMonth(), 1),
+  let rank = await prismaPaiado.usuario.findMany({
+    select: {
+      apelido: true,
+      foto: true,
+      lidoPeloUser: {
+        distinct: ['catalogo_uuid'],
+        select: { id: true },
+        where: {
+          dataDaDescoberta: {
+            gte: new Date(dataAtual.getFullYear(), dataAtual.getMonth(), 1),
+          },
+        },
       },
     },
-    take: 30,
+
+    take: 15,
   });
 
-  res.json({ message: 'sucesso', rank });
+  rank = rank.map(({ apelido, foto, lidoPeloUser }) => ({
+    apelido,
+    foto,
+    qrCodeUnicosLidos: lidoPeloUser.length,
+  }));
+
+  res.json({ message: 'sucesso ao requisitar o rank', rank });
 });
