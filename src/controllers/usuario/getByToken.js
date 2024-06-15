@@ -19,7 +19,11 @@ export default endpointBoxSafe(async (req, res) => {
       id: true,
       apelido: true,
       foto: true,
-      lidoPeloUser: { include: { catalogo: true } },
+      lidoPeloUser: {
+        distinct: ['catalogo_uuid'],
+        select: { dataDaDescoberta: true, catalogo: true },
+        orderBy: { dataDaDescoberta: 'asc' },
+      },
     },
     where: { id },
   });

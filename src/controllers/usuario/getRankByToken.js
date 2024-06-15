@@ -15,7 +15,7 @@ export default endpointBoxSafe(async (req, res) => {
   const dataAtual = new Date();
 
   // terminarei mais tarde
-  const rank = prismaPaiado.lidoPeloUser.groupBy({
+  const rank = await prismaPaiado.lidoPeloUser.groupBy({
     by: ['usuario_id'],
     _count: { _all: true },
     where: {
