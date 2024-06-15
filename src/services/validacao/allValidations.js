@@ -1,41 +1,44 @@
 import { z } from 'zod';
 
+const padrao = {
+  oauthId: z.string().max(45),
+  nome: z.string().min(3).max(45),
+  url: z.string().min(1).max(200),
+};
+
 export const allValid = {
   id: z.coerce.number().int(),
-  uuid: z.string(),
+  uuid: z.string().uuid(),
 
   // Modelo "usuario" e "funcionario"
-  googleId: z.string().max(45),
-  facebookId: z.string().max(45),
+  googleId: padrao.oauthId,
+  facebookId: padrao.oauthId,
   email: z.string().email().max(80),
-  foto: z.string().max(200),
-  apelido: z.string().max(45),
-  nome: z.string().max(50),
-  cidade: z.string().max(50),
+  foto: padrao.url,
+  apelido: padrao.nome,
+  nome: padrao.nome,
+  cidade: padrao.nome,
   sexo: z.enum(['F', 'M', 'O']),
-  cpf: z.string().max(14),
-  senha: z.string().max(50),
+  cpf: z.string().min(11).max(14),
+  senha: z.string().min(4).max(100),
   roles: z.enum(['ADM', 'TOTEM']),
   nascimento: z.coerce.date(),
 
   // Modelo "catalogo"
-  descricao: z.string().max(800),
-  nomePopular: z.string().max(45),
-  nomeCientifico: z.string().max(45),
-  som: z.string().max(45),
-  medalha: z.string().max(200),
-  ftModel: z.string().max(200),
-  estrela: z.coerce.number().max(5),
+  descricao: z.string().min(10).max(800),
+  nomePopular: padrao.nome,
+  nomeCientifico: padrao.nome,
+  especie: padrao.nome,
+  som: padrao.url,
+  medalha: padrao.url,
+  ftModel: padrao.url,
   catalogoGaleria: z
-    .array(z.string())
+    .array(padrao.url)
     .transform((ft) => ft.map((f) => ({ url: f })))
-    .or(z.string().transform((ft) => ({ url: ft }))), // aproveito para transformar em um formato aceito ṕelo prisma
-
-  // Modelo "foto"
-  url: z.string().max(200),
-  mostrarNoCarrosel: z.coerce.number().int().max(255),
+    .or(padrao.url.transform((ft) => ({ url: ft }))), // aproveito para transformar em um formato aceito pelo prisma
 
   // Modelo "visitas" e "lidoPeloUser"
-  dataDaVisita: z.string().max(45),
-  dataDaDescoberta: z.string().max(45),
+  dataDaVisita: z.coerce.date(),
+  dataDaDescoberta: z.coerce.date(),
+  url: padrao.url,
 };
