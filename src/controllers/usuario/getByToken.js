@@ -28,6 +28,11 @@ export default endpointBoxSafe(async (req, res) => {
     where: { id },
   });
 
+  usuario.progresso = {
+    total: await prismaPaiado.catalogo.count(),
+    lido: usuario.lidoPeloUser.length,
+  };
+
   res.json({
     message: `Usuário ${usuario.apelido} encontrado com sucesso`,
     usuario,
