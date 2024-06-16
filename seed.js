@@ -13,7 +13,7 @@ const desc =
           nome: 'Paia Cabral',
           roles: 'ADM',
           email: 'paiaTriste@gmail.com',
-          cpf: 'vcsSãoTristes',
+          cpf: '123.123.132-05',
           senha: gerarHash('paia123'),
         },
         {
@@ -21,7 +21,7 @@ const desc =
           nome: 'Paio Silva',
           roles: 'TOTEM',
           email: 'paiaFeliz@gmail.com',
-          cpf: 'vcsSãoFelizes',
+          cpf: '123.123.132-05',
           senha: gerarHash('paia123'),
         },
       ],
