@@ -1,12 +1,12 @@
 import { hashSync } from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { HttpException } from '../secureController/handlersPaia.js';
+import { baseUrl } from '../../helpers/getBaseUrl.js';
 
 const saltOrRounds = Number(process.env.PASSWORD_SALTS) || 8;
 const secretJwt = process.env.SECRET_JWT || 'paia';
 const expiresJwt = process.env.EXPIRES_JWT || '3m';
 const refreshJwt = Number(process.env.REFRESH_JWT) || 364;
-const urlBase = process.env.URLBASE || 'http://localhost:3000';
 
 export function gerarHash(senha) {
   if (senha) return hashSync(senha, saltOrRounds);
@@ -25,7 +25,7 @@ export function extractTokenFromHeader(req) {
 }
 
 export function urlOauthCallback(oauthName) {
-  return `${urlBase}/usuario/login/${oauthName}/callback`;
+  return `${baseUrl.url}/usuario/login/${oauthName}/callback`;
 }
 
 export function jwtVerify(token) {

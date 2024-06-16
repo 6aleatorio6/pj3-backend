@@ -1,8 +1,7 @@
-import app, { corsOptions } from '../app.js';
+import app from '../app.js';
+import { origin } from '../helpers/corsOrigin.js';
 
 const PORT = process.env.PORT || 3000;
-
-const origin = corsOptions.origin.toString();
 
 const corsTexto = origin.includes('*') ? 'all' : origin;
 
