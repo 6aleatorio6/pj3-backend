@@ -2,7 +2,7 @@ import request from 'supertest';
 import app from '../../../src/app';
 import { jwtSign } from '../../../src/services/auth/helpersAuth.js';
 
-describe('GET /user/getByToken', () => {
+describe('GET /usuario', () => {
   const token = jwtSign({ id: 1, roles: 'USER' });
 
   it('deve retornar os detalhes do usuário quando um token válido for fornecido', async () => {
@@ -15,6 +15,8 @@ describe('GET /user/getByToken', () => {
     expect(response.body.usuario).toHaveProperty('apelido');
     expect(response.body.usuario).toHaveProperty('lidoPeloUser');
     expect(response.body.usuario.progresso).toEqual({ lido: 1, total: 6 });
+    expect(response.body.usuario.lidoPeloUser.length).toBe(1);
+    expect(response.body.usuario.catalogoNLido.length).toBe(5);
     expect(response.body.usuario.foto).toBe(null);
   });
 
