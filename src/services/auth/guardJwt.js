@@ -3,7 +3,7 @@ import { HttpException } from '../secureController/handlersPaia.js';
 import { extractTokenFromHeader, jwtVerify } from './helpersAuth.js';
 
 /**
- * @param {"USER" | "ADM" | "TOTEM"} roles
+ * @param {("USER" | "ADM" | "TOTEM")[]} roles
  */
 export function useGuard(...roles) {
   return endpointBoxSafe(async (req, res, next) => {
