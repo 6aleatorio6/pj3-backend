@@ -27,12 +27,10 @@ app.use(rotas);
 
 const serverApp = createServer(app);
 
-const io = new Server(serverApp, { cors: { origin } });
+export const io = new Server(serverApp, { cors: { origin } });
 
 io.on('connection', (socket) => {
-  socket.on('connect', () => {
-    console.log('hello paia');
-  });
+  socket.emit('token', 'paia');
 });
 
 export default serverApp;
