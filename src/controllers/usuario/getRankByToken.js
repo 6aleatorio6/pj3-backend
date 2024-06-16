@@ -17,6 +17,7 @@ export default endpointBoxSafe(async (req, res) => {
   // terminarei mais tarde
   let rank = await prismaPaiado.usuario.findMany({
     select: {
+      id: true,
       apelido: true,
       foto: true,
       lidoPeloUser: {
@@ -33,10 +34,12 @@ export default endpointBoxSafe(async (req, res) => {
     take: 15,
   });
 
-  rank = rank.map(({ apelido, foto, lidoPeloUser }) => ({
+  rank = rank.map(({ apelido, foto, id, lidoPeloUser }) => ({
+    id,
     apelido,
     foto,
     qrCodeUnicosLidos: lidoPeloUser.length,
+    isCurrentUser: id === req.user.id,
   }));
 
   res.json({ message: 'sucesso ao requisitar o rank', rank });
