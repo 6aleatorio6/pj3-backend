@@ -22,7 +22,7 @@ export function oauthGoogle(stateRedirect = '') {
     url: oAuth2Client.generateAuthUrl({
       access_type: 'online',
       state: stateRedirect,
-      scope: ['profile'],
+      scope: ['profile', 'email'],
     }),
     async callback(code) {
       try {
@@ -40,6 +40,7 @@ export function oauthGoogle(stateRedirect = '') {
           googleId: payload.sub,
           foto: payload.picture,
           apelido: payload.given_name || payload.name,
+          email: payload.email,
         };
       } catch (error) {
         if (error.response)

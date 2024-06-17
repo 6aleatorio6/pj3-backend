@@ -17,10 +17,10 @@ export default endpointBoxSafe(async (req, res) => {
       nomeCientifico: 'required',
       nomePopular: 'required',
       descricao: 'required',
-      estrela: 'required',
-      nascimento: 'required',
+      especie: 'required',
       medalha: 'required',
       som: 'required',
+      ftModel: 'required',
 
       // estou usando o zod para transformar o valor recebido. Se for modificar veja em `/src/services/validacao/allValidations.js`
       catalogoGaleria: 'required',

@@ -1,27 +1,23 @@
-import cookieParser from 'cookie-parser';
 import express from 'express';
+import { createServer } from 'http';
+import { Server } from 'socket.io';
+import rotas from './index.js';
+import { origin } from './helpers/corsOrigin.js';
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
-
-import funcionarioRouter from './routers/funcionarioRouter.js'
-import usuarioRouter from './routers/usuarioRouter.js'
-import catalogoRouter from './routers/catalogoRouter.js'
-import pdfRouter from './routers/pdfRouter.js'
-import excelRouter from './routers/excelRouter.js'
-import totenRouter from './routers/totenRouter.js';
 import { loggerMiddleware } from './helpers/loggerMidleware.js';
-import refreshSession from './controllers/auth/refreshSession.js';
 import { convertFilesToURLs } from './services/uploadFiles/upload.js';
-import { getFilesEndpoint } from './services/uploadFiles/pontasFiles.js';
+import { baseUrl } from './helpers/getBaseUrl.js';
+import { useGuardSocket } from './services/socket/auth.js';
+import { totemSocket } from './services/socket/connections/totem.js';
 
 const app = express();
 
-export const corsOptions = JSON.parse(
-  `{"origin": ${process.env.CORS_ORIGIN || '"*"'} }`,
-);
+app.get('/', (req, res) => res.json({ message: 'servidor online!' }));
 
-// middleware
 app.use(
-  cors(corsOptions),
+  baseUrl.capturar,
+  cors({ origin }),
   express.json(),
   express.urlencoded({ extended: false }),
   convertFilesToURLs, // mais pra frente tem que mover para dps da autenticacao
@@ -29,16 +25,16 @@ app.use(
   cookieParser(),
 );
 
-// services
-app.get('/files/:uuid', getFilesEndpoint);
-app.use('/token/refresh', refreshSession);
+app.use(rotas);
 
-// controllers
-app.use('/funcionario', funcionarioRouter);
-app.use('/usuario', usuarioRouter);
-app.use('/catalogo', catalogoRouter);
-app.use('/geraPdf', pdfRouter)
-app.use('/toten', totenRouter);
-app.use('/excel', excelRouter)
+const serverApp = createServer(app);
 
-export default app;
+export const io = new Server(serverApp, { cors: { origin } });
+
+//  complicarei isso mais tarde
+io.on('connection', (socket) => {
+  io.use(useGuardSocket('TOTEM'));
+  totemSocket(socket);
+});
+
+export default serverApp;

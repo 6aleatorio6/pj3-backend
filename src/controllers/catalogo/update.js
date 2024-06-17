@@ -18,13 +18,13 @@ export default endpointBoxSafe(async (req, res) => {
     },
     body: {
       nomeCientifico: 'partial',
-      nascimento: 'partial',
-      estrela: 'partial',
+      especie: 'partial',
       descricao: 'partial',
       foto: 'partial',
       medalha: 'partial',
       som: 'partial',
       nomePopular: 'partial',
+      ftModel: 'partial',
     },
   });
 

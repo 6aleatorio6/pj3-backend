@@ -119,7 +119,7 @@ describe('helpers Controller', () => {
 
       expect(res.body).toEqual(
         returnMsgErrorValid({
-          fieldError: 'Expected number, received string',
+          fieldError: 'Expected number, received nan',
           fieldName: 'id',
         }),
       );

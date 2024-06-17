@@ -1,5 +1,7 @@
+import { z } from 'zod';
 import { prismaPaiado } from '../../prisma.js';
 import endpointBoxSafe from '../../services/secureController/handlerBox.js';
+import { qrCodeMAP } from '../../services/socket/connections/totem.js';
 import { reqValidy } from '../../services/validacao/reqValidy.js';
 
 /**
@@ -13,24 +15,12 @@ import { reqValidy } from '../../services/validacao/reqValidy.js';
  *      APP MOBILE
  */
 export default endpointBoxSafe(async (req, res) => {
-  reqValidy(req, { params: { uuid: 'required' } });
+  reqValidy(req, { params: { uuid: z.string() } });
 
-  const id = +req.user.id;
-  const apelido = +req.user.apelido;
+  const uuid = req.params.uuid;
 
-  if (uuid === 'qrcodetoten.com') {
-    const qrCodeToten = await prismaPaiado.visitas.create({
-      data: {
-        usuario_id: id,
-        dataDaVisita: new Date(),
-      },
-    });
-    res.json({
-      message: `Visita do ${apelido} feita pelo app com sucesso`,
-      qrCodeToten,
-    });
-  }
-  console.log(req.params.uuid);
+  console.log(qrCodeMAP.has(uuid), uuid, 'asdads');
+  if (qrCodeMAP.has(uuid)) return res.redirect('/toten/qrcode/' + uuid);
 
   const { catalogo } = await prismaPaiado.lidoPeloUser.create({
     data: {
@@ -45,8 +35,8 @@ export default endpointBoxSafe(async (req, res) => {
           som: true,
           nomePopular: true,
           nomeCientifico: true,
-          nascimento: true,
-          estrela: true,
+          especie: true,
+          ftModel: true,
           descricao: true,
           catalogoGaleria: true,
         },

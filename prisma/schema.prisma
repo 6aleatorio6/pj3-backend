@@ -15,7 +15,7 @@ model usuario {
   nascimento   DateTime?      @db.Date
   facebookId   String?        @db.VarChar(45)
   foto         String?        @db.VarChar(200)
-  apelido      String?        @db.VarChar(45)
+  apelido      String?        @db.VarChar(50)
   nome         String?        @db.VarChar(50)
   cidade       String?        @db.VarChar(50)
   sexo         usuario_sexo?
@@ -28,12 +28,12 @@ model catalogo {
   uuid           String    @id @unique() @default(uuid()) @db.VarChar(60)
   funcionarioId  Int
   descricao      String    @db.VarChar(800)
-  nomePopular    String    @db.VarChar(45)
-  nomeCientifico String    @db.VarChar(45)
+  nomePopular    String    @db.VarChar(50)
+  nomeCientifico String    @db.VarChar(50)
+  especie        String?   @db.VarChar(50)
   som            String?   @db.VarChar(200)
+  ftModel        String?   @db.VarChar(200)
   medalha        String?   @db.VarChar(200)
-  estrela        Decimal?  @db.Decimal(2, 1)
-  nascimento     DateTime? @db.Date
   deleted_at     DateTime?
 
   lidoPeloUser      lidoPeloUser[]
@@ -55,14 +55,13 @@ model catalogoGaleria {
 }
 
 model funcionario {
-  id       Int               @id @unique() @default(autoincrement())
-  email    String            @db.VarChar(80)
-  senha    String            @db.VarChar(100)
-  cpf      String            @db.VarChar(14)
-  nome     String            @db.VarChar(50)
-  roles    funcionario_roles
-  catalogo catalogo[]
-
+  id         Int               @id @unique() @default(autoincrement())
+  email      String            @db.VarChar(80)
+  senha      String            @db.VarChar(100)
+  cpf        String            @db.VarChar(14)
+  nome       String            @db.VarChar(50)
+  roles      funcionario_roles
+  catalogo   catalogo[]
   deleted_at DateTime?
 }
 

@@ -1,6 +1,28 @@
+/* eslint-disable no-unused-vars */
 import { Prisma } from '@prisma/client';
+import { createSoftDeleteExtension } from 'prisma-extension-soft-delete';
 
-export const SoftDeletePrisma = Prisma.defineExtension((dbClient) =>
+/**
+ * SoftDelete usando pacote externo
+ */
+export const SoftDeletePrisma = createSoftDeleteExtension({
+  models: Object.fromEntries(
+    Object.values(Prisma.ModelName).map((m) => [m, true]), // ele monta um obj com as propriedades sendo as model com valor true
+  ),
+  defaultConfig: {
+    field: 'deleted_at',
+    createValue: (deleted) => {
+      if (deleted) return new Date();
+      return null;
+    },
+    allowToOneUpdates: true,
+  },
+});
+
+/**
+ * @deprecated MÉTODO SUBSTITUIDO POR UMA EXTENSAO EXTERNA
+ */
+const SoftDeletePrismaAntigo = Prisma.defineExtension((dbClient) =>
   dbClient.$extends({
     query: {
       $allOperations({ query, model, operation, args }) {
@@ -17,24 +39,24 @@ export const SoftDeletePrisma = Prisma.defineExtension((dbClient) =>
           });
         }
 
-        deepChange(args, ['where', 'select', 'include'], (e, key) => {
+        deepChange(args, ['where', 'select', 'include'], (objDoKey, key) => {
           if (key === 'where') {
-            e.deleted_at = null;
+            objDoKey.deleted_at = null;
             return;
           }
 
-          // TODO: revisar isso
-          // for (const keySelect in e) {
-          //   if (!Object.keys(Prisma.ModelName).includes(keySelect)) return;
-          //   const v = e[keySelect];
-          //   const isObject = typeof v === 'object';
+          //  só vai rodar essa parte se for select ou include
+          //  o objDoKey pé os select que encontrar
+          for (const keySelect in objDoKey) {
+            if (!Object.keys(Prisma.ModelName).includes(keySelect)) continue; // verifico se tem uma proprieade com o nome de uma tabela do prisma
+            const v = objDoKey[keySelect]; // pego essa propriedade
+            const isObject = typeof v === 'object';
 
-          //   console.log(key, keySelect);
-          //   e[keySelect] = {
-          //     ...(isObject ? v : {}),
-          //     where: { ...(isObject ? v.where : {}), deleted_at: null },
-          //   };
-          // }
+            objDoKey[keySelect] = {
+              ...(isObject ? v : {}), // devolvo as prop se ele for um obj
+              where: { ...(isObject ? v.where : {}), deleted_at: null }, // coloco um where
+            };
+          }
         });
 
         if (operation === 'findUnique' || operation === 'findUniqueOrThrow') {

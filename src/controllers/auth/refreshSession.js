@@ -14,7 +14,7 @@ export default endpointBoxSafe(async (req, res) => {
   const RefreshIsValid = jwtVerify(token) === 'REFRESH';
 
   if (!RefreshIsValid)
-    throw HttpException(
+    throw new HttpException(
       401,
       'Não foi possivel atualizar o token, faça login novamente',
     );
