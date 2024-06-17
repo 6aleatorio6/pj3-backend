@@ -41,20 +41,19 @@ export default endpointBoxSafe(async (req, res) => {
     },
   });
 
-  usuario.catalogoNLido = [];
-  for (const item of catalogo) {
-    usuario.lidoPeloUser.forEach((itemLido) => {
-      const isRead = item.uuid === itemLido.catalogo_uuid;
+  usuario.catalogoNLido = catalogo.filter(
+    ({ uuid }) =>
+      !usuario.lidoPeloUser.some(({ catalogo_uuid }) => uuid === catalogo_uuid),
+  );
 
-      if (!isRead) return usuario.catalogoNLido.push(item);
-
-      itemLido.catalogo = item;
-      delete itemLido.catalogo_uuid;
-    });
-  }
+  usuario.lidoPeloUser = usuario.lidoPeloUser.map((lido) => ({
+    ...lido,
+    catalogo: catalogo.find((item) => item.uuid === lido.catalogo_uuid),
+    catalogo_uuid: undefined,
+  }));
 
   usuario.progresso = {
-    total: catalogo.length,
+    total: await prismaPaiado.catalogo.count(),
     lido: usuario.lidoPeloUser.length,
   };
 
