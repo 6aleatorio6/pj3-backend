@@ -29,7 +29,7 @@ export function useGuardSocket(...roles) {
         throw new ErrorSocket('Você não tem permissão', 403);
       }
 
-      socket.user = {
+      socket.handshake.query.user = {
         id: result.id,
         roles: result.roles,
       };

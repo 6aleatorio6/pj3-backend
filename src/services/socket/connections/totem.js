@@ -9,8 +9,10 @@ export const qrCodeMAP = new Map();
 
 /** *  @param {Socket} soc */
 export function totemSocket(soc) {
+  let hash;
+
   soc.on('qrcode:get', (cb) => {
-    const hash = hashAleatorio();
+    hash = `PAIA:${hashAleatorio()}`;
 
     qrCodeMAP.set(hash, (apelido) => {
       soc.emit('qrcode:visita', { apelido });
@@ -19,8 +21,13 @@ export function totemSocket(soc) {
     cb(hash);
   });
 
- 
   soc.on('error', (e) => {
     console.log('erro', e);
+  });
+
+  soc.on('disconnect', () => {
+    if (hash && qrCodeMAP.has(hash)) {
+      qrCodeMAP.delete(hash);
+    }
   });
 }
