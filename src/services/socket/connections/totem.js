@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { Socket } from 'socket.io';
+import { createHash } from 'crypto';
 
 const hashAleatorio = () =>
-  crypto.createHash('sha256').update(Date.now().toString()).digest('hex');
+  createHash('sha256').update(Date.now().toString()).digest('hex');
 
-export const qrCodeMAP = new Set();
+export const qrCodeMAP = new Map();
 
 /** *  @param {Socket} soc */
 export function totemSocket(soc) {
@@ -12,9 +13,14 @@ export function totemSocket(soc) {
     const hash = hashAleatorio();
 
     qrCodeMAP.set(hash, (apelido) => {
-      soc.emit('qrcode:visita', { apelido: 'paia' });
+      soc.emit('qrcode:visita', { apelido });
     });
 
     cb(hash);
+  });
+
+ 
+  soc.on('error', (e) => {
+    console.log('erro', e);
   });
 }

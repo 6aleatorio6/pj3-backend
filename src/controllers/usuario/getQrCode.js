@@ -1,3 +1,4 @@
+import { z } from 'zod';
 import { prismaPaiado } from '../../prisma.js';
 import endpointBoxSafe from '../../services/secureController/handlerBox.js';
 import { qrCodeMAP } from '../../services/socket/connections/totem.js';
@@ -14,31 +15,12 @@ import { reqValidy } from '../../services/validacao/reqValidy.js';
  *      APP MOBILE
  */
 export default endpointBoxSafe(async (req, res) => {
-  reqValidy(req, { params: { uuid: 'required' } });
+  reqValidy(req, { params: { uuid: z.string() } });
 
   const uuid = req.params.uuid;
 
-  if (qrCodeMAP.has(uuid)) {
-    const allInfoNecessaria = await prismaPaiado.usuario.findFirst({
-      select: { apelido: true },
-      where: {
-        id: req.user.id,
-        nome: { not: null },
-        sexo: { not: null },
-        cidade: { not: null },
-        nascimento: { not: null },
-      },
-    });
-
-    if (!allInfoNecessaria)
-      return res.json({ message: 'Falta informações', status: 'FALTA' });
-
-    qrCodeMAP.get(uuid)(allInfoNecessaria.apelido);
-
-    qrCodeMAP.delete(uuid);
-
-    return res.json({ message: 'Visita realizada', status: 'OK' });
-  }
+  console.log(qrCodeMAP.has(uuid), uuid, 'asdads');
+  if (qrCodeMAP.has(uuid)) return res.redirect('/toten/qrcode/' + uuid);
 
   const { catalogo } = await prismaPaiado.lidoPeloUser.create({
     data: {

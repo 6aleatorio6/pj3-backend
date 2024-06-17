@@ -14,8 +14,7 @@ class ErrorSocket extends Error {
 export function useGuardSocket(...roles) {
   return (socket, next) => {
     try {
-      const token = socket.handshake.auth.token;
-
+      const token = socket.handshake?.auth?.token;
       const result = jwtVerify(token);
 
       if (!result) {

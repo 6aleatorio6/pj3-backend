@@ -8,7 +8,8 @@ import cors from 'cors';
 import { loggerMiddleware } from './helpers/loggerMidleware.js';
 import { convertFilesToURLs } from './services/uploadFiles/upload.js';
 import { baseUrl } from './helpers/getBaseUrl.js';
-import { indexSocket } from './services/socket/index.js';
+import { useGuardSocket } from './services/socket/auth.js';
+import { totemSocket } from './services/socket/connections/totem.js';
 
 const app = express();
 
@@ -30,6 +31,10 @@ const serverApp = createServer(app);
 
 export const io = new Server(serverApp, { cors: { origin } });
 
-io.on('connection', indexSocket);
+//  complicarei isso mais tarde
+io.on('connection', (socket) => {
+  io.use(useGuardSocket('TOTEM'));
+  totemSocket(socket);
+});
 
 export default serverApp;
