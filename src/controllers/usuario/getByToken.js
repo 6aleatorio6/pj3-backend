@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+/* eslint-disable camelcase */
 import endpointBoxSafe from '../../services/secureController/handlerBox.js';
 import { prismaPaiado } from '../../prisma.js';
 
@@ -53,7 +54,7 @@ export default endpointBoxSafe(async (req, res) => {
   }));
 
   usuario.progresso = {
-    total: await prismaPaiado.catalogo.count(),
+    total: catalogo.length,
     lido: usuario.lidoPeloUser.length,
   };
 

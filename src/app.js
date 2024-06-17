@@ -8,6 +8,8 @@ import cors from 'cors';
 import { loggerMiddleware } from './helpers/loggerMidleware.js';
 import { convertFilesToURLs } from './services/uploadFiles/upload.js';
 import { baseUrl } from './helpers/getBaseUrl.js';
+import { useGuardSocket } from './services/socket/auth.js';
+import { totemSocket } from './services/socket/connections/totem.js';
 
 const app = express();
 
@@ -27,12 +29,12 @@ app.use(rotas);
 
 const serverApp = createServer(app);
 
-const io = new Server(serverApp, { cors: { origin } });
+export const io = new Server(serverApp, { cors: { origin } });
 
+//  complicarei isso mais tarde
 io.on('connection', (socket) => {
-  socket.on('connect', () => {
-    console.log('hello paia');
-  });
+  io.use(useGuardSocket('TOTEM'));
+  totemSocket(socket);
 });
 
 export default serverApp;
