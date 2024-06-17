@@ -8,6 +8,7 @@ import cors from 'cors';
 import { loggerMiddleware } from './helpers/loggerMidleware.js';
 import { convertFilesToURLs } from './services/uploadFiles/upload.js';
 import { baseUrl } from './helpers/getBaseUrl.js';
+import { indexSocket } from './services/socket/index.js';
 
 const app = express();
 
@@ -29,8 +30,6 @@ const serverApp = createServer(app);
 
 export const io = new Server(serverApp, { cors: { origin } });
 
-io.on('connection', (socket) => {
-  socket.emit('token', 'paia');
-});
+io.on('connection', indexSocket);
 
 export default serverApp;
