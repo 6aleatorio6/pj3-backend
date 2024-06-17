@@ -1,3 +1,5 @@
+import countVisitas from "../../../helpers/countVisitas.js";
+
 const formatarData = (nascimento) => {
     const data = new Date(nascimento);
     const dia = data.getDate().toString().padStart(2, '0');
@@ -10,50 +12,62 @@ const formatarData = (nascimento) => {
 
 const generateHTML = (visitas) => {
 
+    visitas.forEach
     let linhas = [];
     visitas.forEach(visita => {
         linhas.push(`<tr><td>${visita.usuario.sexo}</td><td>${visita.usuario.nome}</td><td>${formatarData(visita.dataDaVisita)}</td><td>${visita.usuario.email ? visita.usuario.email : "não possui"}</td><td>${visita.usuario.cidade ? visita.usuario.cidade : "não informou"}</td></tr>`);
     });
 
     let Graficos = `
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <div style="width: 50%; margin: auto;">
-        <canvas id="myPieChart"></canvas>
+    
+    <div style="width: 50%; margin: auto;" id="chartContainer">
+        <canvas id="myPieChart1"></canvas>
+        <canvas id="myPieChart2"></canvas>
+        <canvas id="myPieChart3"></canvas>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
     <script>
-        // Dados do gráfico de pizza
-        const data = {
-            labels: ['São Paulo', 'Rio de Janeiro', 'Belo Horizonte', 'Curitiba', 'Porto Alegre'],
+        // Dados do primeiro gráfico de pizza
+        const data1 = {
+            labels: ['Masculino: ${countVisitas.visitasTiposSexo(visitas)[0]}', 'Feminino: ${countVisitas.visitasTiposSexo(visitas)[1]}', 'Outros: ${countVisitas.visitasTiposSexo(visitas)[2]}'],
             datasets: [{
-                label: 'População',
-                data: [12000000, 6700000, 2500000, 1900000, 1500000],
+                label: 'Sexos',
+                data: [${countVisitas.visitasTiposSexo(visitas)}],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
                     'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)'
                 ],
                 borderColor: [
                     'rgba(255, 99, 132, 1)',
                     'rgba(54, 162, 235, 1)',
                     'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)'
                 ],
                 borderWidth: 1
             }]
         };
 
-        // Configuração do gráfico
-        const config = {
+        // Configuração do primeiro gráfico
+        const config1 = {
             type: 'pie',
-            data: data,
+            data: data1,
             options: {
                 responsive: true,
+                animation: false,
                 plugins: {
+                    datalabels: {
+                        color: 'blue',
+                        font: {
+                            size: 30
+                        },
+                        formatter: (value, context) => {
+                            return value;
+                        }
+                    },
                     legend: {
                         position: 'top',
+                        display: true
                     },
                     tooltip: {
                         callbacks: {
@@ -70,12 +84,74 @@ const generateHTML = (visitas) => {
                         }
                     }
                 }
-            },
+            }
         };
 
-        // Renderizando o gráfico
-        const ctx = document.getElementById('myPieChart').getContext('2d');
-        const myPieChart = new Chart(ctx, config);
+        // Renderizando o primeiro gráfico
+        const ctx1 = document.getElementById('myPieChart1').getContext('2d');
+        const myPieChart1 = new Chart(ctx1, config1);
+
+        // Dados do segundo gráfico de pizza
+        const data2 = {
+            labels: ['Cadastrados: ${countVisitas.visitasCadastradas(visitas)[0]} ', 'Não Cadastrados: ${countVisitas.visitasCadastradas(visitas)[1]}'],
+            datasets: [{
+                label: 'Valores',
+                data: [${countVisitas.visitasCadastradas(visitas)}],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        // Configuração do segundo gráfico
+        const config2 = {
+            type: 'pie',
+            data: data2,
+            options: {
+                responsive: true,
+                animation: false,
+                plugins: {
+                    datalabels: {
+                        color: 'green',
+                        font: {
+                            size: 30
+                        },
+                        formatter: (value, context) => {
+                            return value;
+                        }
+                    },
+                    legend: {
+                        position: 'top',
+                        display: true
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.raw !== null) {
+                                    label += context.raw.toLocaleString();
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        // Renderizando o segundo gráfico
+        const ctx2 = document.getElementById('myPieChart2').getContext('2d');
+        const myPieChart2 = new Chart(ctx2, config2);
+
     </script>`
 
     let BaseHtml = `<!DOCTYPE html>
@@ -144,6 +220,9 @@ const generateHTML = (visitas) => {
                 border: 1px solid #ddd;
                 text-align: left;
             }
+            #chartContainer{
+                height: 50%;
+            }
         </style>
     </head>
     
@@ -160,23 +239,25 @@ const generateHTML = (visitas) => {
                 <tr>
                     <th>Sexo</th>
                     <th>Nome</th>
-                    <th>nascimento</th>
+                    <th>Data da Visita</th>
                     <th>email</th>
                     <th>cidade</th>
                 </tr>
             </thead>
             <tbody>
-                ${linhas.join('')}
 
-                ${Graficos}
+                ${linhas.join('')} 
+
             </tbody>
             
         </table>
+
+        ${Graficos}
     </body>
     
     </html>`;
-
+    console.log(countVisitas.visitasTiposSexo(visitas));
+    console.log(`teste: ${countVisitas.visitasTiposSexo(visitas)}`);
     return BaseHtml;
 }
-
 export default generateHTML;

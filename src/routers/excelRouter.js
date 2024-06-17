@@ -5,6 +5,6 @@ import criacaoExcel from '../controllers/excelJs/excelInfo.js'
 const router = Router();
 
 // router.post('/listar-usuarios', todosUsuariosExcel)
-router.get('/listar-usuarios', criacaoExcel)
+router.get('/listar-visitas', criacaoExcel)
 
 export default router;

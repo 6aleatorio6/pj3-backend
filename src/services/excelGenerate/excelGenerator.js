@@ -1,6 +1,6 @@
 import ExcelJS from 'exceljs';
 
-const criacaoExcel = async (users) => {
+const generateExcel = async (visitas) => {
     const formatarTimestampParaData = () => {
         const timestamp = Date.now();
         const data = new Date(timestamp);
@@ -15,37 +15,20 @@ const criacaoExcel = async (users) => {
         worksheet.columns = [
             { header: 'Nome', key: 'name', width: 20 },
             { header: 'Sexo', key: 'sex', width: 10 },
-            { header: 'Idade', key: 'age', width: 16 },
+            { header: 'Nascimento', key: 'age', width: 16 },
             { header: 'Email', key: 'email', width: 30 },
             { header: 'Cidade', key: 'city', width: 20 },
         ];
 
-        // for (let index = 0; index < users.length; index++) {
-        //     const element = users[index];
-        //     worksheet.addRow({
-        //         name: element.nome,
-        //         sex: element.sexo,
-        //         age: element.nascimento,
-        //         email: element.email? element.email : "não possui",
-        //         city: element.cidade? element.cidade: "não informou"})
-        // }
-
-        users.forEach(user => {
+        visitas.forEach(visita => {
             worksheet.addRow({
-                name: user.nome,
-                sex: user.sexo,
-                age: user.nascimento,
-                email: user.email ? user.email : "não possui",
-                city: user.cidade ? user.cidade : "não informou"
+                name: visita.usuario.nome,
+                sex: visita.usuario.sexo,
+                age: visita.usuario.nascimento,
+                email: visita.usuario.email ? visita.usuario.email : "não possui",
+                city: visita.usuario.cidade ? visita.usuario.cidade : "não informou"
             })
         });
-
-        // //usar for nesta parte para cada visita
-        // worksheet.addRow({id: 1, name: 'João', email: 'joao@email.com'});
-        // worksheet.addRow({id: 2, name: 'Maria', email: 'maria@email.com'});
-        // worksheet.addRow({id: 2, name: 'Maria', email: 'maria@email.com'});
-        // worksheet.addRow({name: 'Maria', email: 'maria@email.com'});
-
 
         const excelFile = `relatorioDeVisitas${formatarTimestampParaData()}.xlsx`
         await workbook.xlsx.writeFile(excelFile);
@@ -58,4 +41,4 @@ const criacaoExcel = async (users) => {
 
 }
 
-export default criacaoExcel
+export default generateExcel

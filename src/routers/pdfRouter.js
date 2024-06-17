@@ -1,10 +1,13 @@
 import { Router } from 'express';
 
-import todosUsuariosPDF from '../controllers/pdfPuppeteer/todosUsuariosPDF.js';
+import todasVisitasPDF from '../controllers/pdfPuppeteer/todasVisitasPDF.js';
 import { useGuard } from '../services/auth/guardJwt.js';
 
 const router = Router();
 
-router.get('/listar-usuarios', useGuard('ADM'), todosUsuariosPDF);
+
+router.get('/listar-visitas', useGuard('ADM'), todasVisitasPDF)
+
+
 
 export default router;
