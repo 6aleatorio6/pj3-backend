@@ -1,5 +1,6 @@
 import { prismaPaiado } from '../../prisma.js';
 import endpointBoxSafe from '../../services/secureController/handlerBox.js';
+import { qrCodeMAP } from '../../services/socket/connections/totem.js';
 import { reqValidy } from '../../services/validacao/reqValidy.js';
 
 /**
@@ -15,21 +16,28 @@ import { reqValidy } from '../../services/validacao/reqValidy.js';
 export default endpointBoxSafe(async (req, res) => {
   reqValidy(req, { params: { uuid: 'required' } });
 
-  const id = +req.user.id;
-  const apelido = req.user.apelido;
   const uuid = req.params.uuid;
 
-  if (uuid === 'qrcodetoten.com') {
-    const qrCodeToten = await prismaPaiado.visitas.create({
-      data: {
-        usuario_id: id,
-        dataDaVisita: new Date(),
+  if (qrCodeMAP.has(uuid)) {
+    const allInfoNecessaria = await prismaPaiado.usuario.findFirst({
+      select: { apelido: true },
+      where: {
+        id: req.user.id,
+        nome: { not: null },
+        sexo: { not: null },
+        cidade: { not: null },
+        nascimento: { not: null },
       },
     });
-    return res.json({
-      message: `Visita do ${apelido} feita pelo app com sucesso`,
-      qrCodeToten,
-    });
+
+    if (!allInfoNecessaria)
+      return res.json({ message: 'Falta informações', status: 'FALTA' });
+
+    qrCodeMAP.get(uuid)(allInfoNecessaria.apelido);
+
+    qrCodeMAP.delete(uuid);
+
+    return res.json({ message: 'Visita realizada', status: 'OK' });
   }
 
   const { catalogo } = await prismaPaiado.lidoPeloUser.create({
