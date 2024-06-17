@@ -4,7 +4,8 @@
 export const baseUrl = {
   url: null,
   capturar(req, res, next) {
-    if (!baseUrl.url) baseUrl.url = `${req.protocol}://${req.get('host')}`;
+    const protocol = req.headers['x-forwarded-proto'] || req.protocol;
+    if (!baseUrl.url) baseUrl.url = `${protocol}://${req.get('host')}`;
     next();
   },
 };

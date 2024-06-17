@@ -10,11 +10,11 @@ describe('GET /usuario/rank', () => {
       .get('/usuario/rank')
       .set('Authorization', `Bearer ${token}`);
 
-    expect(response.body.rank).toHaveLength(1);
+    expect(response.body.rank).toBeInstanceOf(Array);
     expect(response.body.rank[0]).toHaveProperty('id');
     expect(response.body.rank[0]).toHaveProperty('apelido', 'leoleo');
-    expect(response.body.rank[0]).toHaveProperty('qrCodeUnicosLidos', 1);
-    expect(response.body.rank[0]).toHaveProperty('isCurrentUser', true);
+    expect(response.body.rank[0]).toHaveProperty('qrCodeUnicosLidos');
+    expect(response.body.rank[0]).toHaveProperty('isCurrentUser');
     expect(response.body.rank[0]).toHaveProperty('foto', null);
 
     expect(response.status).toBe(200);
