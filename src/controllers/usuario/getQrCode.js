@@ -19,7 +19,6 @@ export default endpointBoxSafe(async (req, res) => {
 
   const uuid = req.params.uuid;
 
-  console.log(qrCodeMAP.has(uuid), uuid, 'asdads');
   if (qrCodeMAP.has(uuid)) return res.redirect('/toten/qrcode/' + uuid);
 
   const { catalogo } = await prismaPaiado.lidoPeloUser.create({

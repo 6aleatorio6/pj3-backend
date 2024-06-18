@@ -14,14 +14,13 @@ import { gerarHash } from '../../services/auth/helpersAuth.js';
  *      APP MOBILE
  */
 export default endpointBoxSafe(async (req, res) => {
-  const id = +req.user.id;
-
   reqValidy(req, {
     body: {
       senha: allValid.senha.optional().transform(gerarHash),
       foto: 'partial',
       apelido: 'partial',
       nome: 'partial',
+      nascimento: 'partial',
       cidade: 'partial',
       sexo: 'partial',
     },
@@ -33,12 +32,13 @@ export default endpointBoxSafe(async (req, res) => {
       foto: true,
       nome: true,
       email: true,
+      nascimento: true,
       cidade: true,
       sexo: true,
       id: true,
     },
     data: req.body,
-    where: { id },
+    where: { id: req.user.id },
   });
 
   res.json({ message: `Usuário ${usuario.apelido} atualizado`, usuario });

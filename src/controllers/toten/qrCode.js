@@ -16,7 +16,7 @@ export default endpointBoxSafe(async (req, res) => {
     throw new HttpException(404, 'QRCode não encontrado');
 
   const allInfoNecessaria = await prismaPaiado.usuario.findFirst({
-    select: { apelido: true },
+    select: { nome: true },
     where: {
       id: req.user.id,
       nome: { not: null },
@@ -33,7 +33,7 @@ export default endpointBoxSafe(async (req, res) => {
     data: { usuario: { connect: { id: req.user.id } } },
   });
 
-  qrCodeMAP.get(hash)(allInfoNecessaria.apelido);
+  qrCodeMAP.get(hash)(allInfoNecessaria.nome);
 
   qrCodeMAP.delete(hash);
 
