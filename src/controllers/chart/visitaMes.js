@@ -19,7 +19,7 @@ export default async (req, res) => {
             WHERE
                 EXTRACT(YEAR FROM dataDaVisita) = ${year} AND EXTRACT(MONTH FROM dataDaVisita) = ${month}
             GROUP BY
-                dia
+                TO_CHAR(dataDaVisita, 'YYYY-MM-DD')
           `
             total = visitasTotal.map(visit => ({
                 ...visit,
@@ -37,7 +37,7 @@ export default async (req, res) => {
             WHERE
                 EXTRACT(YEAR FROM v.dataDaVisita) = ${year} AND EXTRACT(MONTH FROM v.dataDaVisita) = ${month}
             GROUP BY
-                dia, sexo
+                TO_CHAR(v.dataDaVisita, 'YYYY-MM-DD'), sexo
           `
             genero = visitasGenero.map(visit => ({
                 ...visit,

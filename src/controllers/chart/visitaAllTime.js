@@ -14,7 +14,7 @@ export default async (req, res) => {
             FROM
                 Visitas
             GROUP BY
-                monthYear
+                TO_CHAR(dataDaVisita, 'YYYY-MM')
           `
             total = visitasTotal.map(visit => ({
                 ...visit,
@@ -30,7 +30,7 @@ export default async (req, res) => {
                 Visitas v
             JOIN Usuario u ON v.usuario_Id = u.id
             GROUP BY
-                monthYear, sexo
+                TO_CHAR(dataDaVisita, 'YYYY-MM'), sexo
           `
             genero = visitasGenero.map(visit => ({
                 ...visit,
