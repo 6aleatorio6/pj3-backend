@@ -4,6 +4,7 @@ import catalogoRouter from './routers/catalogoRouter.js';
 import pdfRouter from './routers/pdfRouter.js';
 import excelRouter from './routers/excelRouter.js';
 import totenRouter from './routers/totenRouter.js';
+import chartRouter from './routers/chartRouter.js';
 import { getFilesEndpoint } from './services/uploadFiles/pontasFiles.js';
 import refreshSession from './controllers/auth/refreshSession.js';
 import { Router } from 'express';
@@ -21,6 +22,7 @@ rotas.use('/catalogo', catalogoRouter);
 rotas.use('/geraPdf', pdfRouter);
 rotas.use('/toten', totenRouter);
 rotas.use('/excel', excelRouter);
+rotas.use('/chart', chartRouter);
 
 // ERROS
 rotas.use((req, res, next) => {
