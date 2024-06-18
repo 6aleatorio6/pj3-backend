@@ -58,7 +58,7 @@ function cadastrarImagensGaleria(datCat) {
         medalha: `public/?uri=images/medalha/medalhaPassaro.png`,
         especie: 'Aves',
         ftModel: `public/?uri=images/ftModel/passaroPsicopata.png`,
-        fotosGaleria: [`teste`]
+        fotosGaleria: [`teste`, `teste2`]
       },
       {
         uuid: 'ff3eb595-49f7-44c6-b368-32d9cfe6d843',
@@ -70,7 +70,7 @@ function cadastrarImagensGaleria(datCat) {
         medalha: `public/?uri=images/medalha/medalhaPassaro.png`,
         especie: 'Aves',
         ftModel: `public/?uri=images/ftModel/passaroVerm.png`,
-        fotosGaleria: [`teste`]
+        fotosGaleria: [`teste`, '3teste']
       },
       {
         uuid: '134b0f51-46a7-44b8-9ec1-65114273cf39',
@@ -122,16 +122,11 @@ function cadastrarImagensGaleria(datCat) {
       },
     ];
 
-    console.log(datCat);
     const datCat2 = [...datCat]
 
+    const datCatgaleria = cadastrarImagensGaleria(datCat2)    
     const datCatFiltrado = FiltrarDatCat(datCat)
 
-    console.log(datCatFiltrado);
-
-    const datCatgaleria = cadastrarImagensGaleria(datCat2)
-
-    console.log(datCatgaleria);
 
     await prisma.catalogo.createMany({ data: datCatFiltrado }); // CATALOGO
     await prisma.catalogoGaleria.createMany({ data: datCatgaleria });
