@@ -14,12 +14,12 @@ import { prismaPaiado } from '../../prisma.js';
 export default endpointBoxSafe(async (req, res) => {
   const dataAtual = new Date();
 
-  // terminarei mais tarde
   let rank = await prismaPaiado.usuario.findMany({
     select: {
       id: true,
       apelido: true,
       foto: true,
+
       lidoPeloUser: {
         distinct: ['catalogo_uuid'],
         select: { id: true },
@@ -30,9 +30,11 @@ export default endpointBoxSafe(async (req, res) => {
         },
       },
     },
-
+    orderBy: { lidoPeloUser: { _count: 'desc' } },
     take: 15,
   });
+
+  rank.sort((a, b) => b.lidoPeloUser.length - a.lidoPeloUser.length);
 
   rank = rank.map(({ apelido, foto, id, lidoPeloUser }) => ({
     id,
