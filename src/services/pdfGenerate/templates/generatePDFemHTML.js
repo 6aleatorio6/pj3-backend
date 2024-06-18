@@ -182,6 +182,9 @@ const generateHTML = (visitas) => {
                 color: #424643;
                 position: relative;
             }
+            img {
+                width: 70%
+            }
             h2 {
                 margin-top: 15px;
                 margin-bottom: 15px;
@@ -228,7 +231,7 @@ const generateHTML = (visitas) => {
     
     <body>
         <div class="cabecalho">
-            <img src="https://picsum.photos/200/100" alt="">
+            <img src="http://localhost:3000/files/public/?uri=images/logo.png" alt="">
             <h2>Parque Natural Municipal do Juqueriquerê</h2>
         </div>
         <div>

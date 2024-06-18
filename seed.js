@@ -264,6 +264,106 @@ function cadastrarImagensGaleria(datCat) {
     await prisma.catalogo.createMany({ data: datCatFiltrado }); // CATALOGO
     await prisma.catalogoGaleria.createMany({ data: datCatgaleria });
 
+    const usuarios = [
+      {
+        email: 'jubileu@gmail.com',
+        senha: 'senha123',
+        foto: 'foto1.png',
+        apelido: 'jubileu',
+        cidade: 'Caraguatatuba',
+        nome: "Jubileu dos Santos",
+        sexo: 'M'
+      },
+      {
+        email: 'Silvana@gmail.com',
+        senha: 'senha123',
+        foto: 'foto2.png',
+        apelido: 'Silvana',
+        cidade: 'Outro',
+        nome: "Silvana dos Santos",
+        sexo: 'F'
+      },
+      {
+        apelido: 'Santos',
+        cidade: 'Outro',
+        nome: "Santos dos Santos",
+        sexo: 'O'
+      }
+    ]
+
+    await prisma.usuario.createMany({
+      data: usuarios
+    })
+
+
+    const visitas = [
+      {
+        usuario_id: 1,
+        dataDaVisita: new Date('2024-05-20T10:30:00Z'),
+        deleted_at: null
+      },
+      {
+        usuario_id: 1,
+        dataDaVisita: new Date('2024-05-25T11:00:00Z'),
+        deleted_at: null
+      },
+      {
+        usuario_id: 1,
+        dataDaVisita: new Date('2024-05-30T12:00:00Z'),
+        deleted_at: null
+      },
+      {
+        usuario_id: 2,
+        dataDaVisita: new Date('2024-05-22T09:30:00Z'),
+        deleted_at: null
+      },
+      {
+        usuario_id: 2,
+        dataDaVisita: new Date('2024-05-27T10:00:00Z'),
+        deleted_at: null
+      },
+      {
+        usuario_id: 2,
+        dataDaVisita: new Date('2024-06-01T11:30:00Z'),
+        deleted_at: null
+      },
+      {
+        usuario_id: 3,
+        dataDaVisita: new Date('2024-05-24T08:30:00Z'),
+        deleted_at: null
+      },
+      {
+        usuario_id: 3,
+        dataDaVisita: new Date('2024-05-29T09:00:00Z'),
+        deleted_at: null
+      },
+      {
+        usuario_id: 3,
+        dataDaVisita: new Date('2024-06-05T10:30:00Z'),
+        deleted_at: null
+      },
+      {
+        usuario_id: 1,
+        dataDaVisita: new Date('2024-06-10T11:30:00Z'),
+        deleted_at: null
+      },
+      {
+        usuario_id: 2,
+        dataDaVisita: new Date('2024-06-12T12:00:00Z'),
+        deleted_at: null
+      },
+      {
+        usuario_id: 3,
+        dataDaVisita: new Date('2024-06-15T10:00:00Z'),
+        deleted_at: null
+      }
+    ];    
+    
+
+    await prisma.visitas.createMany({
+      data: visitas
+    })
+
 
 
   } catch (error) {
