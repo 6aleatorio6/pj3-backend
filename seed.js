@@ -1,24 +1,24 @@
 import prisma from './src/prisma.js';
 import { gerarHash } from './src/services/auth/helpersAuth.js';
 
-function FiltrarDatCat(datCat){
-    const sla = datCat.map(animal => {
-        delete animal.fotosGaleria
-        return animal
-    })
-    return sla
+function FiltrarDatCat(datCat) {
+  const sla = datCat.map(animal => {
+    delete animal.fotosGaleria
+    return animal
+  })
+  return sla
 }
 
 function cadastrarImagensGaleria(datCat) {
   const catalogoGaleria = [];
 
   datCat.forEach(item => {
-      item.fotosGaleria.forEach(url => {
-          catalogoGaleria.push({
-            catalogo_uuid: item.uuid, 
-            url
-          });
+    item.fotosGaleria.forEach(url => {
+      catalogoGaleria.push({
+        catalogo_uuid: item.uuid,
+        url
       });
+    });
   });
 
   return catalogoGaleria;
@@ -49,90 +49,223 @@ function cadastrarImagensGaleria(datCat) {
 
     const datCat = [
       {
-        uuid: 'c9229a1e-1ad6-41dd-b27e-3b45707e6ed0',
+        uuid: 'c9229a1e-1ad6-41dd-b27e-3b45707e6ed1',
         funcionarioId: 1,
-        descricao: "O Tucano-de-bico-preto (Ramphastos vitellinus) é uma espécie de ave que habita florestas tropicais e é conhecido por seu bico grande e colorido, usado tanto para alimentação quanto para atração de parceiros.",
-        nomePopular: 'Tucano-de-bico-preto',
-        nomeCientifico: 'Ramphastos vitellinus',
-        som: `public/?uri=audio/TUCANOBICOVERDE.mp3`,
-        medalha: `public/?uri=images/medalha/medalhaPassaro.png`,
-        especie: 'Aves',
-        ftModel: `public/?uri=images/ftModel/passaroPsicopata.png`,
-        fotosGaleria: [`teste`, `teste2`]
+        descricao: "A Aranha Pernuda é um aracnídeo encontrado em áreas tropicais, conhecido por suas longas pernas e habilidades de tecer teias complexas e resistentes.",
+        nomePopular: 'Aranha Pernuda',
+        nomeCientifico: 'Opiliones sp.',
+        som: 'public/?uri=audio/ARANHA.mp3',
+        medalha: 'public/?uri=images/medalha/medalhaAranha.png',
+        especie: 'Aracnídeos',
+        ftModel: 'public/?uri=images/ftModel/aranhaPernuda.png',
+        fotosGaleria: [
+          'public/?uri=images/pastaDasImagensDosAnimais/Aranha-Pernuda/Aranhapernuda(1).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Aranha-Pernuda/Aranhapernuda(2).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Aranha-Pernuda/Aranhapernuda(3).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Aranha-Pernuda/Aranhapernuda(4).jpg'
+        ]
       },
       {
-        uuid: 'ff3eb595-49f7-44c6-b368-32d9cfe6d843',
+        uuid: 'ff3eb595-49f7-44c6-b368-32d9cfe6d844',
         funcionarioId: 2,
-        descricao: "O Sabiá-laranjeira (Turdus rufiventris) é uma ave comum no Brasil, famosa pelo seu canto melodioso e por ser um dos símbolos nacionais, com plumagem marrom e barriga alaranjada.",
-        nomePopular: 'Sabiá-laranjeira',
-        nomeCientifico: 'Turdus rufiventris',
-        som: `public/?uri=audio/beijavi.mp3`,
-        medalha: `public/?uri=images/medalha/medalhaPassaro.png`,
-        especie: 'Aves',
-        ftModel: `public/?uri=images/ftModel/passaroVerm.png`,
-        fotosGaleria: [`teste`, '3teste']
+        descricao: "O Calango é um lagarto pequeno e ágil encontrado em diversas regiões do Brasil, principalmente em áreas quentes e secas, conhecido por sua capacidade de se camuflar.",
+        nomePopular: 'Calango',
+        nomeCientifico: 'Tropidurus sp.',
+        som: 'public/?uri=audio/CALANGO.mp3',
+        medalha: 'public/?uri=images/medalha/medalhaLagarto.png',
+        especie: 'Répteis',
+        ftModel: 'public/?uri=images/ftModel/calango.png',
+        fotosGaleria: [
+          'public/?uri=images/pastaDasImagensDosAnimais/Calango V/calango(1).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Calango V/calango(2).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Calango V/calango(3).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Calango V/calango(4).jpg'
+        ]
       },
       {
-        uuid: '134b0f51-46a7-44b8-9ec1-65114273cf39',
+        uuid: 'b705ec15-f909-474a-be9c-0704e6ad8a60',
         funcionarioId: 1,
-        descricao: "O Esquilo-vermelho (Sciurus vulgaris) é um roedor encontrado em florestas da Europa e da Ásia, conhecido por sua cauda espessa e peluda e por armazenar alimentos para o inverno.",
-        nomePopular: 'Esquilo-vermelho',
-        nomeCientifico: 'Sciurus vulgaris',
-        som: `public/?uri=audio/macaco.mp3`,
-        medalha: `public/?uri=images/medalha/medalhaArvore.png`,
-        especie: 'Mamíferos',
-        ftModel: `public/?uri=images/ftModel/esquilo.png`,
-        fotosGaleria: [`teste`]
-      },
-      {
-        uuid: 'e7ce4c8c-f4c6-4663-adb4-203fa0992d2c',
-        funcionarioId: 2,
-        descricao: "A Arara-azul-grande (Anodorhynchus hyacinthinus) é uma ave nativa do Brasil, conhecida por sua plumagem azul vibrante e grande porte, sendo a maior arara do mundo.",
-        nomePopular: 'Arara-azul-grande',
-        nomeCientifico: 'Anodorhynchus hyacinthinus',
-        som: `public/?uri=audio/TIÊSANGUE.mp3`,
-        medalha: `public/?uri=images/medalha/medalhaPassaro.png`,
-        especie: 'Aves',
-        ftModel: `public/?uri=images/ftModel/coisa2.png`,
-        fotosGaleria: [`teste`]
-      },
-      {
-        uuid: 'b4424545-99dd-40bb-9e0e-f684ac1c41e6',
-        funcionarioId: 1,
-        descricao: "O Tucano-toco (Ramphastos toco) é uma espécie de tucano reconhecível por seu bico enorme e laranja, que vive em áreas de floresta tropical e savanas na América do Sul.",
-        nomePopular: 'Tucano-toco',
-        nomeCientifico: 'Ramphastos toco',
-        som: `public/?uri=audio/TUCANOBICOVerde.mp3`,
-        medalha: `public/?uri=images/medalha/medalhaPassaro.png`,
-        especie: 'Aves',
-        ftModel: `public/?uri=images/ftModel/passaroVerm.png`,
-        fotosGaleria: [`teste`]
-      },
-      {
-        uuid: 'b705ec15-f909-474a-be9c-0704e6ad8a59',
-        funcionarioId: 2,
         descricao: "A Capivara (Hydrochoerus hydrochaeris) é o maior roedor do mundo, encontrado em grande parte da América do Sul, vivendo próximo a corpos d'água e conhecida por seu comportamento sociável.",
         nomePopular: 'Capivara',
         nomeCientifico: 'Hydrochoerus hydrochaeris',
-        som: `public/?uri=audio/CAPIVARA.mp3`,
-        medalha: `public/?uri=images/medalha/medalhaArvore.png`,
+        som: 'public/?uri=audio/CAPIVARA.mp3',
+        medalha: 'public/?uri=images/medalha/medalhaArvore.png',
         especie: 'Mamíferos',
-        ftModel: `public/?uri=images/ftModel/esquilo.png`,
-        fotosGaleria: [`teste`]
+        ftModel: 'public/?uri=images/ftModel/capivara.png',
+        fotosGaleria: [
+          'public/?uri=images/pastaDasImagensDosAnimais/Capivara/Capivara(1).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Capivara/Capivara(2).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Capivara/Capivara(3).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Capivara/Capivara(4).jpg'
+        ]
       },
+      {
+        uuid: '134b0f51-46a7-44b8-9ec1-65114273cf40',
+        funcionarioId: 2,
+        descricao: "O Caraguatá é uma planta da família Bromeliaceae, nativa de regiões tropicais da América do Sul, conhecida por suas folhas espinhosas e flores coloridas.",
+        nomePopular: 'Caraguatá',
+        nomeCientifico: 'Bromelia balansae',
+        som: 'public/?uri=audio/PLANTA.mp3',
+        medalha: 'public/?uri=images/medalha/medalhaPlanta.png',
+        especie: 'Plantas',
+        ftModel: 'public/?uri=images/ftModel/caraguata.png',
+        fotosGaleria: [
+          'public/?uri=images/pastaDasImagensDosAnimais/Caraguatá V/Caraguatá(1).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Caraguatá V/Caraguatá(2).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Caraguatá V/Caraguatá(3).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Caraguatá V/Caraguatá(4).jpg'
+        ]
+      },
+      {
+        uuid: 'e7ce4c8c-f4c6-4663-adb4-203fa0992d3d',
+        funcionarioId: 1,
+        descricao: "O Esquilo (Sciurus vulgaris) é um roedor encontrado em florestas da Europa e da Ásia, conhecido por sua cauda espessa e peluda e por armazenar alimentos para o inverno.",
+        nomePopular: 'Esquilo',
+        nomeCientifico: 'Sciurus vulgaris',
+        som: 'public/?uri=audio/ESQUILO.mp3',
+        medalha: 'public/?uri=images/medalha/medalhaArvore.png',
+        especie: 'Mamíferos',
+        ftModel: 'public/?uri=images/ftModel/esquilo.png',
+        fotosGaleria: [
+          'public/?uri=images/pastaDasImagensDosAnimais/Esquilo V/CaxinguelêVertical(1).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Esquilo V/CaxinguelêVertical(2).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Esquilo V/CaxinguelêVertical(3).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Esquilo V/CaxinguelêVertical(4).jpg'
+        ]
+      },
+      {
+        uuid: 'c4b5a67a-d835-4d75-bc3e-4e7d2d7a676a',
+        funcionarioId: 2,
+        descricao: "O Juqueriquere-tupi-guarani é uma planta rara, nativa de regiões específicas do Brasil, conhecida por suas propriedades medicinais e por seu nome de origem indígena.",
+        nomePopular: 'Juqueriquere-tupi-guarani',
+        nomeCientifico: 'Plantae rarus',
+        som: 'public/?uri=audio/JUQUERI.mp3',
+        medalha: 'public/?uri=images/medalha/medalhaPlanta.png',
+        especie: 'Plantas',
+        ftModel: 'public/?uri=images/ftModel/juqueriquere.png',
+        fotosGaleria: [
+          'public/?uri=images/pastaDasImagensDosAnimais/Juqueriquere-tupi-guarani V/Dormideira(1).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Juqueriquere-tupi-guarani V/Dormideira(2).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Juqueriquere-tupi-guarani V/Dormideira(3).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Juqueriquere-tupi-guarani V/Dormideira(4).jpg'
+        ]
+      },
+      {
+        uuid: 'b705ec15-f909-474a-be9c-0704e6ad8a61',
+        funcionarioId: 1,
+        descricao: "O Passarinho-vermelho-sangue é uma ave conhecida por sua plumagem vibrante e canto melodioso, comum em diversas regiões do Brasil, especialmente em áreas de floresta.",
+        nomePopular: 'Passarinho-vermelho-sangue',
+        nomeCientifico: 'Passerina ciris',
+        som: 'public/?uri=audio/PASSARINHO.mp3',
+        medalha: 'public/?uri=images/medalha/medalhaPassaro.png',
+        especie: 'Aves',
+        ftModel: 'public/?uri=images/ftModel/passarinho.png',
+        fotosGaleria: [
+          'public/?uri=images/pastaDasImagensDosAnimais/Passarinho-vermelho-sangue/TieSangue(1).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Passarinho-vermelho-sangue/TieSangue(2).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Passarinho-vermelho-sangue/TieSangue(3).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Passarinho-vermelho-sangue/TieSangue(4).jpg'
+        ]
+      },
+      {
+        uuid: '134b0f51-46a7-44b8-9ec1-65114273cf41',
+        funcionarioId: 2,
+        descricao: "A Quaresmeira é uma árvore nativa do Brasil, conhecida por suas flores roxas que florescem durante a quaresma, sendo comum em jardins e parques urbanos.",
+        nomePopular: 'Quaresmeira',
+        nomeCientifico: 'Tibouchina granulosa',
+        som: 'public/?uri=audio/PLANTA.mp3',
+        medalha: 'public/?uri=images/medalha/medalhaPlanta.png',
+        especie: 'Plantas',
+        ftModel: 'public/?uri=images/ftModel/quaresmeira.png',
+        fotosGaleria: [
+          'public/?uri=images/pastaDasImagensDosAnimais/Quaresmeira V/quaresmeira(1).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Quaresmeira V/quaresmeira(2).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Quaresmeira V/quaresmeira(3).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Quaresmeira V/quaresmeira(4).jpg'
+        ]
+      },
+      {
+        uuid: 'c9229a1e-1ad6-41dd-b27e-3b45707e6ed2',
+        funcionarioId: 1,
+        descricao: "A Saíra-sete-cores é uma pequena ave de plumagem multicolorida, encontrada em florestas tropicais e conhecida por sua beleza e pelo canto melodioso.",
+        nomePopular: 'Saíra-sete-cores',
+        nomeCientifico: 'Tangara seledon',
+        som: 'public/?uri=audio/SAIRA.mp3',
+        medalha: 'public/?uri=images/medalha/medalhaPassaro.png',
+        especie: 'Aves',
+        ftModel: 'public/?uri=images/ftModel/saira.png',
+        fotosGaleria: [
+          'public/?uri=images/pastaDasImagensDosAnimais/Saira-sete-cores/saira(1).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Saira-sete-cores/saira(2).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Saira-sete-cores/saira(3).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Saira-sete-cores/saira(4).jpg'
+        ]
+      },
+      {
+        uuid: 'ff3eb595-49f7-44c6-b368-32d9cfe6d845',
+        funcionarioId: 2,
+        descricao: "O Tatu é um mamífero noturno encontrado em várias partes da América do Sul, conhecido por sua carapaça dura que o protege de predadores.",
+        nomePopular: 'Tatu',
+        nomeCientifico: 'Dasypus novemcinctus',
+        som: 'public/?uri=audio/TATU.mp3',
+        medalha: 'public/?uri=images/medalha/medalhaMamifero.png',
+        especie: 'Mamíferos',
+        ftModel: 'public/?uri=images/ftModel/tatu.png',
+        fotosGaleria: [
+          'public/?uri=images/pastaDasImagensDosAnimais/tatu V/Tatu-Galinha(1).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/tatu V/Tatu-Galinha(2).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/tatu V/Tatu-Galinha(3).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/tatu V/Tatu-Galinha(4).jpg'
+        ]
+      },
+      {
+        uuid: 'b4424545-99dd-40bb-9e0e-f684ac1c41e7',
+        funcionarioId: 1,
+        descricao: "O Teiú é um lagarto grande encontrado em florestas tropicais da América do Sul, conhecido por sua pele escamosa e comportamento agressivo quando ameaçado.",
+        nomePopular: 'Teiú',
+        nomeCientifico: 'Salvator merianae',
+        som: 'public/?uri=audio/TEIU.mp3',
+        medalha: 'public/?uri=images/medalha/medalhaLagarto.png',
+        especie: 'Répteis',
+        ftModel: 'public/?uri=images/ftModel/teiu.png',
+        fotosGaleria: [
+          'public/?uri=images/pastaDasImagensDosAnimais/Teiú V/Teiu(1).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Teiú V/Teiu(2).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Teiú V/Teiu(3).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Teiú V/Teiu(4).jpg'
+        ]
+      },
+      {
+        uuid: 'e7ce4c8c-f4c6-4663-adb4-203fa0992d4e',
+        funcionarioId: 2,
+        descricao: "O Tucano-bico-verde (Ramphastos dicolorus) é uma ave tropical da América do Sul, reconhecida pelo bico verde e corpo colorido, habitando florestas e matas densas.",
+        nomePopular: 'Tucano-bico-verde',
+        nomeCientifico: 'Ramphastos dicolorus',
+        som: 'public/?uri=audio/TUCANO.mp3',
+        medalha: 'public/?uri=images/medalha/medalhaPassaro.png',
+        especie: 'Aves',
+        ftModel: 'public/?uri=images/ftModel/tucano.png',
+        fotosGaleria: [
+          'public/?uri=images/pastaDasImagensDosAnimais/Tucano-bico-verde V/TucanoBicoVerde(1).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Tucano-bico-verde V/TucanoBicoVerde(2).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Tucano-bico-verde V/TucanoBicoVerde(3).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Tucano-bico-verde V/TucanoBicoVerde(4).jpg'
+        ]
+      }
     ];
+
 
     const datCat2 = [...datCat]
 
-    const datCatgaleria = cadastrarImagensGaleria(datCat2)    
+    const datCatgaleria = cadastrarImagensGaleria(datCat2)
     const datCatFiltrado = FiltrarDatCat(datCat)
 
 
     await prisma.catalogo.createMany({ data: datCatFiltrado }); // CATALOGO
     await prisma.catalogoGaleria.createMany({ data: datCatgaleria });
-    
-    
-   
+
+
+
   } catch (error) {
     console.log('O banco já contém dados');
     console.log(error);
