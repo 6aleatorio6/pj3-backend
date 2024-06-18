@@ -19,6 +19,10 @@ export default endpointBoxSafe(async (req, res) => {
       id: true,
       apelido: true,
       foto: true,
+      nascimento: true,
+      sexo: true,
+      nome: true,
+      cidade: true,
       lidoPeloUser: {
         distinct: ['catalogo_uuid'],
         select: {
