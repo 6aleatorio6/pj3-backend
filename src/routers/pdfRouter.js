@@ -6,7 +6,7 @@ import { useGuard } from '../services/auth/guardJwt.js';
 const router = Router();
 
 
-router.get('/listar-visitas', useGuard('ADM'), todasVisitasPDF)
+router.post('/listar-visitas', useGuard('ADM'), todasVisitasPDF)
 
 
 
