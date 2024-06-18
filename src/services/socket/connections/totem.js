@@ -14,8 +14,8 @@ export function totemSocket(soc) {
   soc.on('qrcode:get', (cb) => {
     hash = `PAIA:${hashAleatorio()}`;
 
-    qrCodeMAP.set(hash, (apelido) => {
-      soc.emit('qrcode:visita', { apelido });
+    qrCodeMAP.set(hash, (nome) => {
+      soc.emit('qrcode:visita', { nome });
     });
 
     cb(hash);
