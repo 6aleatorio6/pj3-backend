@@ -142,7 +142,7 @@ function cadastrarImagensGaleria(datCat) {
         som: 'public/?uri=audio/JUQUERI.mp3',
         medalha: 'public/?uri=images/medalha/medalhaArvore2.png',
         especie: 'Plantas',
-        ftModel: 'public/?uri=images/ftModel/arvorePaia.png',
+        ftModel: 'public/?uri=images/ftModel/arvorePaiada.png',
         fotosGaleria: [
           'public/?uri=images/pastaDasImagensDosAnimais/Juqueriquere-tupi-guarani/Dormideira(1).jpg',
           'public/?uri=images/pastaDasImagensDosAnimais/Juqueriquere-tupi-guarani/Dormideira(2).jpg',
