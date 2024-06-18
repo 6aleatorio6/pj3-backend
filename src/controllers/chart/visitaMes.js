@@ -3,10 +3,48 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient()
 
 export default async (req, res) => {
+    const isPostgres = process.env.DB_TYPE === 'postgres';
+    let total = null
+    let genero = null
     const year = new Date().getFullYear();
     const month = new Date().getMonth() + 1;
     try {
-        const visitasTotal = await prisma.$queryRaw`
+        if (isPostgres) {
+            const visitasTotal = await prisma.$queryRaw`
+            SELECT
+                TO_CHAR(dataDaVisita, 'YYYY-MM-DD') AS dia,
+                COUNT(*) as count
+            FROM
+                Visitas
+            WHERE
+                EXTRACT(YEAR FROM dataDaVisita) = ${year} AND EXTRACT(MONTH FROM dataDaVisita) = ${month}
+            GROUP BY
+                dia
+          `
+            total = visitasTotal.map(visit => ({
+                ...visit,
+                count: Number(visit.count)
+            }))
+
+            const visitasGenero = await prisma.$queryRaw`
+            SELECT
+                TO_CHAR(v.dataDaVisita, 'YYYY-MM-DD') AS dia,
+                sexo,
+                COUNT(*) as count
+            FROM
+                Visitas v
+            JOIN Usuario u ON v.usuario_Id = u.id
+            WHERE
+                EXTRACT(YEAR FROM v.dataDaVisita) = ${year} AND EXTRACT(MONTH FROM v.dataDaVisita) = ${month}
+            GROUP BY
+                dia, sexo
+          `
+            genero = visitasGenero.map(visit => ({
+                ...visit,
+                count: Number(visit.count)
+            }))
+        } else {
+            const visitasTotal = await prisma.$queryRaw`
             SELECT
             DAY(dataDaVisita) AS dia,
             COUNT(*) AS count
@@ -17,12 +55,12 @@ export default async (req, res) => {
             GROUP BY
                 dia
           `
-        const total = visitasTotal.map(visit => ({
-            ...visit,
-            count: Number(visit.count)
-        }))
+            total = visitasTotal.map(visit => ({
+                ...visit,
+                count: Number(visit.count)
+            }))
 
-        const visitasGenero = await prisma.$queryRaw`
+            const visitasGenero = await prisma.$queryRaw`
             SELECT
                 DAY(v.dataDaVisita) AS dia,
                 sexo,
@@ -35,11 +73,11 @@ export default async (req, res) => {
             GROUP BY
                 dia, sexo
           `
-        const genero = visitasGenero.map(visit => ({
-            ...visit,
-            count: Number(visit.count)
-        }))
-
+            genero = visitasGenero.map(visit => ({
+                ...visit,
+                count: Number(visit.count)
+            }))
+        }
         const visitaMetodo = await prisma.visitas.findMany({
             select: {
                 dataDaVisita: true,
