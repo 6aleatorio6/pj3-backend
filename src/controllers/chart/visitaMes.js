@@ -99,6 +99,6 @@ export default async (req, res) => {
         res.json({ total, genero, qrCode, toten })
     } catch (error) {
         console.log(error)
-        res.status(500).json({ error: 'Houve um erro no nosso servidor, tente novamente!' })
+        res.status(500).json({ error: 'Houve um erro no nosso servidor, tente novamente!', message: error })
     }
 }
