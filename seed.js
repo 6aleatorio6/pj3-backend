@@ -76,10 +76,10 @@ function cadastrarImagensGaleria(datCat) {
         especie: 'Répteis',
         ftModel: 'public/?uri=images/ftModel/calango.png',
         fotosGaleria: [
-          'public/?uri=images/pastaDasImagensDosAnimais/Calango V/calango(1).jpg',
-          'public/?uri=images/pastaDasImagensDosAnimais/Calango V/calango(2).jpg',
-          'public/?uri=images/pastaDasImagensDosAnimais/Calango V/calango(3).jpg',
-          'public/?uri=images/pastaDasImagensDosAnimais/Calango V/calango(4).jpg'
+          'public/?uri=images/pastaDasImagensDosAnimais/Calango/calango(1).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Calango/calango(2).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Calango/calango(3).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Calango/calango(4).jpg'
         ]
       },
       {
@@ -110,10 +110,10 @@ function cadastrarImagensGaleria(datCat) {
         especie: 'Plantas',
         ftModel: 'public/?uri=images/ftModel/caraguata.png',
         fotosGaleria: [
-          'public/?uri=images/pastaDasImagensDosAnimais/Caraguatá V/Caraguatá(1).jpg',
-          'public/?uri=images/pastaDasImagensDosAnimais/Caraguatá V/Caraguatá(2).jpg',
-          'public/?uri=images/pastaDasImagensDosAnimais/Caraguatá V/Caraguatá(3).jpg',
-          'public/?uri=images/pastaDasImagensDosAnimais/Caraguatá V/Caraguatá(4).jpg'
+          'public/?uri=images/pastaDasImagensDosAnimais/Caraguata/Caraguatá(1).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Caraguata/Caraguatá(2).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Caraguata/Caraguatá(3).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Caraguata/Caraguatá(4).jpg'
         ]
       },
       {
@@ -127,10 +127,10 @@ function cadastrarImagensGaleria(datCat) {
         especie: 'Mamíferos',
         ftModel: 'public/?uri=images/ftModel/esquilo.png',
         fotosGaleria: [
-          'public/?uri=images/pastaDasImagensDosAnimais/Esquilo V/CaxinguelêVertical(1).jpg',
-          'public/?uri=images/pastaDasImagensDosAnimais/Esquilo V/CaxinguelêVertical(2).jpg',
-          'public/?uri=images/pastaDasImagensDosAnimais/Esquilo V/CaxinguelêVertical(3).jpg',
-          'public/?uri=images/pastaDasImagensDosAnimais/Esquilo V/CaxinguelêVertical(4).jpg'
+          'public/?uri=images/pastaDasImagensDosAnimais/Esquilo/CaxingueleVertical(1).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Esquilo/CaxingueleVertical(2).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Esquilo/CaxingueleVertical(3).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Esquilo/CaxingueleVertical(4).jpg'
         ]
       },
       {
@@ -144,10 +144,10 @@ function cadastrarImagensGaleria(datCat) {
         especie: 'Plantas',
         ftModel: 'public/?uri=images/ftModel/juqueriquere.png',
         fotosGaleria: [
-          'public/?uri=images/pastaDasImagensDosAnimais/Juqueriquere-tupi-guarani V/Dormideira(1).jpg',
-          'public/?uri=images/pastaDasImagensDosAnimais/Juqueriquere-tupi-guarani V/Dormideira(2).jpg',
-          'public/?uri=images/pastaDasImagensDosAnimais/Juqueriquere-tupi-guarani V/Dormideira(3).jpg',
-          'public/?uri=images/pastaDasImagensDosAnimais/Juqueriquere-tupi-guarani V/Dormideira(4).jpg'
+          'public/?uri=images/pastaDasImagensDosAnimais/Juqueriquere-tupi-guarani/Dormideira(1).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Juqueriquere-tupi-guarani/Dormideira(2).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Juqueriquere-tupi-guarani/Dormideira(3).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Juqueriquere-tupi-guarani/Dormideira(4).jpg'
         ]
       },
       {
@@ -178,10 +178,10 @@ function cadastrarImagensGaleria(datCat) {
         especie: 'Plantas',
         ftModel: 'public/?uri=images/ftModel/quaresmeira.png',
         fotosGaleria: [
-          'public/?uri=images/pastaDasImagensDosAnimais/Quaresmeira V/quaresmeira(1).jpg',
-          'public/?uri=images/pastaDasImagensDosAnimais/Quaresmeira V/quaresmeira(2).jpg',
-          'public/?uri=images/pastaDasImagensDosAnimais/Quaresmeira V/quaresmeira(3).jpg',
-          'public/?uri=images/pastaDasImagensDosAnimais/Quaresmeira V/quaresmeira(4).jpg'
+          'public/?uri=images/pastaDasImagensDosAnimais/Quaresmeira/quaresmeira(1).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Quaresmeira/quaresmeira(2).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Quaresmeira/quaresmeira(3).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Quaresmeira/quaresmeira(4).jpg'
         ]
       },
       {
@@ -212,10 +212,10 @@ function cadastrarImagensGaleria(datCat) {
         especie: 'Mamíferos',
         ftModel: 'public/?uri=images/ftModel/tatu.png',
         fotosGaleria: [
-          'public/?uri=images/pastaDasImagensDosAnimais/tatu V/Tatu-Galinha(1).jpg',
-          'public/?uri=images/pastaDasImagensDosAnimais/tatu V/Tatu-Galinha(2).jpg',
-          'public/?uri=images/pastaDasImagensDosAnimais/tatu V/Tatu-Galinha(3).jpg',
-          'public/?uri=images/pastaDasImagensDosAnimais/tatu V/Tatu-Galinha(4).jpg'
+          'public/?uri=images/pastaDasImagensDosAnimais/tatu/Tatu-Galinha(1).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/tatu/Tatu-Galinha(2).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/tatu/Tatu-Galinha(3).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/tatu/Tatu-Galinha(4).jpg'
         ]
       },
       {
@@ -229,10 +229,10 @@ function cadastrarImagensGaleria(datCat) {
         especie: 'Répteis',
         ftModel: 'public/?uri=images/ftModel/teiu.png',
         fotosGaleria: [
-          'public/?uri=images/pastaDasImagensDosAnimais/Teiú V/Teiu(1).jpg',
-          'public/?uri=images/pastaDasImagensDosAnimais/Teiú V/Teiu(2).jpg',
-          'public/?uri=images/pastaDasImagensDosAnimais/Teiú V/Teiu(3).jpg',
-          'public/?uri=images/pastaDasImagensDosAnimais/Teiú V/Teiu(4).jpg'
+          'public/?uri=images/pastaDasImagensDosAnimais/Teiu/Teiu(1).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Teiu/Teiu(2).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Teiu/Teiu(3).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Teiu/Teiu(4).jpg'
         ]
       },
       {
@@ -246,10 +246,10 @@ function cadastrarImagensGaleria(datCat) {
         especie: 'Aves',
         ftModel: 'public/?uri=images/ftModel/tucano.png',
         fotosGaleria: [
-          'public/?uri=images/pastaDasImagensDosAnimais/Tucano-bico-verde V/TucanoBicoVerde(1).jpg',
-          'public/?uri=images/pastaDasImagensDosAnimais/Tucano-bico-verde V/TucanoBicoVerde(2).jpg',
-          'public/?uri=images/pastaDasImagensDosAnimais/Tucano-bico-verde V/TucanoBicoVerde(3).jpg',
-          'public/?uri=images/pastaDasImagensDosAnimais/Tucano-bico-verde V/TucanoBicoVerde(4).jpg'
+          'public/?uri=images/pastaDasImagensDosAnimais/Tucano-bico-verde/TucanoBicoVerde(1).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Tucano-bico-verde/TucanoBicoVerde(2).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Tucano-bico-verde/TucanoBicoVerde(3).jpg',
+          'public/?uri=images/pastaDasImagensDosAnimais/Tucano-bico-verde/TucanoBicoVerde(4).jpg'
         ]
       }
     ];
