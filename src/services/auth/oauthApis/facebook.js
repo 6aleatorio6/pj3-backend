@@ -8,9 +8,10 @@ const FB_VERSION = process.env.FB_VERSION;
 
 const urlBaseFbG = `https://graph.facebook.com/${FB_VERSION}`;
 const urlBaseFbW = `https://www.facebook.com/${FB_VERSION}`;
-const REDIRECT_URI = urlOauthCallback('facebook');
 
 export function oauthFB(stateRedirect = '') {
+  const REDIRECT_URI = urlOauthCallback('facebook');
+  
   return {
     url: `${urlBaseFbW}/dialog/oauth?client_id=${APP_ID}&redirect_uri=${REDIRECT_URI}&state=${stateRedirect}&scope=email`,
     async callback(code) {

@@ -10,13 +10,17 @@ import { HttpException } from '../secureController/handlersPaia.js';
 export const errosSabidos = (e, modelOriginal) => {
   const { code, message, meta } = e;
 
+  const { modelName: modelError, target, column_name } = e.meta || {};
+
+  const col = column_name || target?.split('_')[1] || model;
+  
   const errosPeloCod = {
     P2000: [
       400,
       `O valor fornecido para o campo '${meta?.target}' é muito longo.`,
       meta,
     ],
-    P2001: [404, `${meta?.target || modelOriginal} não encontrado.`, meta],
+    P2001: [404, `${meta?.target || modelOriginal || modelError} não encontrado.`, meta],
     P2002: [400, `O campo '${meta?.target}' já está em uso.`, meta],
     P2003: [400, `Chave estrangeira inválida: ${message}`, meta],
     P2004: [400, `Erro de restrição no banco de dados: ${message}`, meta],
@@ -30,7 +34,7 @@ export const errosSabidos = (e, modelOriginal) => {
     P2012: [400, `Falta um valor obrigatório para '${meta?.target}'.`, meta],
     P2013: [400, `Falta um argumento obrigatório: ${message}`, meta],
     P2014: [400, `Violação de integridade referencial: ${message}`, meta],
-    P2015: [400, `${meta?.target || modelOriginal} não encontrado.`, meta],
+    P2015: [400, `${meta?.target || modelOriginal || modelError} não encontrado.`, meta],
     P2016: [400, `Erro na consulta: ${message}`, meta],
     P2017: [
       400,
