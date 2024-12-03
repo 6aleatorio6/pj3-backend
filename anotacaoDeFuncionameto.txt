@@ -1,9 +1,0 @@
-rode o npm i 
-desinstale o puppeteer( npm un puppeteer)
-e baixe novamente ( npm i puppeteer@22.6.1 )
-
-faça isso se não quiser se arrepender no futuro
-não sei porque funciona se fizer isso, mas funciona, então só rode esses comandos
-caso ignore estas instruções, por favor, adicione a contagem de arrependimento:
-
-horas de arrependimento: 10 horas
