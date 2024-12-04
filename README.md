@@ -89,47 +89,33 @@ Para mais detalhes, veja a **[notícia sobre a apresentação do projeto para o 
 | **Admin/Totem**| Painel administrativo e interface do totem.   | [Repositório Admin/Totem](https://github.com/lorislolo/pi-3sem) |
 | **Aplicativo** | Aplicativo móvel para usuários finais.        | [Repositório App](https://github.com/Programadorwolrd/pj3-Aplicativo-Municipal) |
 
-## Funcionalidades
+## Funcionalidades Gerais
 
-- **Registro de Visitas:** Totens digitais para registro rápido dos visitantes, coletando dados como sexo, origem e frequência. O **QR code** do totem também pode ser escaneado pelo aplicativo, registrando a visita sem a necessidade de formulário.
-- **Exportação de Dados:** Painel administrativo permite exportar registros de visitas em **Excel** e **PDF**.
-- **Dashboard:** Visualização de gráficos em tempo real sobre visitas, ranking e métricas de desempenho.
-- **Gamificação:** QR codes no parque liberam informações sobre animais e sons. **Ranking mensal** é zerado a cada mês, incentivando novas competições.
-- **Pontos de Interesse:** Registre e explore áreas do parque, com ranking que motiva a exploração.
-- **Painel Administrativo:** Gerencie o conteúdo interativo, como a adição, edição e remoção de informações sobre os animais.
+- **Registro de Visitas:** Totens digitais para registro rápido de visitantes, coletando informações como sexo, origem e frequência. Alternativamente, o **QR code** do totem pode ser escaneado pelo aplicativo para registrar a visita sem a necessidade de formulário.
+- **Exportação de Dados:** O painel administrativo permite a exportação de registros de visitas para **Excel** e **PDF**.
+- **Dashboard:** Visualização de gráficos em tempo real, com dados sobre visitas, ranking e métricas de desempenho.
+- **Gamificação:** QR codes interativos no parque liberam informações sobre animais e sons. **Ranking mensal** é reiniciado todo mês, incentivando novos desafios.
+- **Pontos de Interesse:** Registre e explore áreas do parque com ranking que incentiva a exploração.
+- **Painel Administrativo:** Gerencie conteúdo interativo, como a adição, edição e remoção de informações sobre animais.
 - **Educação Ambiental:** Oferece aprendizado sobre a biodiversidade do parque e a importância da preservação.
 
+## Funcionalidades Técnicas
 
+- **Autenticação com JWT e OAuth2:** Utiliza **OAuth2** para login social (Google e Facebook) e **JSON Web Tokens (JWT)** para gerenciamento seguro das sessões de usuários.
+  
+- **Persistência de Sessão:** Tokens de autenticação são armazenados no dispositivo com **AsyncStorage** e gerenciados por **Zustand**, mantendo a sessão ativa durante as interações do usuário no aplicativo.
 
+- **Comunicação em tempo real via WebSocket:** O totem se conecta via **Socket.io** ao backend para ser notificado quando uma visita é registrada pelo **QR code**, ativando uma resposta visual em tempo real.
 
-## Tecnologias Utilizadas
+- **Upload de Mídia (Imagens e Áudios):** Processamento de uploads de **imagens** e **áudios** com **Busboy**, para enriquecer os pontos de interesse e informações sobre os animais.
 
-O **BioDex** foi desenvolvido utilizando um conjunto robusto de tecnologias modernas, incluindo:
+- **Gestão de Tipos de Usuários (Roles):** O sistema possui três tipos de contas (**cliente**, **administrador**, **totem**), com permissões diferenciadas. O controle de acesso é feito por **JWT**.
 
-### **Frontend & Mobile**
+- **Exportação de Dados:** O painel administrativo oferece exportação de registros de visita para **Excel** e **PDF** usando **ExcelJS** e **Puppeteer**.
 
-- **React:** Biblioteca para criação de interfaces de usuário.
-- **React Native:** Framework para desenvolvimento do aplicativo móvel.
-- **Expo:** Plataforma para desenvolvimento e construção de aplicativos React Native.
-- **Expo Router:** Biblioteca para navegação no aplicativo móvel.
-- **Tamagui:** Framework para criação de interfaces de usuário personalizadas e responsivas.
-- **Zustand:** Biblioteca para gerenciamento de estado simplificado.
-- **Bootstrap:** Framework CSS utilizado para estilização da interface.
-- **Axios:** Cliente HTTP para requisições.
-- **React Query:** Biblioteca para gerenciamento de dados assíncronos, incluindo cache e sincronização.
-
-### **Backend**
-
-- **Express:** Framework para criação de APIs RESTful no backend.
-- **Socket\.io:** Implementado para comunicação em tempo real.
-- **JWT (JSON Web Token):** Método utilizado para autenticação segura de usuários.
-- **Bcrypt:** Biblioteca usada para criptografia de senhas.
-- **Prisma:** ORM para interação com o banco de dados.
-- **Zod:** Biblioteca para validação de schemas de dados.
-- **PostgreSQL:** Sistema de banco de dados relacional utilizado no projeto.
-- **Jest:** Framework para testes unitários.
-- **Supertest:** Ferramenta para testes de endpoints HTTP.
-- **Puppeteer:** Ferramenta para criação de PDFs.
+- **Ranking e Gamificação:** Implementação de **ranking mensal** para estimular a interação contínua dos visitantes com o parque, com reinício automático a cada mês.
+  
+- **Gerenciamento de Estado com React Query:** **React Query** é utilizado para gerenciar o estado das requisições no aplicativo, garantindo a sincronização eficiente dos dados entre o cliente e o servidor, além de facilitar o gerenciamento de estados como carregamento, erro e sucesso das requisições.
 
 
 
