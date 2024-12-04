@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="200" src="https://private-user-images.githubusercontent.com/128484070/341966294-ba3f81be-69d5-4427-8cd4-0b2ca6bdefb9.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzMxODQ0NzksIm5iZiI6MTczMzE4NDE3OSwicGF0aCI6Ii8xMjg0ODQwNzAvMzQxOTY2Mjk0LWJhM2Y4MWJlLTY5ZDUtNDQyNy04Y2Q0LTBiMmNhNmJkZWZiOS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQxMjAzJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MTIwM1QwMDAyNTlaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT02YmEzYjhhM2Y0NDU2Yjg3MWE0MGE1MWFjNGQyN2U4ZTZjNGQ0YzgzNGMwMzViNDBjNDU2Mzk0OWVmYmQ0M2Y2JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.nqx3NyROp_Cd1FXizzHHwWVVT1CgR_vFVwTbpUfJxT4" alt="TechPass Logo"/>
+  <img width="200" src="https://gist.githubusercontent.com/6aleatorio6/b7667f910d555388c0ef02588b38ec65/raw/183f785c99d9217605f8494ec6440c3cdc5b3b33/logo.png" alt="TechPass Logo"/>
 </p>
 
 <p align="center">
@@ -12,27 +12,62 @@
 </p>
 
 <p align="center">
-    <a href="https://expressjs.com/" target="_blank">
-    <img src="https://img.shields.io/badge/Express-Web%20Framework-000000?style=for-the-badge&logo=express" alt="Express"/>
+  <a href="https://reactnative.dev/" target="_blank">
+    <img src="https://img.shields.io/badge/React%20Native-Mobile%20Framework-61DAFB?style=for-the-badge&logo=react" alt="React Native"/>
   </a>
+  <a href="https://react-query.tanstack.com/" target="_blank">
+    <img src="https://img.shields.io/badge/React%20Query-Data%20Fetching-FF4154?style=for-the-badge&logo=reactquery" alt="React Query"/>
+  </a>
+</p>
 
-   <a href="https://axios-http.com/" target="_blank">
-    <img src="https://img.shields.io/badge/Axios-HTTP%20Client-5A29E4?style=for-the-badge&logo=axios" alt="Axios"/>
+<p align="center">
+  <a href="https://jwt.io/" target="_blank">
+    <img src="https://img.shields.io/badge/JWT-Authentication-000000?style=for-the-badge&logo=jsonwebtokens" alt="JWT"/>
   </a>
-    <a href="https://expo.dev/" target="_blank">
+  <a href="https://www.postgresql.org/" target="_blank">
+    <img src="https://img.shields.io/badge/PostgreSQL-Database-4169E1?style=for-the-badge&logo=postgresql" alt="PostgreSQL"/>
+  </a>
+ <a href="https://expo.dev/" target="_blank">
     <img src="https://img.shields.io/badge/Expo-Platform-000020?style=for-the-badge&logo=expo" alt="Expo"/>
   </a>
 </p>
 
 <p align="center">
+  <a href="https://tamagui.dev/" target="_blank">
+    <img src="https://img.shields.io/badge/Tamagui-UI%20Framework-000000?style=for-the-badge&logo=tamagui" alt="Tamagui"/>
+  </a>
+  <a href="https://github.com/pmndrs/zustand" target="_blank">
+    <img src="https://img.shields.io/badge/Zustand-State%20Management-7A4B9B?style=for-the-badge&logo=zustand" alt="Zustand"/>
+  </a>
+    <a href="https://expressjs.com/" target="_blank">
+    <img src="https://img.shields.io/badge/Express-Web%20Framework-000000?style=for-the-badge&logo=express" alt="Express"/>
+  </a>
+</p>
 
+<p align="center">
+
+  <a href="https://supertestjs.org/" target="_blank">
+    <img src="https://img.shields.io/badge/Supertest-HTTP%20Assertions-00D4B7?style=for-the-badge&logo=supertest" alt="Supertest"/>
+  </a>
+  <a href="https://jestjs.io/" target="_blank">
+    <img src="https://img.shields.io/badge/Jest-Testing-00C7B7?style=for-the-badge&logo=jest" alt="Jest"/>
+  </a>
+    <a href="https://axios-http.com/" target="_blank">
+    <img src="https://img.shields.io/badge/Axios-HTTP%20Client-5A29E4?style=for-the-badge&logo=axios" alt="Axios"/>
+  </a>
+   <a href="https://www.prisma.io/" target="_blank">
+    <img src="https://img.shields.io/badge/Prisma-ORM-2D3748?style=for-the-badge&logo=prisma" alt="Prisma"/>
+  </a>
+</p>
+
+<p align="center">
+ <a href="https://www.npmjs.com/package/bcrypt" target="_blank">
+    <img src="https://img.shields.io/badge/Bcrypt-Security-00C7B7?style=for-the-badge&logo=lock" alt="Bcrypt"/>
+  </a>
  <a href="https://reactjs.org/" target="_blank">
     <img src="https://img.shields.io/badge/React-Library-61DAFB?style=for-the-badge&logo=react" alt="React"/>
   </a>
 
-  <a href="https://www.prisma.io/" target="_blank">
-    <img src="https://img.shields.io/badge/Prisma-ORM-2D3748?style=for-the-badge&logo=prisma" alt="Prisma"/>
-  </a>
   <a href="https://socket.io/" target="_blank">
     <img src="https://img.shields.io/badge/Socket.io-Realtime-000000?style=for-the-badge&logo=socketdotio" alt="Socket.io"/>
   </a>
@@ -41,61 +76,31 @@
   </a>
 </p>
 
-<p align="center">
-<a href="https://getbootstrap.com/" target="_blank">
-    <img src="https://img.shields.io/badge/Bootstrap-CSS%20Framework-7952B3?style=for-the-badge&logo=bootstrap" alt="Bootstrap"/>
-  </a>
-  <a href="https://reactnative.dev/" target="_blank">
-    <img src="https://img.shields.io/badge/React%20Native-Mobile%20Framework-61DAFB?style=for-the-badge&logo=react" alt="React Native"/>
-  </a>
-
-  <a href="https://github.com/pmndrs/zustand" target="_blank">
-    <img src="https://img.shields.io/badge/Zustand-State%20Management-7A4B9B?style=for-the-badge&logo=zustand" alt="Zustand"/>
-  </a>
-
-</p>
-
-<p align="center">
-  <a href="https://pptr.dev/" target="_blank">
-    <img src="https://img.shields.io/badge/Puppeteer-Web%20Scraping-005C6B?style=for-the-badge&logo=puppeteer" alt="Puppeteer"/>
-  </a>
-  <a href="https://www.npmjs.com/package/bcrypt" target="_blank">
-    <img src="https://img.shields.io/badge/Bcrypt-Security-00C7B7?style=for-the-badge&logo=lock" alt="Bcrypt"/>
-  </a>
-  <a href="https://jwt.io/" target="_blank">
-    <img src="https://img.shields.io/badge/JWT-Authentication-000000?style=for-the-badge&logo=jsonwebtokens" alt="JWT"/>
-  </a>
-  <a href="https://www.postgresql.org/" target="_blank">
-    <img src="https://img.shields.io/badge/PostgreSQL-Database-4169E1?style=for-the-badge&logo=postgresql" alt="PostgreSQL"/>
-  </a>
-</p>
-
-<p align="center">
-  <a href="https://react-query.tanstack.com/" target="_blank">
-    <img src="https://img.shields.io/badge/React%20Query-Data%20Fetching-FF4154?style=for-the-badge&logo=reactquery" alt="React Query"/>
-  </a>
-  
-  <a href="https://supertestjs.org/" target="_blank">
-    <img src="https://img.shields.io/badge/Supertest-HTTP%20Assertions-00D4B7?style=for-the-badge&logo=supertest" alt="Supertest"/>
-  </a>
-  <a href="https://jestjs.io/" target="_blank">
-    <img src="https://img.shields.io/badge/Jest-Testing-00C7B7?style=for-the-badge&logo=jest" alt="Jest"/>
-  </a>
-   <a href="https://tamagui.dev/" target="_blank">
-    <img src="https://img.shields.io/badge/Tamagui-UI%20Framework-000000?style=for-the-badge&logo=tamagui" alt="Tamagui"/>
-  </a>
-</p>
-
 # BioDex - Sistema de Registro e Aplicativo Gamificado
 
-O **BioDex** é um sistema desenvolvido para o **Parque Natural Municipal Juqueriquerê**, com o objetivo de **automatizar o registro de visitas** e **proporcionar uma experiência interativa e educativa** para os visitantes. Criado como parte do **Trabalho de Conclusão de Curso** do curso técnico em **Informática para Internet** do **IFSP Caraguatatuba**, o projeto combina tecnologia e preservação ambiental para enriquecer a visitação ao parque.
+O **BioDex** é um sistema desenvolvido para o **Parque Natural Municipal Juqueriquerê**, com o objetivo de **automatizar o registro de visitas** e **proporcionar uma experiência interativa e educativa** para os visitantes. Criado como parte do **projeto integrado** no **[curso técnico em Informática para Internet](https://www.ifspcaraguatatuba.edu.br/cursos/tecnico/tecnico-em-informatica-para-internethttps://www.ifspcaraguatatuba.edu.br/cursos/tecnico/tecnico-em-informatica-para-internet)** do **IFSP Caraguatatuba**, sob a supervisão do professor **Anderson Deizepe**, o projeto visa unir tecnologia e preservação ambiental.
+
+Para mais detalhes, veja a **[notícia sobre a apresentação do projeto para o parque](https://www.caraguatatuba.sp.gov.br/pmc/2024/06/prefeitura-de-caraguatatuba-recebe-alunos-do-ifsp-para-apresentacao-de-aplicativo-para-o-parque-juqueriquere/#:~:text=A%20Prefeitura%20de%20Caraguatatuba%20abriu,ter%C3%A7a%2Dfeira%20(18))**.
+
+
+| Componente     | Descrição                                      | Link do Repositório                                 |
+|-----------------|----------------------------------------------|----------------------------------------------------|
+| **Backend**    | API e lógica de negócios do sistema.          | [Repositório Backend](https://github.com/6aleatorio6/pj3-backend) |
+| **Admin/Totem**| Painel administrativo e interface do totem.   | [Repositório Admin/Totem](https://github.com/lorislolo/pi-3sem) |
+| **Aplicativo** | Aplicativo móvel para usuários finais.        | [Repositório App](https://github.com/Programadorwolrd/pj3-Aplicativo-Municipal) |
 
 ## Funcionalidades
 
-- **Sistema de Registro de Visitas:** A instalação de totens digitais permite que os visitantes registrem sua presença de forma rápida e eficiente, gerando dados quantitativos e qualitativos sobre o perfil dos frequentadores, como sexo, origem e frequência das visitas.
-- **Gamificação:** O aplicativo oferece uma abordagem gamificada, onde os visitantes podem escanear **QR codes** espalhados pelo parque para desbloquear informações sobre os animais, incluindo fotos e sons característicos, tornando a experiência mais envolvente.
-- **Ranking de Pontos de Interesse:** Os usuários podem cadastrar e visitar **pontos de interesse** dentro do parque, gerando um ranking entre os visitantes e incentivando a exploração de diversas áreas do local.
-- **Educação Ambiental:** Além de ser uma ferramenta interativa, o aplicativo também serve como uma plataforma educativa, proporcionando aos usuários aprendizado sobre a biodiversidade do parque e a importância da preservação ambiental.
+- **Registro de Visitas:** Totens digitais para registro rápido dos visitantes, coletando dados como sexo, origem e frequência. O **QR code** do totem também pode ser escaneado pelo aplicativo, registrando a visita sem a necessidade de formulário.
+- **Exportação de Dados:** Painel administrativo permite exportar registros de visitas em **Excel** e **PDF**.
+- **Dashboard:** Visualização de gráficos em tempo real sobre visitas, ranking e métricas de desempenho.
+- **Gamificação:** QR codes no parque liberam informações sobre animais e sons. **Ranking mensal** é zerado a cada mês, incentivando novas competições.
+- **Pontos de Interesse:** Registre e explore áreas do parque, com ranking que motiva a exploração.
+- **Painel Administrativo:** Gerencie o conteúdo interativo, como a adição, edição e remoção de informações sobre os animais.
+- **Educação Ambiental:** Oferece aprendizado sobre a biodiversidade do parque e a importância da preservação.
+
+
+
 
 ## Tecnologias Utilizadas
 
@@ -126,13 +131,7 @@ O **BioDex** foi desenvolvido utilizando um conjunto robusto de tecnologias mode
 - **Supertest:** Ferramenta para testes de endpoints HTTP.
 - **Puppeteer:** Ferramenta para criação de PDFs.
 
-## Repositórios do Projeto
 
-| Componente     | Descrição                                      | Link do Repositório                                 |
-|-----------------|----------------------------------------------|----------------------------------------------------|
-| **Backend**    | API e lógica de negócios do sistema.          | [Repositório Backend](https://github.com/6aleatorio6/pj3-backend) |
-| **Admin/Totem**| Painel administrativo e interface do totem.   | [Repositório Admin/Totem](https://github.com/lorislolo/pi-3sem) |
-| **Aplicativo** | Aplicativo móvel para usuários finais.        | [Repositório App](https://github.com/Programadorwolrd/pj3-Aplicativo-Municipal) |
 
 ## Desenvolvedores :octocat:
 
