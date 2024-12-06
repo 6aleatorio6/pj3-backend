@@ -89,45 +89,79 @@ Para mais detalhes, veja a **[notícia sobre a apresentação do projeto para o 
 | **Admin/Totem**| Painel administrativo e interface do totem.   | [Repositório Admin/Totem](https://github.com/lorislolo/pi-3sem) |
 | **Aplicativo** | Aplicativo móvel para usuários finais.        | [Repositório App](https://github.com/Programadorwolrd/pj3-Aplicativo-Municipal) |
 
-## Funcionalidades Gerais
+# Funcionalidades Gerais
 
-- **Registro de Visitas:** Totens digitais para registro rápido de visitantes, coletando informações como sexo, origem e frequência. Alternativamente, o **QR code** do totem pode ser escaneado pelo aplicativo para registrar a visita sem a necessidade de formulário.
-- **Exportação de Dados:** O painel administrativo permite a exportação de registros de visitas para **Excel** e **PDF**.
-- **Dashboard:** Visualização de gráficos em tempo real, com dados sobre visitas, ranking e métricas de desempenho.
-- **Gamificação:** QR codes interativos no parque liberam informações sobre animais e sons. **Ranking mensal** é reiniciado todo mês, incentivando novos desafios.
-- **Pontos de Interesse:** Registre e explore áreas do parque com ranking que incentiva a exploração.
-- **Painel Administrativo:** Gerencie conteúdo interativo, como a adição, edição e remoção de informações sobre animais.
-- **Educação Ambiental:** Oferece aprendizado sobre a biodiversidade do parque e a importância da preservação.
+- **Registro de Visitas:**  
+  Totens digitais permitem o registro rápido de visitantes com coleta de informações básicas. Alternativamente, o aplicativo pode escanear o **QR code** do totem, registrando a visita sem necessidade de formulários.
 
-## Funcionalidades Técnicas
+- **Exportação de Dados:**  
+  Registros de visitas podem ser exportados em **Excel** e **PDF** pelo painel administrativo.
 
-- **Autenticação com JWT e OAuth2:** Utiliza **OAuth2** para login social (Google e Facebook) e **JSON Web Tokens (JWT)** para gerenciamento seguro das sessões de usuários.
-  
-- **Persistência de Sessão:** Tokens de autenticação são armazenados no dispositivo com **AsyncStorage** e gerenciados por **Zustand**, mantendo a sessão ativa durante as interações do usuário no aplicativo.
+- **Dashboard Interativo:**  
+  Gráficos em tempo real mostram dados de visitas, rankings e métricas relevantes.
 
-- **Comunicação em tempo real via WebSocket:** O totem se conecta via **Socket.io** ao backend para ser notificado quando uma visita é registrada pelo **QR code**, ativando uma resposta visual em tempo real.
+- **Gamificação:**  
+  QR codes interativos no parque desbloqueiam informações e sons sobre animais. O **ranking mensal** é automaticamente reiniciado, promovendo engajamento recorrente.
 
-- **Upload de Mídia (Imagens e Áudios):** Processamento de uploads de **imagens** e **áudios** com **Busboy**, para enriquecer os pontos de interesse e informações sobre os animais.
+- **Exploração do Parque:**  
+  Rankings incentivam a descoberta e interação com pontos de interesse no parque.
 
-- **Gestão de Tipos de Usuários (Roles):** O sistema possui três tipos de contas (**cliente**, **administrador**, **totem**), com permissões diferenciadas. O controle de acesso é feito por **JWT**.
+- **Gestão de Conteúdo:**  
+  Informações sobre animais e pontos de interesse podem ser gerenciadas no painel administrativo.
 
-- **Exportação de Dados:** O painel administrativo oferece exportação de registros de visita para **Excel** e **PDF** usando **ExcelJS** e **Puppeteer**.
+- **Educação Ambiental:**  
+  Promove aprendizado sobre biodiversidade e conscientização ambiental.
 
-- **Ranking e Gamificação:** Implementação de **ranking mensal** para estimular a interação contínua dos visitantes com o parque, com reinício automático a cada mês.
-  
-- **Gerenciamento de Estado com React Query:** **React Query** é utilizado para gerenciar o estado das requisições no aplicativo, garantindo a sincronização eficiente dos dados entre o cliente e o servidor, além de facilitar o gerenciamento de estados como carregamento, erro e sucesso das requisições.
+# Funcionalidades Técnicas
 
-## Demonstrações
+- **Autenticação Avançada:**  
+  Login social via **OAuth2** (Google e Facebook), combinado com **JWT** para gerenciamento de sessões seguras.
 
-### Fluxo de Login do App
+- **Persistência de Sessão:**  
+  Tokens armazenados localmente com **AsyncStorage**, gerenciados por **Zustand**.
 
-O aplicativo oferece diferentes formas de autenticação para facilitar o acesso dos usuários. Veja abaixo um exemplo das opções de login disponíveis:
+- **Comunicação em Tempo Real:**  
+  **Socket.io** notifica o totem após o registro de visitas via QR code, permitindo exibição de resposta visual imediata.
 
-- **Login via Google**
-- **Login via Facebook**
-- **Login com e-mail e senha**
+- **Gerenciamento de Estado:**  
+  **React Query** facilita a sincronização e gerenciamento de estados de requisições, garantindo fluidez entre cliente e servidor.
 
-![Demonstração de login com Google, Facebook e e-mail/senha](https://gist.githubusercontent.com/6aleatorio6/b7667f910d555388c0ef02588b38ec65/raw/afd0ab35f83c7e0a663dd3aade57989eebd14957/formas_de_login.gif)
+- **Uploads de Mídia:**  
+  Uploads de **imagens** e **áudios** processados com **Busboy**, enriquecendo os pontos de interesse.
+
+- **Controle de Acesso:**  
+  Três tipos de usuários (**cliente**, **administrador**, **totem**) com permissões específicas gerenciadas por **JWT**.
+
+- **Exportação de Registros:**  
+  Utilização de **ExcelJS** para gerar arquivos **Excel** e **Puppeteer** para criação de **PDFs** diretamente no painel administrativo.
+
+- **Ranking Mensal Automatizado:**  
+  Rankings reiniciam automaticamente a cada mês, incentivando novas interações e competições.
+
+# Demonstrações
+
+### **App em geral**
+
+- A tela inicial possui 2 seções: a primeira é a apresentação com uma lista dos animais, com filtros, que ficam verdes quando liberados. A segunda é um mapa com os pontos de interesse.
+- A tela de rank, onde os usuários são classificados pelos animais registrados, com a classificação sendo resetada a cada mês.
+- A tela "Minha Conta", onde o usuário pode visualizar os troféus e os animais que capturou. Há também uma subpágina para editar as informações da conta.
+- A tela de crédito, que exibe todos os que contribuíram com o projeto, nesse caso todos da turma do curso.
+
+![apresentando o app](https://gist.githubusercontent.com/6aleatorio6/b7667f910d555388c0ef02588b38ec65/raw/ba4327f0621677515c61ad7386b353864c64239a/app_geral.gif)
+
+
+### **Login no Aplicativo**  
+- O aplicativo oferece autenticação tradicional por e-mail e senha, além de opções de login social com **Google** e **Facebook**.
+ 
+![Formas de login do app](https://gist.githubusercontent.com/6aleatorio6/b7667f910d555388c0ef02588b38ec65/raw/afd0ab35f83c7e0a663dd3aade57989eebd14957/formas_de_login.gif) 
+
+### **Registro de Visitas via QR Code**  
+
+- **Aplicativo:** Ao ler o QR code do totem pelo aplicativo pela primeira vez, pode ser necessário completar as informações de cadastro, como nome completo, idade, sexo e localização. Embora essas informações não sejam obrigatórias para o uso do app, são essenciais para registrar a visita. Se o usuário já tiver preenchido essas informações anteriormente, o registro será feito automaticamente.
+
+- **Totem:** Após o registro, o totem exibirá o nome do visitante como confirmação.
+
+![Registro de visita no totem pelo QR Code](https://gist.githubusercontent.com/6aleatorio6/b7667f910d555388c0ef02588b38ec65/raw/b7c0e2854dcd4a82637949a0c02ea62160d8c1af/qrcode_ambos.gif)
 
 ## Desenvolvedores :octocat:
 
